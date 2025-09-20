@@ -1,0 +1,8 @@
+{
+  "*.{js,ts,vue}": [
+    "echo 'Stylelint will be configured later'"
+  ],
+  "*.{scss,css}": [
+    "echo 'Stylelint will be configured later'"
+  ]
+}
