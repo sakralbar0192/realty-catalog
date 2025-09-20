@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxt/image',
+    '@pinia/nuxt',
     // '@nuxt/fonts'
   ],
   css: ['/assets/styles/main.scss']

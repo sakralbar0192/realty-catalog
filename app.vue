@@ -19,21 +19,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import type { Property } from './mocks/models'
-import type { PaginationMeta } from './types/index'
+import { onMounted } from 'vue'
+import { usePropertyStore } from './stores/property'
+import { storeToRefs } from 'pinia'
 
-interface ApiResponse<T> {
-  data: T
-  meta: PaginationMeta
-}
+const propertyStore = usePropertyStore()
+const { properties, loading, pagination } = storeToRefs(propertyStore)
 
-const properties = ref<Property[]>([])
-
-onMounted(async () => {
-  const response = await $fetch<ApiResponse<Property[]>>('/api/properties?page=1&limit=20')
-  properties.value = response.data
-  console.log(properties.value)
-})
+onMounted(async () => {propertyStore.fetchProperties()})
 </script>
 
