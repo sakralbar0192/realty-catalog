@@ -6,5 +6,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     // '@nuxt/fonts'
   ],
-  css: ['/assets/styles/main.scss']
+  css: ['/assets/styles/main.scss'],
+  pinia: {
+    storesDirs: ['./stores/**']
+  }
 })

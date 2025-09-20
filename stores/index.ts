@@ -1,27 +1,57 @@
 import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 
-export const useMainStore = defineStore('main', {
-  state: () => ({
-    loading: false,
-    error: null as string | null
-  }),
+export const useMainStore = defineStore('main', () => {
+  const loading = ref(false)
+  const error = ref<string | null>(null)
+  const theme = ref<'light' | 'dark'>('light')
+  const language = ref<'en' | 'ru'>('en')
 
-  getters: {
-    isLoading: (state) => state.loading,
-    hasError: (state) => !!state.error
-  },
+  const isLoading = computed(() => loading.value)
+  const hasError = computed(() => !!error.value)
+  const isDarkTheme = computed(() => theme.value === 'dark')
 
-  actions: {
-    setLoading(loading: boolean) {
-      this.loading = loading
-    },
+  const setLoading = (val: boolean) => {
+    loading.value = val
+  }
 
-    setError(error: string | null) {
-      this.error = error
-    },
+  const setError = (val: string | null) => {
+    error.value = val
+  }
 
-    clearError() {
-      this.error = null
-    }
+  const clearError = () => {
+    error.value = null
+  }
+
+  const toggleTheme = () => {
+    theme.value = theme.value === 'light' ? 'dark' : 'light'
+  }
+
+  const setTheme = (val: 'light' | 'dark') => {
+    theme.value = val
+  }
+
+  const setLanguage = (val: 'en' | 'ru') => {
+    language.value = val
+  }
+
+  return {
+    loading,
+    error,
+    theme,
+    language,
+    isLoading,
+    hasError,
+    isDarkTheme,
+    setLoading,
+    setError,
+    clearError,
+    toggleTheme,
+    setTheme,
+    setLanguage
+  }
+}, {
+  persist: {
+    pick: ['theme', 'language']
   }
 })
