@@ -2,14 +2,14 @@
   <button 
     :class="$style.toggle"
     @click="toggleTheme"
-    :aria-label="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+    :aria-label="isDarkTheme ? $t('theme.Switch to light theme') : $t('theme.Switch to dark theme')"
   >
     <Icon
       :name="isDarkTheme ? 'sun' : 'moon'"
       :size="20"
     />
     <span :class="$style.label">
-      {{ isDarkTheme ? 'Light' : 'Dark' }}
+      {{ isDarkTheme ? $t('theme.light') : $t('theme.dark') }}
     </span>
   </button>
 </template>

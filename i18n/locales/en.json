@@ -1,0 +1,50 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "language": "Language"
+  },
+  "navigation": {
+    "home": "Home",
+    "properties": "Properties",
+    "favorites": "Favorites",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "properties": {
+    "title": "Properties",
+    "noProperties": "No properties found",
+    "loadMore": "Load More",
+    "price": "Price",
+    "location": "Location",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "area": "Area",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites"
+  },
+  "theme": {
+    "light": "Light Theme",
+    "dark": "Dark Theme",
+    "toggle": "Toggle Theme",
+    "Switch to light theme": "Switch to light theme",
+    "Switch to dark theme": "Switch to dark theme"
+  },
+  "search": {
+    "placeholder": "Search properties...",
+    "filters": "Filters",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "applyFilters": "Apply Filters",
+    "clearFilters": "Clear Filters"
+  }
+}

@@ -2,7 +2,7 @@
   <Card class="container">
     <template #title>Properties List</template>
     <template #actions>
-      <Button @click="" size="small">Edit</Button>
+      <LanguageSwitcher />
       <ThemeToggle />
     </template>
 

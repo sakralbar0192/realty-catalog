@@ -4,6 +4,20 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
     '@pinia/nuxt',
+    ['@nuxtjs/i18n', {
+      locales: [
+        { code: 'en', name: 'English', iso: 'en-US', file: 'en.json' },
+        { code: 'ru', name: 'Русский', iso: 'ru-RU', file: 'ru.json' }
+      ],
+      defaultLocale: 'en',
+      detectBrowserLanguage: {
+        useCookie: true,
+        cookieKey: 'i18n_redirected',
+        redirectOn: 'root',
+        alwaysRedirect: false,
+        fallbackLocale: 'en'
+      }
+    }],
     // '@nuxt/fonts'
   ],
   css: ['/assets/styles/main.scss'],

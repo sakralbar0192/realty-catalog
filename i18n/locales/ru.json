@@ -1,0 +1,50 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "retry": "Повторить",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "view": "Просмотр",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Предыдущий",
+    "language": "Язык"
+  },
+  "navigation": {
+    "home": "Главная",
+    "properties": "Недвижимость",
+    "favorites": "Избранное",
+    "about": "О нас",
+    "contact": "Контакты"
+  },
+  "properties": {
+    "title": "Недвижимость",
+    "noProperties": "Объекты не найдены",
+    "loadMore": "Загрузить еще",
+    "price": "Цена",
+    "location": "Местоположение",
+    "bedrooms": "Спальни",
+    "bathrooms": "Ванные",
+    "area": "Площадь",
+    "addToFavorites": "Добавить в избранное",
+    "removeFromFavorites": "Удалить из избранного"
+  },
+  "theme": {
+    "light": "Светлая тема",
+    "dark": "Темная тема",
+    "toggle": "Переключить тему",
+    "Switch to light theme": "Переключить на светлую тему",
+    "Switch to dark theme": "Переключить на темную тему"
+  },
+  "search": {
+    "placeholder": "Поиск недвижимости...",
+    "filters": "Фильтры",
+    "minPrice": "Мин. цена",
+    "maxPrice": "Макс. цена",
+    "applyFilters": "Применить фильтры",
+    "clearFilters": "Очистить фильтры"
+  }
+}
