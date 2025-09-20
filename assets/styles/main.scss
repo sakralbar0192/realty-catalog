@@ -1,14 +1,4 @@
-// Variables
-$primary-color: #007bff;
-$secondary-color: #6c757d;
-$font-family: 'Inter', sans-serif;
-
-// Mixins
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@use '/assets/styles/variables' as *;
 
 // Global styles
 * {
@@ -27,22 +17,4 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-}
-
-.btn {
-  @include flex-center;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  
-  &-primary {
-    background-color: $primary-color;
-    color: white;
-    
-    &:hover {
-      background-color: darken($primary-color, 10%);
-    }
-  }
 }
