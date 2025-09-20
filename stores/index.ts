@@ -4,12 +4,11 @@ import { ref, computed } from 'vue'
 export const useMainStore = defineStore('main', () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
-  const theme = ref<'light' | 'dark'>('light')
+  const theme = ref<'light' | 'dark' | null>(null)
   const language = ref<'en' | 'ru'>('en')
 
   const isLoading = computed(() => loading.value)
   const hasError = computed(() => !!error.value)
-  const isDarkTheme = computed(() => theme.value === 'dark')
 
   const setLoading = (val: boolean) => {
     loading.value = val
@@ -23,11 +22,7 @@ export const useMainStore = defineStore('main', () => {
     error.value = null
   }
 
-  const toggleTheme = () => {
-    theme.value = theme.value === 'light' ? 'dark' : 'light'
-  }
-
-  const setTheme = (val: 'light' | 'dark') => {
+  const setTheme = (val: 'light' | 'dark' | null) => {
     theme.value = val
   }
 
@@ -42,16 +37,25 @@ export const useMainStore = defineStore('main', () => {
     language,
     isLoading,
     hasError,
-    isDarkTheme,
     setLoading,
     setError,
     clearError,
-    toggleTheme,
     setTheme,
     setLanguage
   }
 }, {
   persist: {
-    pick: ['theme', 'language']
+    pick: ['theme', 'language'],
+    serializer: {
+      serialize: JSON.stringify,
+      deserialize: (value: string) => {
+        const parsed = JSON.parse(value)
+        // Если тема null, не восстанавливаем её, чтобы дать возможность инициализировать системной темой
+        if (parsed.theme === null) {
+          return { ...parsed, theme: null }
+        }
+        return parsed
+      }
+    }
   }
 })

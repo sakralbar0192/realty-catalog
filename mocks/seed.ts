@@ -1,6 +1,12 @@
 import { db } from './models'
 
 export const seedDatabase = () => {
+  const existingProperties = db.property.getAll()
+
+  if (existingProperties.length > 0) {
+    return
+  }
+
   // Создаем 100 тестовых объектов недвижимости
   for (let i = 1; i <= 100; i++) {
     db.property.create({

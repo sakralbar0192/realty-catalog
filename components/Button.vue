@@ -29,7 +29,6 @@ const buttonClasses = computed(() => [
 </script>
 
 <style module lang="scss">
-@use "sass:color";
 @use '/assets/styles/_mixins.scss';
 @use '/assets/styles/variables' as *;
 
@@ -56,7 +55,7 @@ const buttonClasses = computed(() => [
     background-color: $primary-color;
 
     &:hover {
-      background-color: color.adjust($primary-color, $lightness: -10%);
+      background-color: $primary-hover-color;
       box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
     }
   }
@@ -65,7 +64,7 @@ const buttonClasses = computed(() => [
     background-color: $secondary-color;
 
     &:hover {
-      background-color: color.adjust($secondary-color, $lightness: -10%);
+      background-color: $secondary-hover-color;
     }
   }
 

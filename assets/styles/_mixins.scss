@@ -11,3 +11,11 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
+@mixin theme-colors($property, $color-name) {
+  #{$property}: var(--color-#{$color-name});
+}
+
+@mixin theme-shadow($level) {
+  box-shadow: var(--shadow-#{$level});
+}
