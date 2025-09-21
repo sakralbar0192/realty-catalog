@@ -4,6 +4,7 @@
     :class="styles.toggle"
     @click="toggleTheme"
     :aria-label="isDarkTheme ? $t('theme.Switch to light theme') : $t('theme.Switch to dark theme')"
+    data-test="theme-toggle"
   >
     <Icon
       :name="isDarkTheme ? 'sun' : 'moon'"

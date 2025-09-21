@@ -27,6 +27,11 @@ import { onMounted } from 'vue'
 import { usePropertyStore } from '~/stores/property'
 import { useTheme } from '~/composables/useTheme'
 import { storeToRefs } from 'pinia'
+import { useHead } from '#imports'
+
+useHead({
+  title: 'Properties List'
+})
 
 const propertyStore = usePropertyStore()
 const { initializeTheme } = useTheme()
