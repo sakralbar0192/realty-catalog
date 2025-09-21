@@ -1,5 +1,5 @@
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, readonly } from 'vue'
 import { useMainStore } from '~/stores'
 
 export const useTheme = () => {
