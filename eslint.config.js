@@ -1,3 +1,5 @@
+import storybook from "eslint-plugin-storybook";
+
 import js from '@eslint/js'
 import vue from 'eslint-plugin-vue'
 import vueParser from 'vue-eslint-parser'
@@ -40,140 +42,135 @@ const nuxtGlobals = {
   usePerformance: 'readonly',
 }
 
-export default [
-  {
-    ignores: [
-      'node_modules',
-      '.nuxt',
-      '.output',
-      'dist',
-      'build',
-      'coverage',
-      '.nyc_output',
-      '.cache',
-      '.vscode',
-      '.idea',
-      '*.min.js',
-      'public/mockServiceWorker.js',
+export default [{
+  ignores: [
+    'node_modules',
+    '.nuxt',
+    '.output',
+    'dist',
+    'build',
+    'coverage',
+    '.nyc_output',
+    '.cache',
+    '.vscode',
+    '.idea',
+    '*.min.js',
+    'public/mockServiceWorker.js',
+  ],
+}, js.configs.recommended, {
+  files: ['**/*.ts', '**/*.js'],
+  languageOptions: {
+    parser: tsParser,
+    globals: {
+      ...globals.node,
+      ...globals.browser,
+      ...nuxtGlobals,
+    },
+  },
+  plugins: {
+    '@typescript-eslint': tseslint,
+  },
+  rules: {
+    // TypeScript rules
+    '@typescript-eslint/no-unused-vars': ['error', {
+      'argsIgnorePattern': '^_',
+      'varsIgnorePattern': '^_',
+    }],
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+
+    'no-console': 'warn',
+    'no-debugger': 'warn',
+
+    // Code style rules
+    'quotes': ['error', 'single'],
+    'semi': ['error', 'never'],
+    'indent': ['error', 2],
+    'comma-dangle': ['error', 'always-multiline'],
+    'no-multiple-empty-lines': ['error', { max: 1 }],
+    'object-curly-spacing': ['error', 'always'],
+    'array-bracket-spacing': ['error', 'never'],
+    'key-spacing': ['error'],
+    'space-before-function-paren': ['error', 'never'],
+    'space-in-parens': ['error', 'never'],
+    'space-infix-ops': 'error',
+    'space-unary-ops': 'error',
+    'spaced-comment': ['error', 'always'],
+    'brace-style': ['error', '1tbs'],
+    'comma-spacing': ['error', { before: false, after: true }],
+    'func-call-spacing': ['error', 'never'],
+    'keyword-spacing': 'error',
+    'no-trailing-spaces': 'error',
+    'eol-last': ['error', 'always'],
+
+    // General rules
+    'prefer-const': 'error',
+    'no-var': 'error',
+    'eqeqeq': ['error', 'always'],
+    'curly': ['error', 'all'],
+    'no-else-return': 'error',
+    'no-lonely-if': 'error',
+  },
+}, {
+  files: ['**/*.vue'],
+  languageOptions: {
+    parser: vueParser,
+    parserOptions: {
+      parser: tsParser,
+      extraFileExtensions: ['.vue'],
+    },
+    globals: {
+      ...globals.browser,
+      ...globals.node,
+      ...nuxtGlobals,
+    },
+  },
+  plugins: {
+    vue,
+    'vuejs-accessibility': vuejsAccessibility,
+  },
+  rules: {
+    'vue/multi-word-component-names': 'off',
+    'vue/no-unused-vars': 'error',
+    'vue/require-v-for-key': 'error',
+    'vue/no-use-v-if-with-v-for': 'error',
+    'vue/html-self-closing': ['error', {
+      'html': {
+        'void': 'always',
+        'normal': 'never',
+        'component': 'always',
+      },
+      'svg': 'always',
+      'math': 'always',
+    }],
+    'vuejs-accessibility/click-events-have-key-events': 'error',
+    'vuejs-accessibility/mouse-events-have-key-events': 'error',
+    'vuejs-accessibility/alt-text': 'error',
+    'vuejs-accessibility/anchor-has-content': 'error',
+    'vuejs-accessibility/heading-has-content': 'error',
+    'vue/component-definition-name-casing': ['error', 'PascalCase'],
+    'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+    'vue/prop-name-casing': ['error', 'camelCase'],
+    'vue/v-slot-style': ['error', 'shorthand'],
+    'vue/custom-event-name-casing': ['error', 'camelCase'],
+    // Vue style rules
+    'vue/html-indent': ['error', 2],
+    'vue/script-indent': ['error', 2],
+    'vue/html-quotes': ['error', 'double'],
+    'vue/max-attributes-per-line': ['error', {
+      'singleline': 3,
+      'multiline': 1,
+    }],
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
+
+    // Prevent <style> blocks in Vue components
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'VElement[name=style]',
+        message: 'Style blocks are not allowed in Vue components. Use separate SCSS files instead.',
+      },
     ],
   },
-  js.configs.recommended,
-  {
-    files: ['**/*.ts', '**/*.js'],
-    languageOptions: {
-      parser: tsParser,
-      globals: {
-        ...globals.node,
-        ...globals.browser,
-        ...nuxtGlobals,
-      },
-    },
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
-    rules: {
-      // TypeScript rules
-      '@typescript-eslint/no-unused-vars': ['error', {
-        'argsIgnorePattern': '^_',
-        'varsIgnorePattern': '^_',
-      }],
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
-
-      'no-console': 'warn',
-      'no-debugger': 'warn',
-
-      // Code style rules
-      'quotes': ['error', 'single'],
-      'semi': ['error', 'never'],
-      'indent': ['error', 2],
-      'comma-dangle': ['error', 'always-multiline'],
-      'no-multiple-empty-lines': ['error', { max: 1 }],
-      'object-curly-spacing': ['error', 'always'],
-      'array-bracket-spacing': ['error', 'never'],
-      'key-spacing': ['error'],
-      'space-before-function-paren': ['error', 'never'],
-      'space-in-parens': ['error', 'never'],
-      'space-infix-ops': 'error',
-      'space-unary-ops': 'error',
-      'spaced-comment': ['error', 'always'],
-      'brace-style': ['error', '1tbs'],
-      'comma-spacing': ['error', { before: false, after: true }],
-      'func-call-spacing': ['error', 'never'],
-      'keyword-spacing': 'error',
-      'no-trailing-spaces': 'error',
-      'eol-last': ['error', 'always'],
-
-      // General rules
-      'prefer-const': 'error',
-      'no-var': 'error',
-      'eqeqeq': ['error', 'always'],
-      'curly': ['error', 'all'],
-      'no-else-return': 'error',
-      'no-lonely-if': 'error',
-    },
-  },
-  {
-    files: ['**/*.vue'],
-    languageOptions: {
-      parser: vueParser,
-      parserOptions: {
-        parser: tsParser,
-        extraFileExtensions: ['.vue'],
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        ...nuxtGlobals,
-      },
-    },
-    plugins: {
-      vue,
-      'vuejs-accessibility': vuejsAccessibility,
-    },
-    rules: {
-      'vue/multi-word-component-names': 'off',
-      'vue/no-unused-vars': 'error',
-      'vue/require-v-for-key': 'error',
-      'vue/no-use-v-if-with-v-for': 'error',
-      'vue/html-self-closing': ['error', {
-        'html': {
-          'void': 'always',
-          'normal': 'never',
-          'component': 'always',
-        },
-        'svg': 'always',
-        'math': 'always',
-      }],
-      'vuejs-accessibility/click-events-have-key-events': 'error',
-      'vuejs-accessibility/mouse-events-have-key-events': 'error',
-      'vuejs-accessibility/alt-text': 'error',
-      'vuejs-accessibility/anchor-has-content': 'error',
-      'vuejs-accessibility/heading-has-content': 'error',
-      'vue/component-definition-name-casing': ['error', 'PascalCase'],
-      'vue/component-name-in-template-casing': ['error', 'PascalCase'],
-      'vue/prop-name-casing': ['error', 'camelCase'],
-      'vue/v-slot-style': ['error', 'shorthand'],
-      'vue/custom-event-name-casing': ['error', 'camelCase'],
-      // Vue style rules
-      'vue/html-indent': ['error', 2],
-      'vue/script-indent': ['error', 2],
-      'vue/html-quotes': ['error', 'double'],
-      'vue/max-attributes-per-line': ['error', {
-        'singleline': 3,
-        'multiline': 1,
-      }],
-      'vue/singleline-html-element-content-newline': 'off',
-      'vue/multiline-html-element-content-newline': 'off',
-
-      // Prevent <style> blocks in Vue components
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'VElement[name=style]',
-          message: 'Style blocks are not allowed in Vue components. Use separate SCSS files instead.',
-        },
-      ],
-    },
-  },
-]
+}, ...storybook.configs["flat/recommended"]];
