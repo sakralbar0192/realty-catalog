@@ -1,8 +1,16 @@
 {
-  "*.{js,ts,vue}": [
-    "echo 'Stylelint will be configured later'"
+  "*.{js,ts}": [
+    "eslint --fix"
+  ],
+  "*.vue": [
+    "eslint --fix",
+    "stylelint --fix --allow-empty-input",
+    "html-validate"
   ],
   "*.{scss,css}": [
-    "echo 'Stylelint will be configured later'"
+    "stylelint --fix --allow-empty-input"
+  ],
+  "*": [
+    "node scripts/quality-check.js"
   ]
 }

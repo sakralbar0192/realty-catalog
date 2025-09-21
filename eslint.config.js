@@ -1,4 +1,4 @@
-import storybook from "eslint-plugin-storybook";
+import storybook from 'eslint-plugin-storybook'
 
 import js from '@eslint/js'
 import vue from 'eslint-plugin-vue'
@@ -173,4 +173,4 @@ export default [{
       },
     ],
   },
-}, ...storybook.configs["flat/recommended"]];
+}, ...storybook.configs['flat/recommended']]

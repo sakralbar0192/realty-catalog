@@ -3,20 +3,21 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxt/image', '@pinia/nuxt', // '@nuxt/fonts',
   // '@nuxtjs/html-validator' // Removed in favor of separate html-validate tool
-  ['@nuxtjs/i18n', {
-    locales: [
-      { code: 'en', name: 'English', iso: 'en-US', file: 'en.json' },
-      { code: 'ru', name: 'Русский', iso: 'ru-RU', file: 'ru.json' },
-    ],
-    defaultLocale: 'en',
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root',
-      alwaysRedirect: false,
-      fallbackLocale: 'en',
-    },
-  }], '@nuxtjs/storybook'],
+    ['@nuxtjs/i18n', {
+      locales: [
+        { code: 'en', name: 'English', iso: 'en-US', file: 'en.json' },
+        { code: 'ru', name: 'Русский', iso: 'ru-RU', file: 'ru.json' },
+      ],
+      defaultLocale: 'en',
+      strategy: 'prefix_except_default',
+      detectBrowserLanguage: {
+        useCookie: true,
+        cookieKey: 'i18n_redirected',
+        redirectOn: 'root',
+        alwaysRedirect: false,
+        fallbackLocale: 'en',
+      },
+    }], '@nuxtjs/storybook'],
   css: ['/assets/styles/main.scss'],
   pinia: {
     storesDirs: ['./stores/**'],

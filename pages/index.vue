@@ -1,6 +1,6 @@
 <template>
   <Card class="container">
-    <template #title>Properties List</template>
+    <template #title>Realty Catalog</template>
     <template #actions>
       <LanguageSwitcher />
       <ThemeToggle />
@@ -30,7 +30,7 @@ import { storeToRefs } from 'pinia'
 import { useHead } from '#imports'
 
 useHead({
-  title: 'Properties List'
+  title: 'Realty Catalog'
 })
 
 const propertyStore = usePropertyStore()

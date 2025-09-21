@@ -2,12 +2,10 @@ import type { StorybookConfig } from '@storybook/vue3-vite'
 
 const config: StorybookConfig = {
   stories: ['../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: [
-    '@storybook/addon-links',
-  ],
-  "framework": {
-    "name": "@storybook-vue/nuxt",
-    "options": {}
+  addons: [],
+  'framework': {
+    'name': '@storybook-vue/nuxt',
+    'options': {},
   },
   docs: {
     // autodocs is enabled by default in Storybook 9
@@ -23,7 +21,7 @@ const config: StorybookConfig = {
       '~': new URL('../', import.meta.url).pathname,
       '@': new URL('../', import.meta.url).pathname,
     }
-    
+
     return config
   },
 }

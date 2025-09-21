@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import ThemeToggle from '../components/ThemeToggle.vue'
 
 const meta: Meta<typeof ThemeToggle> = {
@@ -8,10 +8,10 @@ const meta: Meta<typeof ThemeToggle> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A theme toggle button that switches between light and dark themes.'
-      }
-    }
-  }
+        component: 'A theme toggle button that switches between light and dark themes.',
+      },
+    },
+  },
 }
 
 export default meta
@@ -21,8 +21,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Default theme toggle with automatic theme detection.'
-      }
-    }
-  }
+        story: 'Default theme toggle with automatic theme detection.',
+      },
+    },
+  },
 }

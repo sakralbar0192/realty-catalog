@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import Button from '../components/Button.vue'
 
 const meta: Meta<typeof Button> = {
@@ -8,30 +8,30 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A versatile button component with multiple variants and sizes.'
-      }
-    }
+        component: 'A versatile button component with multiple variants and sizes.',
+      },
+    },
   },
   argTypes: {
     variant: {
       control: { type: 'select' },
       options: ['primary', 'secondary'],
-      description: 'The visual style of the button'
+      description: 'The visual style of the button',
     },
     size: {
       control: { type: 'select' },
       options: ['small', 'medium', 'large'],
-      description: 'The size of the button'
+      description: 'The size of the button',
     },
     disabled: {
       control: 'boolean',
-      description: 'Whether the button is disabled'
+      description: 'Whether the button is disabled',
     },
     ariaLabel: {
       control: 'text',
-      description: 'Accessibility label for screen readers'
-    }
-  }
+      description: 'Accessibility label for screen readers',
+    },
+  },
 }
 
 export default meta
@@ -39,78 +39,78 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    variant: 'primary'
+    variant: 'primary',
   },
   render: (args) => ({
     components: { Button },
     setup() {
       return { args }
     },
-    template: '<Button v-bind="args">Primary Button</Button>'
-  })
+    template: '<Button v-bind="args">Primary Button</Button>',
+  }),
 }
 
 export const Secondary: Story = {
   args: {
-    variant: 'secondary'
+    variant: 'secondary',
   },
   render: (args) => ({
     components: { Button },
     setup() {
       return { args }
     },
-    template: '<Button v-bind="args">Secondary Button</Button>'
-  })
+    template: '<Button v-bind="args">Secondary Button</Button>',
+  }),
 }
 
 export const Small: Story = {
   args: {
-    size: 'small'
+    size: 'small',
   },
   render: (args) => ({
     components: { Button },
     setup() {
       return { args }
     },
-    template: '<Button v-bind="args">Small Button</Button>'
-  })
+    template: '<Button v-bind="args">Small Button</Button>',
+  }),
 }
 
 export const Large: Story = {
   args: {
-    size: 'large'
+    size: 'large',
   },
   render: (args) => ({
     components: { Button },
     setup() {
       return { args }
     },
-    template: '<Button v-bind="args">Large Button</Button>'
-  })
+    template: '<Button v-bind="args">Large Button</Button>',
+  }),
 }
 
 export const Disabled: Story = {
   args: {
-    disabled: true
+    disabled: true,
   },
   render: (args) => ({
     components: { Button },
     setup() {
       return { args }
     },
-    template: '<Button v-bind="args">Disabled Button</Button>'
-  })
+    template: '<Button v-bind="args">Disabled Button</Button>',
+  }),
 }
 
 export const WithAriaLabel: Story = {
   args: {
-    ariaLabel: 'Custom accessible button'
+    ariaLabel: 'Custom accessible button',
   },
   render: (args) => ({
     components: { Button },
     setup() {
       return { args }
     },
-    template: '<Button v-bind="args">Accessible Button</Button>'
-  })
+    template: '<Button v-bind="args">Accessible Button</Button>',
+  }),
 }
