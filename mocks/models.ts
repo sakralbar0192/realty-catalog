@@ -24,6 +24,6 @@ export const db = factory({
     area: Number,
     images: Array,
     description: String,
-    createdAt: String
-  }
+    createdAt: String,
+  },
 })

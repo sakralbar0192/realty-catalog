@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
 
     const worker = setupWorker(...handlers)
     worker.start({
-      onUnhandledRequest: 'bypass'
+      onUnhandledRequest: 'bypass',
     })
   }
 })

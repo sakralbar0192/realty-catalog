@@ -3,6 +3,8 @@
 </template>
 
 <script setup lang="ts">
+import '~/assets/styles/components/Icon.scss'
+
 interface Props {
   name: string
   size?: number
@@ -26,14 +28,3 @@ const iconSvg = computed(() => {
   return icons[props.name] || ''
 })
 </script>
-
-<style scoped>
-.icon {
-  display: inline-block;
-  line-height: 1;
-}
-
-.icon--16 { width: 16px; height: 16px; }
-.icon--20 { width: 20px; height: 20px; }
-.icon--24 { width: 24px; height: 24px; }
-</style>

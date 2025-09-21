@@ -165,6 +165,15 @@ export default [
       }],
       'vue/singleline-html-element-content-newline': 'off',
       'vue/multiline-html-element-content-newline': 'off',
+
+      // Prevent <style> blocks in Vue components
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'VElement[name=style]',
+          message: 'Style blocks are not allowed in Vue components. Use separate SCSS files instead.',
+        },
+      ],
     },
   },
 ]

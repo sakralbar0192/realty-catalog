@@ -19,10 +19,10 @@ export const seedDatabase = () => {
       area: Math.floor(Math.random() * 200) + 50,
       images: [
         `https://picsum.photos/400/300?random=${i}`,
-        `https://picsum.photos/400/300?random=${i + 100}`
+        `https://picsum.photos/400/300?random=${i + 100}`,
       ],
-      description: `This is a beautiful property located in a great area. Perfect for families or young professionals.`,
-      createdAt: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString()
+      description: 'This is a beautiful property located in a great area. Perfect for families or young professionals.',
+      createdAt: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString(),
     })
   }
 }

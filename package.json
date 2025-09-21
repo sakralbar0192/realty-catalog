@@ -13,7 +13,10 @@
     "analyze:serve": "bun run analyze && npx serve dist",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "lint:check": "eslint . --max-warnings 0"
+    "lint:check": "eslint . --max-warnings 0",
+    "stylelint": "stylelint '**/*.{vue,scss,css}'",
+    "stylelint:fix": "stylelint '**/*.{vue,scss,css}' --fix",
+    "stylelint:check": "stylelint '**/*.{vue,scss,css}' --max-warnings 0"
   },
   "dependencies": {
     "@nuxt/fonts": "0.11.4",
@@ -41,6 +44,9 @@
     "msw": "^2.11.2",
     "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.93.0",
+    "stylelint": "^16.24.0",
+    "stylelint-config-recommended-vue": "^1.6.1",
+    "stylelint-config-standard-scss": "^16.0.0",
     "vite-bundle-analyzer": "^1.2.3",
     "web-vitals": "^5.1.0"
   }

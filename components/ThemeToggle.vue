@@ -1,6 +1,6 @@
 <template>
-  <button 
-    :class="$style.toggle"
+  <button
+    :class="styles.toggle"
     @click="toggleTheme"
     :aria-label="isDarkTheme ? $t('theme.Switch to light theme') : $t('theme.Switch to dark theme')"
   >
@@ -8,13 +8,14 @@
       :name="isDarkTheme ? 'sun' : 'moon'"
       :size="20"
     />
-    <span :class="$style.label">
+    <span :class="styles.label">
       {{ isDarkTheme ? $t('theme.light') : $t('theme.dark') }}
     </span>
   </button>
 </template>
 
 <script setup lang="ts">
+import styles from '~/assets/styles/components/ThemeToggle.module.scss'
 import { useTheme } from '~/composables/useTheme'
 
 const { theme, isDarkTheme, toggleTheme } = useTheme()
@@ -26,35 +27,3 @@ watch(() => theme.value, (newTheme) => {
   }
 }, { immediate: true })
 </script>
-
-<style module lang="scss">
-@use '/assets/styles/_mixins.scss' as *;
-
-.toggle {
-  @include flex-center;
-  gap: 8px;
-  padding: 8px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  background-color: var(--color-surface);
-  color: var(--color-text-primary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  
-  &:hover {
-    background-color: var(--color-background);
-    @include theme-shadow(md);
-  }
-  
-  &:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-  }
-}
-
-
-.label {
-  font-size: 14px;
-  font-weight: 500;
-}
-</style>

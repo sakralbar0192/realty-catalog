@@ -1,0 +1,54 @@
+@use '/assets/styles/mixins';
+@use '/assets/styles/variables' as *;
+
+.button {
+  @include mixins.flex-center;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 12px 24px;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &--primary {
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: $primary-hover-color;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+  }
+
+  &--secondary {
+    background-color: $secondary-color;
+
+    &:hover {
+      background-color: $secondary-hover-color;
+    }
+  }
+
+  &--small {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  &--medium {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+
+  &--large {
+    padding: 16px 32px;
+    font-size: 18px;
+  }
+}

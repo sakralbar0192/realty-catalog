@@ -41,7 +41,7 @@ export const useMainStore = defineStore('main', () => {
     setError,
     clearError,
     setTheme,
-    setLanguage
+    setLanguage,
   }
 }, {
   persist: {
@@ -55,7 +55,7 @@ export const useMainStore = defineStore('main', () => {
           return { ...parsed, theme: null }
         }
         return parsed
-      }
-    }
-  }
+      },
+    },
+  },
 })

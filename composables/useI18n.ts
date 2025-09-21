@@ -4,15 +4,15 @@ export const useAppI18n = () => {
   const { t, locale, locales, setLocale } = useNuxtI18n()
 
   // Доступные локали
-  const availableLocales = computed(() => 
-    locales.value.filter(l => typeof l === 'object')
+  const availableLocales = computed(() =>
+    locales.value.filter(l => typeof l === 'object'),
   )
 
   // Текущая локаль
   const currentLocale = computed(() => locale.value)
 
   // Смена языка
-  const changeLocale = async (newLocale: 'en' | 'ru') => {
+  const changeLocale = async(newLocale: 'en' | 'ru') => {
     await setLocale(newLocale)
     // Сохраняем в main store
     const mainStore = useMainStore()
@@ -38,11 +38,11 @@ export const useAppI18n = () => {
     // Reactive свойства
     currentLocale,
     availableLocales,
-    
+
     // Методы
     changeLocale,
     translate: t,
     translateWithParams: translate,
-    hasTranslation
+    hasTranslation,
   }
 }

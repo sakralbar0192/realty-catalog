@@ -1,7 +1,7 @@
 import { db } from '~/mocks/models'
 import { seedDatabase } from '~/mocks/seed'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async(event) => {
   // Seed the database if not already seeded
   seedDatabase()
 
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
       page,
       limit,
       total: allProperties.length,
-      totalPages: Math.ceil(allProperties.length / limit)
-    }
+      totalPages: Math.ceil(allProperties.length / limit),
+    },
   }
 })

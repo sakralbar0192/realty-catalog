@@ -45,6 +45,6 @@ export const useTheme = () => {
 
     setTheme,
     toggleTheme,
-    initializeTheme
+    initializeTheme,
   }
 }

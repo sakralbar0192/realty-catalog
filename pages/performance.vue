@@ -1,26 +1,26 @@
 <template>
-  <div class="performance-page">
+  <div :class="styles.performancePage">
     <h1>Performance Dashboard</h1>
-    
-    <div class="metrics-grid">
+
+    <div :class="styles.metricsGrid">
       <Card title="Web Vitals">
-        <div class="metric" v-for="metric in webVitals" :key="metric.name">
+        <div :class="styles.metric" v-for="metric in webVitals" :key="metric.name">
           <h3>{{ metric.name }}</h3>
           <p :class="getMetricClass(metric)">{{ metric.value }}{{ metric.unit }}</p>
           <small>{{ metric.description }}</small>
         </div>
       </Card>
-      
+
       <Card title="Bundle Analysis">
-        <div class="bundle-info">
+        <div :class="styles.bundleInfo">
           <p>Bundle size: {{ bundleSize }}</p>
           <p>Gzipped: {{ gzippedSize }}</p>
           <Button @click="runAnalysis">Analyze Bundle</Button>
         </div>
       </Card>
-      
+
       <Card title="Memory Usage">
-        <div class="memory-info">
+        <div :class="styles.memoryInfo">
           <p>Used: {{ memory.used }}</p>
           <p>Total: {{ memory.total }}</p>
           <p>Limit: {{ memory.limit }}</p>
@@ -31,6 +31,7 @@
 </template>
 
 <script setup lang="ts">
+import styles from '~/assets/styles/pages/performance.module.scss'
 import { usePerformance } from '~/composables/usePerformance'
 
 const { measureWebVitals, calculatePerformanceScore, monitorResources } = usePerformance()
@@ -114,49 +115,3 @@ onMounted(() => {
 })
 </script>
 
-<style module lang="scss">
-.performance-page {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.metric {
-  margin-bottom: 15px;
-  
-  h3 {
-    margin: 0 0 5px 0;
-    font-size: 14px;
-    color: var(--color-text-secondary);
-  }
-  
-  p {
-    margin: 0 0 5px 0;
-    font-size: 24px;
-    font-weight: bold;
-    
-    &.good { color: #28a745; }
-    &.needs-improvement { color: #ffc107; }
-    &.poor { color: #dc3545; }
-  }
-  
-  small {
-    color: var(--color-text-muted);
-    font-size: 12px;
-  }
-}
-
-.bundle-info, .memory-info {
-  p {
-    margin: 5px 0;
-    font-family: monospace;
-  }
-}
-</style>
