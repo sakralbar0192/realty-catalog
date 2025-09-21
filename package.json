@@ -8,7 +8,9 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "prepare": "husky"
+    "prepare": "husky",
+    "analyze": "ANALYZE=true bun run build",
+    "analyze:serve": "bun run analyze && npx serve dist"
   },
   "dependencies": {
     "@nuxt/fonts": "0.11.4",
@@ -29,6 +31,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
     "msw": "^2.11.2",
-    "sass": "^1.93.0"
+    "rollup-plugin-visualizer": "^6.0.3",
+    "sass": "^1.93.0",
+    "vite-bundle-analyzer": "^1.2.3"
   }
 }
