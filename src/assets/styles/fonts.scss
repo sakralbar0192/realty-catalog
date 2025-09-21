@@ -1,0 +1,35 @@
+// Paratype Font Family
+// Source: https://www.paratype.com/
+
+// Paratype Regular
+@font-face {
+  font-family: 'Paratype';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url('/fonts/paratype-regular.woff2') format('woff2'),
+    url('/fonts/paratype-regular.woff') format('woff');
+}
+
+// Paratype Medium
+@font-face {
+  font-family: 'Paratype';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src:
+    url('/fonts/paratype-medium.woff2') format('woff2'),
+    url('/fonts/paratype-medium.woff') format('woff');
+}
+
+// Paratype Bold
+@font-face {
+  font-family: 'Paratype';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    url('/fonts/paratype-bold.woff2') format('woff2'),
+    url('/fonts/paratype-bold.woff') format('woff');
+}

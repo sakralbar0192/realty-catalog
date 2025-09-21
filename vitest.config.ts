@@ -5,6 +5,13 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@use "~/assets/styles/variables" as *;',
+      },
+    },
+  },
   test: {
     globals: true,
     environment: 'happy-dom', // or 'jsdom'

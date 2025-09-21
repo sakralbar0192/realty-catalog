@@ -66,6 +66,12 @@ export default {
         ignore: 'paint-properties',
       },
     ],
+
+    // Allow comments in SCSS
+    'scss/double-slash-comment-whitespace-inside': null,
+    'scss/double-slash-comment-empty-line-before': null,
+    'comment-empty-line-before': null,
+    'comment-whitespace-inside': null,
   },
   ignores: [
     'node_modules/**/*',
