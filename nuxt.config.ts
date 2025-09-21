@@ -1,26 +1,11 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxt/image', '@pinia/nuxt', // '@nuxt/fonts',
-  // '@nuxtjs/html-validator' // Removed in favor of separate html-validate tool
-    ['@nuxtjs/i18n', {
-      locales: [
-        { code: 'en', name: 'English', iso: 'en-US', file: 'en.json' },
-        { code: 'ru', name: 'Русский', iso: 'ru-RU', file: 'ru.json' },
-      ],
-      defaultLocale: 'en',
-      strategy: 'prefix_except_default',
-      detectBrowserLanguage: {
-        useCookie: true,
-        cookieKey: 'i18n_redirected',
-        redirectOn: 'root',
-        alwaysRedirect: false,
-        fallbackLocale: 'en',
-      },
-    }], '@nuxtjs/storybook'],
-  css: ['/assets/styles/main.scss'],
+  srcDir: 'src',
+  modules: ['@pinia/nuxt'],
+  css: ['~/assets/styles/main.scss'],
   pinia: {
-    storesDirs: ['./stores/**'],
+    storesDirs: ['./src/stores/**'],
   },
   vite: {
     build: {
@@ -34,6 +19,13 @@ export default defineNuxtConfig({
           }),
         ] : [],
       },
+    },
+  },
+
+  // Handle MSW service worker route
+  nitro: {
+    routeRules: {
+      '/mockServiceWorker.js': { redirect: '/public/mockServiceWorker.js' },
     },
   },
 })

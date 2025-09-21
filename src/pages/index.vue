@@ -1,6 +1,6 @@
 <template>
   <Card class="container">
-    <template #title>Realty Catalog</template>
+    <template #title>Properties List</template>
     <template #actions>
       <LanguageSwitcher />
       <ThemeToggle />
@@ -27,10 +27,9 @@ import { onMounted } from 'vue'
 import { usePropertyStore } from '~/stores/property'
 import { useTheme } from '~/composables/useTheme'
 import { storeToRefs } from 'pinia'
-import { useHead } from '#imports'
 
 useHead({
-  title: 'Realty Catalog'
+  title: 'Properties List'
 })
 
 const propertyStore = usePropertyStore()

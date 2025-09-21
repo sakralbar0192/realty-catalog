@@ -1,7 +1,7 @@
 import type { StorybookConfig } from '@storybook/vue3-vite'
 
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../src/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [],
   'framework': {
     'name': '@storybook-vue/nuxt',
@@ -18,8 +18,8 @@ const config: StorybookConfig = {
     config.resolve = config.resolve || {}
     config.resolve.alias = {
       ...config.resolve.alias,
-      '~': new URL('../', import.meta.url).pathname,
-      '@': new URL('../', import.meta.url).pathname,
+      '~': new URL('../src', import.meta.url).pathname,
+      '@': new URL('../src', import.meta.url).pathname,
     }
 
     return config

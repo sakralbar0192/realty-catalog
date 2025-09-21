@@ -1,7 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`Button snapshots > matches default snapshot 1`] = `"<button type="button" class="_button_498b9f _button--primary_498b9f _button--medium_498b9f">Default Button</button>"`;
-
-exports[`Button snapshots > matches disabled state snapshot 1`] = `"<button type="button" class="_button_498b9f _button--primary_498b9f _button--medium_498b9f" disabled="">Disabled Button</button>"`;
-
-exports[`Button snapshots > matches secondary variant snapshot 1`] = `"<button type="button" class="_button_498b9f _button--secondary_498b9f _button--medium_498b9f">Secondary Button</button>"`;

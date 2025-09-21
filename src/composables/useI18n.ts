@@ -1,21 +1,24 @@
-import { useI18n as useNuxtI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n'
 
 export const useAppI18n = () => {
-  const { t, locale, locales, setLocale } = useNuxtI18n()
+  const { t, locale } = useI18n()
+  const mainStore = useMainStore()
+
+  // Синхронизируем язык из store в i18n при инициализации
+  if (process.client) {
+    locale.value = mainStore.language
+  }
 
   // Доступные локали
-  const availableLocales = computed(() =>
-    locales.value.filter(l => typeof l === 'object'),
-  )
-
-  // Текущая локаль
-  const currentLocale = computed(() => locale.value)
+  const availableLocales = computed(() => [
+    { code: 'en', name: 'English' },
+    { code: 'ru', name: 'Русский' },
+  ])
 
   // Смена языка
   const changeLocale = async(newLocale: 'en' | 'ru') => {
-    await setLocale(newLocale)
-    // Сохраняем в main store
-    const mainStore = useMainStore()
+    locale.value = newLocale
+    // Сохраняем в main store (он имеет персистентность)
     mainStore.setLanguage(newLocale)
   }
 
@@ -36,7 +39,7 @@ export const useAppI18n = () => {
 
   return {
     // Reactive свойства
-    currentLocale,
+    currentLocale: readonly(locale),
     availableLocales,
 
     // Методы
