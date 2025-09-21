@@ -12,6 +12,7 @@
       </Card>
 
       <Card title="Bundle Analysis">
+        <h2>Bundle Analysis</h2>
         <div :class="styles.bundleInfo">
           <p>Bundle size: {{ bundleSize }}</p>
           <p>Gzipped: {{ gzippedSize }}</p>

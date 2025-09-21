@@ -1,5 +1,5 @@
 <template>
-  <button :class="buttonClasses" @click="$emit('click')">
+  <button :type="props.type" :class="buttonClasses" @click="$emit('click')">
     <slot></slot>
   </button>
 </template>
@@ -10,12 +10,14 @@ import styles from '~/assets/styles/components/Button.module.scss'
 
 interface Props {
   size?: 'small' | 'medium' | 'large'
-  type?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary'
+  type?: 'button' | 'submit' | 'reset'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
-  type: 'primary'
+  variant: 'primary',
+  type: 'button'
 })
 
 defineEmits<{
@@ -24,7 +26,7 @@ defineEmits<{
 
 const buttonClasses = computed(() => [
   styles.button,
-  styles[`button--${props.type}`],
+  styles[`button--${props.variant}`],
   styles[`button--${props.size}`]
 ])
 </script>

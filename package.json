@@ -16,7 +16,9 @@
     "lint:check": "eslint . --max-warnings 0",
     "stylelint": "stylelint '**/*.{vue,scss,css}'",
     "stylelint:fix": "stylelint '**/*.{vue,scss,css}' --fix",
-    "stylelint:check": "stylelint '**/*.{vue,scss,css}' --max-warnings 0"
+    "stylelint:check": "stylelint '**/*.{vue,scss,css}' --max-warnings 0",
+    "html-validate": "html-validate '**/*.{html,vue}'",
+    "html-validate:check": "html-validate 'app.vue' 'pages/**/*.vue' 'components/**/*.vue'"
   },
   "dependencies": {
     "@nuxt/fonts": "0.11.4",

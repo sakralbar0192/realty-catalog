@@ -18,7 +18,8 @@ export default defineNuxtConfig({
         fallbackLocale: 'en',
       },
     }],
-    // '@nuxt/fonts'
+    // '@nuxt/fonts',
+    // '@nuxtjs/html-validator' // Removed in favor of separate html-validate tool
   ],
   css: ['/assets/styles/main.scss'],
   pinia: {

@@ -10,7 +10,7 @@
       <li v-for="property in properties" :key="property.id">
         {{ property.title }} - ${{ property.price }} - {{ property.location }}
 
-        <button @click="toggleFavorite(property.id)">
+        <button type="button" @click="toggleFavorite(property.id)">
           {{ propertyStore.isFavorite(property.id) ? '❤️' : '🤍' }}
         </button>
       </li>

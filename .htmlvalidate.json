@@ -1,0 +1,68 @@
+{
+  "extends": [
+    "html-validate:recommended",
+    "html-validate:standard"
+  ],
+  "rules": {
+    "heading-level": "off",
+    "no-trailing-whitespace": "error",
+    "require-sri": "off",
+    "script-type": "off",
+
+    "wcag/h30": "error",
+    "wcag/h32": "error",
+    "wcag/h36": "error",
+    "wcag/h37": "error",
+    "wcag/h63": "error",
+
+    "prefer-native-element": "error",
+    "no-implicit-button-type": "off",
+    "input-missing-label": "error",
+    "element-case": "off",
+    "element-name": "off",
+    "no-self-closing": "off",
+    "text-content": "off",
+    "empty-heading": "off"
+  },
+  "elements": [
+    "html5",
+    {
+      "NuxtLink": {
+        "attributes": {
+          "to": { "required": true }
+        }
+      },
+      "NuxtPage": {},
+      "Card": {},
+      "Button": {
+        "attributes": {
+          "type": { "enum": ["button", "submit", "reset"] },
+          "variant": { "enum": ["primary", "secondary"] },
+          "size": { "enum": ["small", "medium", "large"] }
+        }
+      },
+      "Icon": {
+        "attributes": {
+          "name": { "required": true },
+          "size": { "required": false }
+        }
+      },
+      "LanguageSwitcher": {},
+      "ThemeToggle": {},
+      "ErrorTemplate": {},
+      "Suspense": {},
+      "ErrorComponent": {},
+      "IslandRenderer": {},
+      "AppComponent": {},
+      "NuxtLayout": {},
+      "NuxtRouteAnnouncer": {},
+      "NuxtImg": {
+        "attributes": {
+          "src": { "required": true },
+          "alt": { "required": true }
+        }
+      },
+      "NuxtPicture": {}
+    }
+  ]
+}
