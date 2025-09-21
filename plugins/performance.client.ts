@@ -3,7 +3,7 @@ export default defineNuxtPlugin(() => {
   // Performance monitoring только в production
   if (process.env.NODE_ENV === 'production') {
     const { measureWebVitals, calculatePerformanceScore, monitorResources } = usePerformance()
-    
+
     // Web Vitals через web-vitals пакет
     measureWebVitals()
 
@@ -14,7 +14,8 @@ export default defineNuxtPlugin(() => {
         monitorResources()
       })
     })
-    
+
+    // eslint-disable-next-line no-console
     console.log('📈 Performance monitoring enabled (production only)')
   }
 })

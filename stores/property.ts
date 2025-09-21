@@ -10,40 +10,40 @@ export const usePropertyStore = defineStore('property', () => {
     page: 1,
     limit: 20,
     total: 0,
-    totalPages: 0
+    totalPages: 0,
   })
   const favorites = ref<string[]>([]) // ID избранных свойств
   const filters = ref({
     minPrice: undefined as number | undefined,
     maxPrice: undefined as number | undefined,
     location: undefined as string | undefined,
-    bedrooms: undefined as number | undefined
+    bedrooms: undefined as number | undefined,
   })
 
   const getPropertyById = computed(() => (id: string) =>
-    properties.value.find(p => p.id === id)
+    properties.value.find(p => p.id === id),
   )
 
   const hasMorePages = computed(() =>
-    pagination.value.page < pagination.value.totalPages
+    pagination.value.page < pagination.value.totalPages,
   )
 
   const favoriteProperties = computed(() =>
-    properties.value.filter(p => favorites.value.includes(p.id))
+    properties.value.filter(p => favorites.value.includes(p.id)),
   )
 
   const isFavorite = computed(() => (id: string) =>
-    favorites?.value?.includes(id)
+    favorites?.value?.includes(id),
   )
 
-  const fetchProperties = async (page = 1, limit = 20) => {
+  const fetchProperties = async(page = 1, limit = 20) => {
     loading.value = true
     try {
       const response = await $fetch<{
         data: Property[]
         meta: typeof pagination.value
       }>('/api/properties', {
-        query: { page, limit }
+        query: { page, limit },
       })
 
       if (page === 1) {
@@ -54,20 +54,23 @@ export const usePropertyStore = defineStore('property', () => {
 
       pagination.value = response.meta
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Failed to fetch properties:', error)
     } finally {
       loading.value = false
     }
+    // eslint-disable-next-line no-console
     console.log(properties.value)
   }
 
-  const fetchPropertyById = async (id: string) => {
+  const fetchPropertyById = async(id: string) => {
     loading.value = true
     try {
       const response = await $fetch<{ data: Property }>(`/api/properties/${id}`)
       currentProperty.value = response.data
       return response.data
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Failed to fetch property:', error)
       throw error
     } finally {
@@ -99,20 +102,27 @@ export const usePropertyStore = defineStore('property', () => {
       minPrice: undefined,
       maxPrice: undefined,
       location: undefined,
-      bedrooms: undefined
+      bedrooms: undefined,
     }
   }
 
   const getFilteredProperties = () => {
     return properties.value.filter(property => {
-      if ((property?.price || 0) < (filters?.value?.minPrice || 0)) return false
-      if ((property?.price || 0) > (filters?.value?.maxPrice || 0)) return false
-      if (filters.value.location && !property.location?.includes(filters.value.location)) return false
-      if (filters.value.bedrooms && property.bedrooms !== filters.value.bedrooms) return false
+      if ((property?.price || 0) < (filters?.value?.minPrice || 0)) {
+        return false
+      }
+      if ((property?.price || 0) > (filters?.value?.maxPrice || 0)) {
+        return false
+      }
+      if (filters.value.location && !property.location?.includes(filters.value.location)) {
+        return false
+      }
+      if (filters.value.bedrooms && property.bedrooms !== filters.value.bedrooms) {
+        return false
+      }
       return true
     })
   }
-
 
   return {
     properties,
@@ -131,11 +141,11 @@ export const usePropertyStore = defineStore('property', () => {
     toggleFavorite,
     setFilters,
     clearFilters,
-    getFilteredProperties
+    getFilteredProperties,
   }
 }, {
   persist: {
-    pick: ['favorites', 'filters']
-  }
+    pick: ['favorites', 'filters'],
+  },
 })
 

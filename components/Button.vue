@@ -1,6 +1,6 @@
 <template>
   <button :class="buttonClasses" @click="$emit('click')">
-    <slot />
+    <slot></slot>
   </button>
 </template>
 
@@ -74,7 +74,8 @@ const buttonClasses = computed(() => [
   }
 
   &--medium {
-    // medium is the default, no additional styles needed
+    padding: 12px 24px;
+    font-size: 16px;
   }
 
   &--large {

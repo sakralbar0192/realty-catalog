@@ -31,7 +31,7 @@ import { storeToRefs } from 'pinia'
 const propertyStore = usePropertyStore()
 const { initializeTheme } = useTheme()
 
-const { properties, loading, pagination } = storeToRefs(propertyStore)
+const { properties } = storeToRefs(propertyStore)
 
 const toggleFavorite = (propertyId: string) => {
   propertyStore.toggleFavorite(propertyId)

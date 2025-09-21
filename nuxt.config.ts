@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     ['@nuxtjs/i18n', {
       locales: [
         { code: 'en', name: 'English', iso: 'en-US', file: 'en.json' },
-        { code: 'ru', name: 'Русский', iso: 'ru-RU', file: 'ru.json' }
+        { code: 'ru', name: 'Русский', iso: 'ru-RU', file: 'ru.json' },
       ],
       defaultLocale: 'en',
       detectBrowserLanguage: {
@@ -15,14 +15,14 @@ export default defineNuxtConfig({
         cookieKey: 'i18n_redirected',
         redirectOn: 'root',
         alwaysRedirect: false,
-        fallbackLocale: 'en'
-      }
+        fallbackLocale: 'en',
+      },
     }],
     // '@nuxt/fonts'
   ],
   css: ['/assets/styles/main.scss'],
   pinia: {
-    storesDirs: ['./stores/**']
+    storesDirs: ['./stores/**'],
   },
   vite: {
     build: {
@@ -32,10 +32,10 @@ export default defineNuxtConfig({
             filename: 'dist/stats.html',
             open: true,
             gzipSize: true,
-            brotliSize: true
-          })
-        ] : []
-      }
-    }
+            brotliSize: true,
+          }),
+        ] : [],
+      },
+    },
   },
 })

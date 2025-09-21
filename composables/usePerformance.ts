@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import { onCLS, onINP, onFCP, onLCP, onTTFB } from 'web-vitals'
 
 export const usePerformance = () => {
   // Web Vitals с callback
-  const measureWebVitals = (callback?: (metric: any) => void) => {
+  // eslint-disable-next-line no-unused-vars
+  const measureWebVitals = (callback?: (metric: unknown) => void) => {
     if (typeof window !== 'undefined') {
       onCLS(callback || console.log)
       onINP(callback || console.log)
@@ -11,21 +13,21 @@ export const usePerformance = () => {
       onTTFB(callback || console.log)
     }
   }
-  
+
   // Lighthouse Performance Score simulation
   const calculatePerformanceScore = () => {
     if (typeof window !== 'undefined' && 'performance' in window) {
       const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming
-      
+
       if (navigation) {
         const loadTime = navigation.loadEventEnd - navigation.fetchStart
         const domContentLoaded = navigation.domContentLoadedEventEnd - navigation.fetchStart
-        
+
         console.log('⚡ Performance metrics:', {
           'Time to First Byte': Math.round(navigation.responseStart - navigation.requestStart),
           'DOM Content Loaded': Math.round(domContentLoaded),
           'Page Load Time': Math.round(loadTime),
-          'DNS Lookup': Math.round(navigation.domainLookupEnd - navigation.domainLookupStart)
+          'DNS Lookup': Math.round(navigation.domainLookupEnd - navigation.domainLookupStart),
         })
       }
     }
@@ -40,12 +42,12 @@ export const usePerformance = () => {
             console.warn('🐌 Slow resource:', {
               name: entry.name,
               duration: Math.round(entry.duration),
-              size: (entry as any).transferSize || 'unknown'
+              size: (entry as PerformanceEntry & { transferSize: number  }).transferSize || 'unknown',
             })
           }
         }
       })
-      
+
       observer.observe({ entryTypes: ['resource'] })
     }
   }
@@ -62,6 +64,6 @@ export const usePerformance = () => {
     measureWebVitals,
     calculatePerformanceScore,
     monitorResources,
-    monitorReactivity
+    monitorReactivity,
   }
 }
