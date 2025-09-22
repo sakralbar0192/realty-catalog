@@ -15,7 +15,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom', // or 'jsdom'
-    setupFiles: ['./src/tests/setup.ts'],
+    setupFiles: ['./tests/setup.ts'],
     include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     exclude: ['**/node_modules/**', '**/dist/**', '.nuxt/**', 'tests/e2e/**'],
 
@@ -47,8 +47,8 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      '~': resolve(__dirname, 'src'),
-      '@': resolve(__dirname, 'src'),
+      '~': resolve(__dirname, '.'),
+      '@': resolve(__dirname, '.'),
     },
   },
 })

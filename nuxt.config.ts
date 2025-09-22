@@ -1,21 +1,20 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  srcDir: 'src',
   modules: ['@pinia/nuxt'],
   css: ['~/assets/styles/main.scss'],
   app: {
     head: {
       link: [
         // Font preloads
-        { rel: 'preload', href: 'public/fonts/paratype-regular.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
-        { rel: 'preload', href: 'public/fonts/paratype-medium.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
-        { rel: 'preload', href: 'public/fonts/paratype-bold.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/paratype-regular.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/paratype-medium.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/paratype-bold.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
       ],
     },
   },
   pinia: {
-    storesDirs: ['./src/stores/**'],
+    storesDirs: ['./stores/**'],
   },
   vite: {
     build: {

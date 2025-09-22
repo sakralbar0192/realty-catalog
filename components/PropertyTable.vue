@@ -99,7 +99,7 @@ defineEmits<{
 
 // Computed property for image source with fallback
 const getImageSrc = (property: Property): string => {
-  return property.imageUrl || '/assets/img/flat.svg'
+  return property.imageUrl || '/img/flat.svg'
 }
 
 const formatArea = (area: number): string => {
