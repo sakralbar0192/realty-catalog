@@ -23,7 +23,6 @@
   "properties": {
     "title": "Properties",
     "noProperties": "No properties found",
-    "loadMore": "Load More",
     "price": "Price",
     "location": "Location",
     "bedrooms": "Bedrooms",
@@ -46,5 +45,17 @@
     "maxPrice": "Max Price",
     "applyFilters": "Apply Filters",
     "clearFilters": "Clear Filters"
+  },
+  "sidebar": {
+    "filters": "Filters",
+    "filtersDescription": "Use filters to find properties that match your criteria",
+    "priceRange": "Price Range",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "propertyType": "Property Type",
+    "apartment": "Apartment",
+    "house": "House",
+    "office": "Office",
+    "applyFilters": "Apply Filters"
   }
 }

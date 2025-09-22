@@ -23,7 +23,6 @@
   "properties": {
     "title": "Недвижимость",
     "noProperties": "Объекты не найдены",
-    "loadMore": "Загрузить еще",
     "price": "Цена",
     "location": "Местоположение",
     "bedrooms": "Спальни",
@@ -46,5 +45,17 @@
     "maxPrice": "Макс. цена",
     "applyFilters": "Применить фильтры",
     "clearFilters": "Очистить фильтры"
+  },
+  "sidebar": {
+    "filters": "Фильтры",
+    "filtersDescription": "Используйте фильтры, чтобы найти объекты, соответствующие вашим критериям",
+    "priceRange": "Диапазон цен",
+    "minPrice": "Мин. цена",
+    "maxPrice": "Макс. цена",
+    "propertyType": "Тип недвижимости",
+    "apartment": "Квартира",
+    "house": "Дом",
+    "office": "Офис",
+    "applyFilters": "Применить фильтры"
   }
 }

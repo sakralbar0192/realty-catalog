@@ -1,0 +1,47 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  gap: 2rem;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pageHeader {
+  margin-bottom: 1rem;
+
+  h1 {
+    margin: 0;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+  }
+}
+
+.pageContent {
+  flex: 1;
+}
+
+.sidebar {
+  width: 300px;
+  flex-shrink: 0;
+
+  @media (max-width: 1024px) {
+    width: 250px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
