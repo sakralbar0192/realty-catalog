@@ -2,28 +2,26 @@ import { factory, primaryKey } from '@mswjs/data'
 
 export interface Property {
   id: string
-  title: string
-  price: number
-  location: string
-  bedrooms: number
-  bathrooms: number
-  area: number
-  images: string[]
-  description: string
-  createdAt: string
+  name: string // "X-комнатная кв. Y"
+  price: number // Цена в рублях (целые числа)
+  area: number // Площадь в м² (с точностью до десятых)
+  floor: number // Номер этажа
+  totalFloors: number // Этажность здания
+  imageUrl: string // URL изображения планировки
+  rooms: number // Количество комнат
+  createdAt?: string // Опционально для будущих фич
 }
 
 export const db = factory({
   property: {
     id: primaryKey(String),
-    title: String,
+    name: String,
     price: Number,
-    location: String,
-    bedrooms: Number,
-    bathrooms: Number,
     area: Number,
-    images: Array,
-    description: String,
+    floor: Number,
+    totalFloors: Number,
+    imageUrl: String,
+    rooms: Number,
     createdAt: String,
   },
 })

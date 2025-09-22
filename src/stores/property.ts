@@ -114,12 +114,6 @@ export const usePropertyStore = defineStore('property', () => {
       if ((property?.price || 0) > (filters?.value?.maxPrice || 0)) {
         return false
       }
-      if (filters.value.location && !property.location?.includes(filters.value.location)) {
-        return false
-      }
-      if (filters.value.bedrooms && property.bedrooms !== filters.value.bedrooms) {
-        return false
-      }
       return true
     })
   }

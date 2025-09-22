@@ -165,7 +165,7 @@ export default [{
     'vue/multiline-html-element-content-newline': 'off',
 
     // Prevent <style> blocks in Vue components
-    'no-restricted-syntax': [
+    'vue/no-restricted-syntax': [
       'error',
       {
         selector: 'VElement[name=style]',

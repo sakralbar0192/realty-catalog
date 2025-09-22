@@ -2,6 +2,12 @@ import { beforeAll, afterAll, afterEach } from 'vitest'
 import { setupServer } from 'msw/node'
 import { handlers } from '~/mocks/handlers'
 
+// Global type declarations for test environment
+declare global {
+  // eslint-disable-next-line no-unused-vars
+  var $t: (key: string) => string
+}
+
 // Import CSS for tests
 import '~/assets/styles/main.scss'
 
@@ -99,4 +105,21 @@ global.IntersectionObserver = class IntersectionObserver implements globalThis.I
   takeRecords(): IntersectionObserverEntry[] {
     return []
   }
+}
+
+// Global mocks for Vue components
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+;(globalThis as any).$t = (key: string) => {
+  const translations: Record<string, string> = {
+    'properties.table.headers.image': 'Photo',
+    'properties.table.headers.name': 'Name',
+    'properties.table.headers.area': 'Area',
+    'properties.table.headers.floor': 'Floor',
+    'properties.table.headers.price': 'Price',
+    'properties.loadMore': 'Load More',
+    'properties.loading': 'Loading...',
+    'properties.empty': 'No properties found',
+    'properties.table.imageAlt': 'Floor plan photo of {name}',
+  }
+  return translations[key] || key
 }

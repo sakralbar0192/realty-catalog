@@ -10,7 +10,7 @@ const steps = [
   { name: 'Type checking', command: 'bun run typecheck' },
   { name: 'Linting', command: 'bun run lint:check' },
   { name: 'Style checking', command: 'bun run stylelint:check' },
-  { name: 'Unit tests', command: 'bun run test:run' },
+  { name: 'Unit tests', command: 'bun run test:run --exclude="**/e2e/**"' },
   { name: 'Build', command: 'bun run build' },
   // E2E tests disabled in CI for now - require separate setup
   // { name: 'E2E tests', command: 'bun run test:e2e' },

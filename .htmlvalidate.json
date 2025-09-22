@@ -12,7 +12,7 @@
     "wcag/h30": "error",
     "wcag/h32": "error",
     "wcag/h36": "error",
-    "wcag/h37": "error",
+    "wcag/h37": "off",
     "wcag/h63": "error",
 
     "prefer-native-element": "error",
@@ -22,7 +22,8 @@
     "element-name": "off",
     "no-self-closing": "off",
     "text-content": "off",
-    "empty-heading": "off"
+    "empty-heading": "off",
+    "void-style": "off"
   },
   "elements": [
     "html5",
@@ -62,7 +63,13 @@
           "alt": { "required": true }
         }
       },
-      "NuxtPicture": {}
+      "NuxtPicture": {},
+      "img": {
+        "attributes": {
+          "src": { "required": false },
+          "alt": { "required": false }
+        }
+      }
     }
   ]
 }

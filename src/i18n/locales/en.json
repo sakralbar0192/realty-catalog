@@ -22,7 +22,19 @@
   },
   "properties": {
     "title": "Properties",
-    "noProperties": "No properties found",
+    "empty": "No properties found",
+    "loading": "Loading...",
+    "loadMore": "Load More",
+    "table": {
+      "headers": {
+        "image": "Photo",
+        "name": "Name",
+        "area": "Area",
+        "floor": "Floor",
+        "price": "Price"
+      },
+      "imageAlt": "Floor plan photo of {name}"
+    },
     "price": "Price",
     "location": "Location",
     "bedrooms": "Bedrooms",

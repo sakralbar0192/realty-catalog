@@ -22,7 +22,19 @@
   },
   "properties": {
     "title": "Недвижимость",
-    "noProperties": "Объекты не найдены",
+    "empty": "Объекты не найдены",
+    "loading": "Загрузка...",
+    "loadMore": "Загрузить еще",
+    "table": {
+      "headers": {
+        "image": "Фото",
+        "name": "Название",
+        "area": "Площадь",
+        "floor": "Этаж",
+        "price": "Цена"
+      },
+      "imageAlt": "Фото планировки {name}"
+    },
     "price": "Цена",
     "location": "Местоположение",
     "bedrooms": "Спальни",
