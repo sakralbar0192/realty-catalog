@@ -14,7 +14,7 @@
   p {
     margin: 0 0 1.5rem 0;
     font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
   }
 }
 
@@ -37,7 +37,7 @@
 
   label {
     font-size: var(--font-size-xs);
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
     font-weight: var(--font-weight-medium);
     margin-bottom: 0.25rem;
   }
@@ -56,7 +56,7 @@
   }
 
   span {
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
     font-weight: var(--font-weight-medium);
     justify-self: center;
   }

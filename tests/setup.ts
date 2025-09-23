@@ -107,6 +107,16 @@ global.IntersectionObserver = class IntersectionObserver implements globalThis.I
   }
 }
 
+// Mock window dimensions for desktop view
+Object.defineProperty(window, 'innerWidth', {
+  writable: true,
+  value: 1200, // Desktop width
+})
+Object.defineProperty(window, 'innerHeight', {
+  writable: true,
+  value: 800,
+})
+
 // Global mocks for Vue components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ;(globalThis as any).$t = (key: string) => {

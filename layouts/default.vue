@@ -1,13 +1,17 @@
 <template>
-  <div :class="styles.layout">
-    <main :class="styles.mainContent">
-      <div :class="styles.pageContent">
-        <slot></slot>
-      </div>
-    </main>
+  <div ref="layoutRef" :class="styles.layout">
+    <div :class="styles.layout__content">
+      <header ref="headerRef" :class="styles.layout__header">
+        <slot name="header"></slot>
+      </header>
 
-    <aside :class="styles.sidebar" v-if="!isMobile">
-      <Sidebar />
+      <main :class="styles.layout__main" :style="{ maxHeight: mainMaxHeight }">
+        <slot name="main"></slot>
+      </main>
+    </div>
+
+    <aside :class="styles.layout__sidebar" v-if="!isMobile">
+      <slot name="sidebar"></slot>
     </aside>
   </div>
 </template>
@@ -15,11 +19,38 @@
 <script setup lang="ts">
 import { useDevice } from '~/composables/useDevice'
 import styles from '~/assets/styles/layouts/default.module.scss'
-import Sidebar from '~/components/Sidebar.vue'
 
 const { isMobile } = useDevice()
 
 defineOptions({
   name: 'DefaultLayout'
+})
+
+const layoutRef = ref<HTMLElement>()
+const headerRef = ref<HTMLElement>()
+
+const mainMaxHeight = ref('calc(100vh - 70px)')
+
+const updateHeights = () => {
+  console.log('updateHeights called')
+  if (import.meta.client && layoutRef.value && headerRef.value) {
+    const layoutStyles = window.getComputedStyle(layoutRef.value)
+    const headerRect = headerRef.value.getBoundingClientRect()
+    
+    // Get padding from layout element
+    const paddingTop = parseFloat(layoutStyles.paddingTop) || 0
+    const paddingBottom = parseFloat(layoutStyles.paddingBottom) || 0
+    
+    mainMaxHeight.value = `calc(100vh - ${headerRect.height}px - ${paddingTop + paddingBottom}px)`
+  }
+}
+
+onMounted(() => {
+  updateHeights()
+  window.addEventListener('resize', updateHeights)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateHeights)
 })
 </script>

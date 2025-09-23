@@ -1,9 +1,9 @@
 <template>
   <div :class="styles.performancePage">
-    <h1>Performance Dashboard</h1>
+    <h1>{{ $t('performance.title') }}</h1>
 
     <div :class="styles.metricsGrid">
-      <Card title="Web Vitals">
+      <Card :title="$t('performance.webVitals')">
         <div :class="styles.metric" v-for="metric in webVitals" :key="metric.name">
           <h3>{{ metric.name }}</h3>
           <p :class="getMetricClass(metric)">{{ metric.value }}{{ metric.unit }}</p>
@@ -11,20 +11,20 @@
         </div>
       </Card>
 
-      <Card title="Bundle Analysis">
-        <h2>Bundle Analysis</h2>
+      <Card :title="$t('performance.bundleAnalysis')">
+        <h2>{{ $t('performance.bundleAnalysis') }}</h2>
         <div :class="styles.bundleInfo">
-          <p>Bundle size: {{ bundleSize }}</p>
-          <p>Gzipped: {{ gzippedSize }}</p>
-          <Button @click="runAnalysis">Analyze Bundle</Button>
+          <p>{{ $t('performance.bundleSize') }}: {{ bundleSize }}</p>
+          <p>{{ $t('performance.gzipped') }}: {{ gzippedSize }}</p>
+          <Button @click="runAnalysis">{{ $t('performance.analyzeBundle') }}</Button>
         </div>
       </Card>
 
-      <Card title="Memory Usage">
+      <Card :title="$t('performance.memoryUsage')">
         <div :class="styles.memoryInfo">
-          <p>Used: {{ memory.used }}</p>
-          <p>Total: {{ memory.total }}</p>
-          <p>Limit: {{ memory.limit }}</p>
+          <p>{{ $t('performance.used') }}: {{ memory.used }}</p>
+          <p>{{ $t('performance.total') }}: {{ memory.total }}</p>
+          <p>{{ $t('performance.limit') }}: {{ memory.limit }}</p>
         </div>
       </Card>
     </div>
@@ -34,6 +34,9 @@
 <script setup lang="ts">
 import styles from '~/assets/styles/pages/performance.module.scss'
 import { usePerformance } from '~/composables/usePerformance'
+import { useAppI18n } from '~/composables/useI18n'
+
+const { translate: $t } = useAppI18n()
 
 const { measureWebVitals, calculatePerformanceScore, monitorResources } = usePerformance()
 
@@ -60,9 +63,9 @@ const getMetricClass = (metric: any) => {
 
 const runAnalysis = () => {
   // Since we can't run child_process in the browser, show instructions
-  alert('To run bundle analysis, execute "bun run analyze" in your terminal. The results will be available in dist/stats.html')
-  bundleSize.value = 'Run "bun run analyze" in terminal'
-  gzippedSize.value = 'Run "bun run analyze" in terminal'
+  alert($t('performance.runAnalysis'))
+  bundleSize.value = $t('performance.runAnalysis')
+  gzippedSize.value = $t('performance.runAnalysis')
 }
 
 // Collect web vitals data

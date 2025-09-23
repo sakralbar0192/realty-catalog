@@ -21,19 +21,24 @@
     "contact": "Contact"
   },
   "properties": {
-    "title": "Properties",
+    "title": "Placements",
     "empty": "No properties found",
     "loading": "Loading...",
     "loadMore": "Load More",
+    "out_of": "out of",
     "table": {
       "headers": {
-        "image": "Photo",
-        "name": "Name",
-        "area": "Area",
+        "image": "Layout",
+        "name": "Flat",
+        "area": "S, м²",
         "floor": "Floor",
         "price": "Price"
       },
-      "imageAlt": "Floor plan photo of {name}"
+      "imageAlt": "Floor plan photo of {name}",
+      "units": {
+        "area": "м²",
+        "currency": "₽"
+      }
     },
     "price": "Price",
     "location": "Location",
@@ -69,5 +74,18 @@
     "house": "House",
     "office": "Office",
     "applyFilters": "Apply Filters"
-  }
+  },
+  "performance": {
+    "title": "Performance Dashboard",
+    "webVitals": "Web Vitals",
+    "bundleAnalysis": "Bundle Analysis",
+    "bundleSize": "Bundle size",
+    "gzipped": "Gzipped",
+    "analyzeBundle": "Analyze Bundle",
+    "memoryUsage": "Memory Usage",
+    "used": "Used",
+    "total": "Total",
+    "limit": "Limit",
+    "runAnalysis": "Run \"bun run analyze\" in terminal"
+  },
 }

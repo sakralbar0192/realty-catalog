@@ -21,19 +21,24 @@
     "contact": "Контакты"
   },
   "properties": {
-    "title": "Недвижимость",
+    "title": "Квартиры",
     "empty": "Объекты не найдены",
     "loading": "Загрузка...",
     "loadMore": "Загрузить еще",
+    "out_of": "из",
     "table": {
       "headers": {
-        "image": "Фото",
-        "name": "Название",
-        "area": "Площадь",
+        "image": "Планировка",
+        "name": "Квартира",
+        "area": "S, м²",
         "floor": "Этаж",
         "price": "Цена"
       },
-      "imageAlt": "Фото планировки {name}"
+      "imageAlt": "Фото планировки {name}",
+      "units": {
+        "area": "м²",
+        "currency": "₽"
+      }
     },
     "price": "Цена",
     "location": "Местоположение",
@@ -69,5 +74,18 @@
     "house": "Дом",
     "office": "Офис",
     "applyFilters": "Применить фильтры"
-  }
+  },
+  "performance": {
+    "title": "Панель производительности",
+    "webVitals": "Web Vitals",
+    "bundleAnalysis": "Анализ бандла",
+    "bundleSize": "Размер бандла",
+    "gzipped": "Сжатый",
+    "analyzeBundle": "Анализировать бандл",
+    "memoryUsage": "Использование памяти",
+    "used": "Использовано",
+    "total": "Всего",
+    "limit": "Лимит",
+    "runAnalysis": "Выполните \"bun run analyze\" в терминале"
+  },
 }

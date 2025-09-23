@@ -1,5 +1,6 @@
 @use 'fonts';
 @use 'variables' as *;
+@use 'helpers';
 
 // Global styles
 * {
@@ -23,13 +24,12 @@ body {
 
 // Typography scale
 h1, h2, h3, h4, h5, h6 {
-  margin: 0 0 1rem 0;
+  margin: 0;
   font-weight: $font-weight-medium;
   line-height: var(--line-height-tight);
-  letter-spacing: var(--letter-spacing-tight);
 }
 
-h1 { font-size: var(--font-size-4xl); }
+h1 { font-weight: var(--font-weight-bold); }
 h2 { font-size: var(--font-size-3xl); }
 h3 { font-size: var(--font-size-2xl); }
 h4 { font-size: var(--font-size-xl); }
@@ -37,7 +37,7 @@ h5 { font-size: var(--font-size-lg); }
 h6 { font-size: var(--font-size-base); }
 
 p {
-  margin: 0 0 1rem 0;
+  margin: 0;
 }
 
 // Links
@@ -70,18 +70,18 @@ a:focus {
 
 // Responsive typography adjustments
 @media (max-width: #{$mobile-max}) {
-  h1 { font-size: var(--font-size-3xl); }
+  h1 { font-size: var(--font-size-4xl); }
   h2 { font-size: var(--font-size-2xl); }
   h3 { font-size: var(--font-size-xl); }
 }
 
 @media (min-width: #{$tablet-min}) and (max-width: #{$tablet-max}) {
-  h1 { font-size: var(--font-size-4xl); }
+  h1 { font-size: var(--font-size-5xl); }
   h2 { font-size: var(--font-size-3xl); }
   h3 { font-size: var(--font-size-2xl); }
 }
 
 @media (min-width: #{$desktop-min}) {
-  h1 { font-size: calc(var(--font-size-4xl) * 1.1); }
+  h1 { font-size: var(--font-size-5xl); }
   h2 { font-size: calc(var(--font-size-3xl) * 1.05); }
 }

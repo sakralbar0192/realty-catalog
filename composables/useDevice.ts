@@ -1,7 +1,7 @@
 import { ref, computed, readonly } from 'vue'
 
 const MOBILE_BREAKPOINT = 768
-const TABLET_BREAKPOINT = 1024
+const TABLET_BREAKPOINT = 1025
 
 const screenWidth = ref(0)
 let initialized = false

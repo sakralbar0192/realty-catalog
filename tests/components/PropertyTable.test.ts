@@ -1,8 +1,29 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import PropertyTable from '~/components/PropertyTable.vue'
 import type { Property } from '~/mocks/models'
+
+// Mock the useAppI18n composable
+vi.mock('~/composables/useI18n', () => ({
+  useAppI18n: () => ({
+    translate: (key: string) => {
+      const translations: Record<string, string> = {
+        'properties.table.headers.image': 'Image',
+        'properties.table.headers.name': 'Name',
+        'properties.table.headers.area': 'Area',
+        'properties.table.headers.floor': 'Floor',
+        'properties.table.headers.price': 'Price',
+        'properties.loadMore': 'Load More',
+        'properties.loading': 'Loading...',
+        'properties.empty': 'No properties found',
+        'properties.table.imageAlt': 'Image of {name}',
+        'properties.out_of': 'out of',
+      }
+      return translations[key] || key
+    },
+  }),
+}))
 
 // Mock property data
 const mockProperties: Property[] = [
@@ -18,22 +39,6 @@ const mockProperties: Property[] = [
   },
 ]
 
-// Mock i18n function
-const mockT = (key: string) => {
-  const translations: Record<string, string> = {
-    'properties.table.headers.image': 'Image',
-    'properties.table.headers.name': 'Name',
-    'properties.table.headers.area': 'Area',
-    'properties.table.headers.floor': 'Floor',
-    'properties.table.headers.price': 'Price',
-    'properties.loadMore': 'Load More',
-    'properties.loading': 'Loading...',
-    'properties.empty': 'No properties found',
-    'properties.table.imageAlt': 'Image of {name}',
-  }
-  return translations[key] || key
-}
-
 describe('PropertyTable', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -45,11 +50,6 @@ describe('PropertyTable', () => {
         properties: mockProperties,
         loading: false,
         hasMore: true,
-      },
-      global: {
-        mocks: {
-          $t: mockT,
-        },
       },
     })
 
@@ -64,11 +64,6 @@ describe('PropertyTable', () => {
         loading: false,
         hasMore: true,
       },
-      global: {
-        mocks: {
-          $t: () => 'Load More',
-        },
-      },
     })
 
     const button = wrapper.find('button[data-test="load-more"]')
@@ -81,11 +76,6 @@ describe('PropertyTable', () => {
         properties: mockProperties,
         loading: false,
         hasMore: true,
-      },
-      global: {
-        mocks: {
-          $t: mockT,
-        },
       },
     })
 
@@ -103,11 +93,6 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const rows = wrapper.findAll('tbody tr')
@@ -120,11 +105,6 @@ describe('PropertyTable', () => {
           properties: [mockProperties[0]],
           loading: false,
           hasMore: false,
-        },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
         },
       })
 
@@ -141,11 +121,6 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const nameCell = wrapper.findAll('tbody td')[1]
@@ -159,15 +134,10 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const areaCell = wrapper.findAll('tbody td')[2]
-      expect(areaCell.text()).toBe('45.5 м²')
+      expect(areaCell.text()).toBe('45.5')
     })
 
     it('should format floor as "floor/totalFloors"', () => {
@@ -177,15 +147,10 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const floorCell = wrapper.findAll('tbody td')[3]
-      expect(floorCell.text()).toBe('5/10')
+      expect(floorCell.text()).toBe('5 out of 10')
     })
 
     it('should format price with thousand separators', () => {
@@ -195,15 +160,10 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const priceCell = wrapper.findAll('tbody td')[4]
-      expect(priceCell.text()).toMatch(/2\s*500\s*000\s*₽/)
+      expect(priceCell.text()).toMatch(/2\s*500\s*000/)
     })
   })
 
@@ -215,16 +175,11 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: true,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const loadMoreButton = wrapper.find('button[data-test="load-more"]')
       expect(loadMoreButton.exists()).toBe(true)
-      expect(loadMoreButton.text()).toBeTruthy() // Will be translated
+      expect(loadMoreButton.text()).toBeTruthy()
     })
 
     it('should not show "Load More" button when hasMore is false', () => {
@@ -233,11 +188,6 @@ describe('PropertyTable', () => {
           properties: mockProperties,
           loading: false,
           hasMore: false,
-        },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
         },
       })
 
@@ -252,16 +202,11 @@ describe('PropertyTable', () => {
           loading: true,
           hasMore: true,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const loadMoreButton = wrapper.find('button[data-test="load-more"]')
       expect(loadMoreButton.attributes('disabled')).toBeDefined()
-      expect(loadMoreButton.text()).toContain('Loading') // Or translated equivalent
+      expect(loadMoreButton.text()).toContain('Loading')
     })
 
     it('should emit "load-more" event when button is clicked', async() => {
@@ -270,11 +215,6 @@ describe('PropertyTable', () => {
           properties: mockProperties,
           loading: false,
           hasMore: true,
-        },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
         },
       })
 
@@ -287,27 +227,20 @@ describe('PropertyTable', () => {
   })
 
   describe('Responsive Design', () => {
-    it('should have responsive table wrapper', () => {
+    it('should render table on desktop', () => {
       const wrapper = mount(PropertyTable, {
         props: {
           properties: mockProperties,
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
-      const tableWrapper = wrapper.find('[data-test="table-wrapper"]')
-      expect(tableWrapper.exists()).toBe(true)
-      // Note: CSS modules add hashed class names, so we just check existence
+      const table = wrapper.find('table')
+      expect(table.exists()).toBe(true)
     })
 
     it('should hide certain columns on mobile', () => {
-      // Mock mobile viewport
       Object.defineProperty(window, 'innerWidth', { value: 480 })
 
       const wrapper = mount(PropertyTable, {
@@ -316,14 +249,8 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
-      // On mobile, some columns might be hidden or shown differently
       const visibleCells = wrapper.findAll('tbody td:not([hidden])')
       expect(visibleCells.length).toBeGreaterThan(0)
     })
@@ -336,11 +263,6 @@ describe('PropertyTable', () => {
           properties: mockProperties,
           loading: false,
           hasMore: false,
-        },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
         },
       })
 
@@ -357,11 +279,6 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const image = wrapper.find('img')
@@ -374,11 +291,6 @@ describe('PropertyTable', () => {
           properties: mockProperties,
           loading: false,
           hasMore: true,
-        },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
         },
       })
 
@@ -395,16 +307,10 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const table = wrapper.find('table')
       expect(table.exists()).toBe(true)
-      // Note: CSS modules add hashed class names, so we just check existence
     })
 
     it('should use CSS custom properties for theming', () => {
@@ -414,17 +320,10 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
-      // Check that table has CSS classes applied
       const table = wrapper.find('table')
       expect(table.exists()).toBe(true)
-      // Note: CSS custom properties are tested in typography tests
     })
   })
 
@@ -436,16 +335,11 @@ describe('PropertyTable', () => {
           loading: false,
           hasMore: false,
         },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
-        },
       })
 
       const emptyState = wrapper.find('[data-test="empty-state"]')
       expect(emptyState.exists()).toBe(true)
-      expect(emptyState.text()).toBeTruthy() // Will be translated
+      expect(emptyState.text()).toBeTruthy()
     })
 
     it('should not show empty state when properties exist', () => {
@@ -454,11 +348,6 @@ describe('PropertyTable', () => {
           properties: mockProperties,
           loading: false,
           hasMore: false,
-        },
-        global: {
-          mocks: {
-            $t: mockT,
-          },
         },
       })
 

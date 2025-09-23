@@ -1,47 +1,79 @@
+@use '../variables.scss' as *;
+
 .layout {
   display: flex;
+  justify-content: space-between;
   min-height: 100vh;
-  gap: 2rem;
-  padding: 2rem;
+  max-width: 1440px;
+  min-width: 360px;
+  margin: 0 auto;
+  background-color: var(--color-background);
 
-  @media (max-width: 768px) {
+  @media (max-width: #{$mobile-max}) {
+    padding: 24px 16px;
+  }
+
+  @media (min-width: #{$tablet-min}) and (max-width: #{$tablet-max}) {
+    padding: 50px 55px;
+    gap: 28px;
+  }
+
+  @media (min-width: #{$desktop-min}) {
+    padding: 98px 80px;
+    gap: 80px
+  }
+
+  &__content {
+    flex-grow: 1;
+    display: flex;
     flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
-  }
-}
 
-.mainContent {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+    @media (max-width: #{$mobile-max}) {
+      max-width: 100%;
+    }
 
-.pageHeader {
-  margin-bottom: 1rem;
+    @media (min-width: #{$tablet-min}) and (max-width: #{$tablet-max}) {
+      max-width: 506px;
+    }
 
-  h1 {
-    margin: 0;
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-primary);
-  }
-}
-
-.pageContent {
-  flex: 1;
-}
-
-.sidebar {
-  width: 300px;
-  flex-shrink: 0;
-
-  @media (max-width: 1024px) {
-    width: 250px;
+    @media (min-width: #{$desktop-min}) {
+      max-width: 801px;
+    }
   }
 
-  @media (max-width: 768px) {
-    display: none;
+  &__header {
+    background-color: var(--color-background);
+
+    @media (max-width: #{$mobile-max}) {
+      padding-bottom: 30px;
+    }
+
+    @media (min-width: #{$tablet-min}) and (max-width: #{$tablet-max}) {
+      padding-bottom: 30px;
+    }
+
+    @media (min-width: #{$desktop-min}) {
+      padding-bottom: 45px;
+    }
+  }
+
+  &__main {
+    flex: 1;
+    display: flex;
+    overflow-y: auto;
+  }
+
+  &__sidebar {
+    @media (max-width: #{$mobile-max}) {
+      display: none;
+    }
+
+    @media (min-width: #{$tablet-min}) and (max-width: #{$tablet-max}) {
+      width: 318px;
+    }
+
+    @media (min-width: #{$desktop-min}) {
+      width: 31%;
+    }
   }
 }

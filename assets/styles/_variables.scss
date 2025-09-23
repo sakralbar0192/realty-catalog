@@ -10,15 +10,14 @@
 
   --color-background: #ffffff;
   --color-surface: #f8f9fa;
-  --color-text-primary: #212529;
-  --color-text-secondary: #6c757d;
+  --color-text-primary: #0B1739;
   --color-text-muted: #868e96;
 
-  --color-border: #dee2e6;
+  --color-border: rgba(0, 0, 0, 0.1);
   --color-border-light: #f8f9fa;
 
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);  
+  --shadow-md: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
@@ -35,8 +34,7 @@
   --color-background: #1a1a1a;
   --color-surface: #2d2d2d;
   --color-text-primary: #ffffff;
-  --color-text-secondary: #cccccc;
-  --color-text-muted: #888888;
+  --color-text-muted: rgba(11, 23, 57, 0.5);
 
   --color-border: #404040;
   --color-border-light: #333333;
@@ -45,6 +43,7 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 }
+
 
 * {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -64,28 +63,32 @@ $font-weight-bold: 700;
 
 $mobile-max: 767px;
 $tablet-min: 768px;
-$tablet-max: 1439px;
-$desktop-min: 1440px;
+$tablet-max: 1024px;
+$desktop-min: 1025px;
 
 $container-max-width: 1440px;
 
 // Font family
 :root {
   --font-family: 'Paratype', system-ui, -apple-system, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
 }
 
 // Responsive font sizes
 :root {
+  --font-size-base: 16px;
   --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
+  --font-size-sm: 0.88rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
+  --font-size-2xl: 1.41rem;
   --font-size-3xl: 1.875rem;
   --font-size-4xl: 2.25rem;
+  --font-size-5xl: 54px;
 
-  --line-height-tight: 1.25;
+  --line-height-tight: 1;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
 
@@ -112,7 +115,6 @@ $container-max-width: 1440px;
 // Desktop typography
 @media (min-width: #{$desktop-min}) {
   :root {
-    --font-size-base: 1.0625rem;
     --line-height-normal: 1.5;
   }
 }
