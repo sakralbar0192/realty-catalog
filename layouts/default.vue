@@ -1,16 +1,16 @@
 <template>
-  <div ref="layoutRef" :class="styles.layout">
+  <div ref="layoutRef" :class="styles.layout" data-test="layout">
     <div :class="styles.layout__content">
-      <header ref="headerRef" :class="styles.layout__header">
+      <header ref="headerRef" :class="styles.layout__header" data-test="layout-header">
         <slot name="header"></slot>
       </header>
 
-      <main :class="styles.layout__main" :style="{ maxHeight: mainMaxHeight }">
+      <main :class="styles.layout__main" :style="{ maxHeight: mainMaxHeight }" data-test="layout-main">
         <slot name="main"></slot>
       </main>
     </div>
 
-    <aside :class="styles.layout__sidebar" v-if="!isMobile">
+    <aside :class="styles.layout__sidebar" v-if="!isMobile" data-test="layout-sidebar">
       <slot name="sidebar"></slot>
     </aside>
   </div>

@@ -87,5 +87,5 @@
     "total": "Total",
     "limit": "Limit",
     "runAnalysis": "Run \"bun run analyze\" in terminal"
-  },
+  }
 }

@@ -85,9 +85,10 @@ export default [{
     // Code style rules
     'quotes': ['error', 'single'],
     'semi': ['error', 'never'],
-    'indent': ['error', 2],
+    'indent': ['error', 2, { 'SwitchCase': 1 }],
+    'no-tabs': 'error', // Explicitly forbid tabs
     'comma-dangle': ['error', 'always-multiline'],
-    'no-multiple-empty-lines': ['error', { max: 1 }],
+    'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1, maxBOF: 0 }],
     'object-curly-spacing': ['error', 'always'],
     'array-bracket-spacing': ['error', 'never'],
     'key-spacing': ['error'],
@@ -100,8 +101,9 @@ export default [{
     'comma-spacing': ['error', { before: false, after: true }],
     'func-call-spacing': ['error', 'never'],
     'keyword-spacing': 'error',
-    'no-trailing-spaces': 'error',
+    'no-trailing-spaces': ['error', { skipBlankLines: false, ignoreComments: false }],
     'eol-last': ['error', 'always'],
+    'linebreak-style': ['error', 'unix'],
 
     // General rules
     'prefer-const': 'error',

@@ -54,9 +54,10 @@ const applyCSSVariables = () => {
 const server = setupServer(...handlers)
 
 // Setup before tests
-beforeAll(() => {
+beforeAll(async() => {
   server.listen({ onUnhandledRequest: 'error' })
   applyCSSVariables()
+  await new Promise(resolve => setTimeout(resolve, 1000)) // Wait for styles to apply
 })
 
 // Reset after each test

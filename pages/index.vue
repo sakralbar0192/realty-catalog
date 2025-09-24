@@ -21,10 +21,19 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import { usePropertyStore } from '~/stores/property'
 import { useTheme } from '~/composables/useTheme'
 import { storeToRefs } from 'pinia'
+
+useHead({
+  title: 'Realty Catalog',
+  meta: [
+    {
+      name: 'description',
+      content: 'A catalog of real estate properties with multi-language support and theme toggling.'
+    }
+  ]
+})
 
 const propertyStore = usePropertyStore()
 const { initializeTheme } = useTheme()
@@ -35,7 +44,7 @@ const handleLoadMore = () => {
   propertyStore.loadMore()
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
   propertyStore.fetchProperties()
   initializeTheme()
 })

@@ -5,6 +5,12 @@ export default {
   ],
   customSyntax: 'postcss-html',
   rules: {
+    // Whitespace and indentation rules
+    'no-tabs': true,
+    'indentation': 2,
+    'no-trailing-spaces': true,
+    'no-eol-whitespace': true,
+
     // BEM methodology rules
     'selector-class-pattern': [
       '^(?:[a-z][a-zA-Z0-9]*)(?:-[a-zA-Z0-9]+)*(?:__[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:--[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?$',

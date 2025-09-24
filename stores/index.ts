@@ -5,7 +5,7 @@ export const useMainStore = defineStore('main', () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
   const theme = ref<'light' | 'dark' | null>(null)
-  const language = ref<'en' | 'ru'>('en')
+  const language = ref<'en' | 'ru'>('ru')
 
   const isLoading = computed(() => loading.value)
   const hasError = computed(() => !!error.value)

@@ -1,0 +1,58 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PropertyTable snapshots > matches desktop table layout snapshot 1`] = `
+"<div class="_table_eedf60">
+  <!-- Mobile/Tablet Card View -->
+  <div><span scope="col">S, м²</span><span scope="col">Floor</span><span scope="col">Price</span></div>
+  <div class="_cards_eedf60 mobile-tablet-only">
+    <div class="_card_eedf60">
+      <div class="_card__content_eedf60">
+        <h3 class="_card__title_eedf60">2-комнатная кв. 15</h3>
+        <div class="_card__details_eedf60">
+          <div class="font-weight-medium _card__area_eedf60">45.5м²</div>
+          <div class="_card__floor_eedf60"><span class="font-weight-medium">5</span><span class="text--muted"> out of 10 floor</span></div>
+          <div class="font-weight-medium">2&nbsp;500&nbsp;000₽</div>
+        </div>
+      </div>
+      <div class="_card__image_eedf60"><img src="/images/apartment-1.jpg" alt="Floor plan photo of {name}" loading="lazy"></div>
+    </div>
+  </div><!-- Load More Button -->
+  <div class="_table__more_eedf60"><button type="button" data-test="load-more" aria-label="Load More"><span>Load More</span></button></div><!-- Empty State -->
+  <!--v-if-->
+</div>"
+`;
+
+exports[`PropertyTable snapshots > matches empty state snapshot 1`] = `
+"<div class="_table_eedf60">
+  <!-- Mobile/Tablet Card View -->
+  <div><span scope="col">S, м²</span><span scope="col">Floor</span><span scope="col">Price</span></div>
+  <div class="_cards_eedf60 mobile-tablet-only"></div><!-- Load More Button -->
+  <!--v-if-->
+  <!-- Empty State -->
+  <div class="_table__empty_eedf60" data-test="empty-state">
+    <p>No properties found</p>
+  </div>
+</div>"
+`;
+
+exports[`PropertyTable snapshots > matches loading state snapshot 1`] = `
+"<div class="_table_eedf60">
+  <!-- Mobile/Tablet Card View -->
+  <div><span scope="col">S, м²</span><span scope="col">Floor</span><span scope="col">Price</span></div>
+  <div class="_cards_eedf60 mobile-tablet-only">
+    <div class="_card_eedf60">
+      <div class="_card__content_eedf60">
+        <h3 class="_card__title_eedf60">2-комнатная кв. 15</h3>
+        <div class="_card__details_eedf60">
+          <div class="font-weight-medium _card__area_eedf60">45.5м²</div>
+          <div class="_card__floor_eedf60"><span class="font-weight-medium">5</span><span class="text--muted"> out of 10 floor</span></div>
+          <div class="font-weight-medium">2&nbsp;500&nbsp;000₽</div>
+        </div>
+      </div>
+      <div class="_card__image_eedf60"><img src="/images/apartment-1.jpg" alt="Floor plan photo of {name}" loading="lazy"></div>
+    </div>
+  </div><!-- Load More Button -->
+  <div class="_table__more_eedf60"><button type="button" disabled="" data-test="load-more" aria-label="Load More"><span>Loading...</span></button></div><!-- Empty State -->
+  <!--v-if-->
+</div>"
+`;
