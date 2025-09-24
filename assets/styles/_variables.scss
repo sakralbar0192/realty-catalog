@@ -1,12 +1,10 @@
 :root {
-  --color-primary: #007bff;
+  --color-primary: #3eb57c;
   --color-primary-hover: #0056b3;
-  --color-secondary: #6c757d;
-  --color-secondary-hover: #545b62;
-  --color-success: #28a745;
-  --color-danger: #dc3545;
-  --color-warning: #ffc107;
-  --color-info: #17a2b8;
+  --color-secondary: #95D0A1;
+  --color-secondary-hover: #545b62; 
+
+  --color-tertiary: #AEE4B2;
 
   --color-background: #ffffff;
   --color-surface: #f8f9fa;
@@ -14,34 +12,37 @@
   --color-text-muted: #868e96;
 
   --color-border: rgba(0, 0, 0, 0.1);
-  --color-border-light: #f8f9fa;
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);  
   --shadow-md: 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  --gradient-primary: linear-gradient(135deg, rgba(174, 228, 178, 0.3) 0%, rgba(149, 208, 161, 0.3) 100%);
+  --gradient-primary-hover: linear-gradient(135deg, rgba(149, 208, 161, 0.4) 0%, rgba(125, 188, 142, 0.4) 100%);
+  --gradient-primary-active: linear-gradient(135deg, rgba(125, 188, 142, 0.5) 0%, rgba(101, 168, 123, 0.5) 100%);
 }
 
-[data-theme="dark"] {
-  --color-primary: #4dabf7;
-  --color-primary-hover: #339af0;
-  --color-secondary: #868e96;
-  --color-secondary-hover: #6c757d;
-  --color-success: #51cf66;
-  --color-danger: #ff6b6b;
-  --color-warning: #ffd43b;
-  --color-info: #74c0fc;
-
-  --color-background: #1a1a1a;
-  --color-surface: #2d2d2d;
-  --color-text-primary: #ffffff;
-  --color-text-muted: rgba(11, 23, 57, 0.5);
-
-  --color-border: #404040;
-  --color-border-light: #333333;
-
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  [data-theme="dark"] {
+  --color-primary: #4ade80;
+  --color-primary-hover: #22c55e;
+  --color-secondary: #86efac;
+  --color-secondary-hover: #4ade80;
+  --color-tertiary: #bbf7d0;
+  
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-text-primary: #f1f5f9;
+  --color-text-muted: rgba(148, 163, 184, 0.75);
+  
+  --color-border: rgba(51, 65, 85, 0.5);
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+  
+  --gradient-primary: linear-gradient(135deg, rgba(74, 222, 128, 0.25) 0%, rgba(34, 197, 94, 0.25) 100%);
+  --gradient-primary-hover: linear-gradient(135deg, rgba(74, 222, 128, 0.35) 0%, rgba(34, 197, 94, 0.35) 100%);
+  --gradient-primary-active: linear-gradient(135deg, rgba(74, 222, 128, 0.45) 0%, rgba(34, 197, 94, 0.45) 100%);
 }
 
 

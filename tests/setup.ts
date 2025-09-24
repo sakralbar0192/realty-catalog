@@ -131,6 +131,7 @@ Object.defineProperty(window, 'innerHeight', {
     'properties.loading': 'Loading...',
     'properties.empty': 'No properties found',
     'properties.table.imageAlt': 'Floor plan photo of {name}',
+    'scrollToTop': 'Scroll to top',
   }
   return translations[key] || key
 }

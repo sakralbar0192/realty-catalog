@@ -34,11 +34,11 @@
         "floor": "Этаж",
         "price": "Цена"
       },
-      "imageAlt": "Фото планировки {name}",
-      "units": {
-        "area": "м²",
-        "currency": "₽"
-      }
+      "imageAlt": "Фото планировки {name}"
+    },
+    "units": {
+      "area": "м²",
+      "currency": "₽"
     },
     "price": "Цена",
     "location": "Местоположение",
@@ -87,5 +87,6 @@
     "total": "Всего",
     "limit": "Лимит",
     "runAnalysis": "Выполните \"bun run analyze\" в терминале"
-  }
+  },
+  "scrollToTop": "Прокрутить вверх"
 }

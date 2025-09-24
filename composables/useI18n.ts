@@ -5,7 +5,7 @@ export const useAppI18n = () => {
   const mainStore = useMainStore()
 
   // Синхронизируем язык из store в i18n при инициализации
-  if (process.client) {
+  if (import.meta.client) {
     locale.value = mainStore.language
   }
 

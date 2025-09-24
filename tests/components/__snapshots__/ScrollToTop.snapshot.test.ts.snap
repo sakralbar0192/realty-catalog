@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ScrollToTop Snapshots > should match snapshot when hidden 1`] = `
+"<transition-stub name="fade" appear="false" persisted="true" css="true"><button class="_scroll_29a310" aria-label="Scroll to top" type="button" data-test="scroll-to-top" style="display: none;">
+    <icon name="arrow-up" class="_scrollToTop__icon_29a310"></icon>
+  </button></transition-stub>"
+`;
+
+exports[`ScrollToTop Snapshots > should match snapshot when visible 1`] = `
+"<transition-stub name="fade" appear="false" persisted="true" css="true"><button class="_scroll_29a310" aria-label="Scroll to top" type="button" data-test="scroll-to-top" style="display: none;">
+    <icon name="arrow-up" class="_scrollToTop__icon_29a310"></icon>
+  </button></transition-stub>"
+`;
+
+exports[`ScrollToTop Snapshots > should match snapshot with focus styles 1`] = `
+"<transition-stub name="fade" appear="false" persisted="true" css="true"><button class="_scroll_29a310" aria-label="Scroll to top" type="button" data-test="scroll-to-top" style="display: none;">
+    <icon name="arrow-up" class="_scrollToTop__icon_29a310"></icon>
+  </button></transition-stub>"
+`;

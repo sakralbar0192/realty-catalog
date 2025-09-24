@@ -1,0 +1,46 @@
+.scroll {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+
+  
+  background: var(--color-secondary);
+  
+  &:hover {
+    background: var(--gradient-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+  }
+  
+  &:active {
+    background: var(--gradient-primary-active);
+    transform: translateY(0);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-primary);
+  }
+
+  &__icon {
+    width: 8px;
+    height: 12px;
+    color: white;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}

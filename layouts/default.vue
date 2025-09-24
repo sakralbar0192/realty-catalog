@@ -13,6 +13,7 @@
     <aside :class="styles.layout__sidebar" v-if="!isMobile" data-test="layout-sidebar">
       <slot name="sidebar"></slot>
     </aside>
+    <ScrollToTop />
   </div>
 </template>
 
@@ -32,7 +33,6 @@ const headerRef = ref<HTMLElement>()
 const mainMaxHeight = ref('calc(100vh - 70px)')
 
 const updateHeights = () => {
-  console.log('updateHeights called')
   if (import.meta.client && layoutRef.value && headerRef.value) {
     const layoutStyles = window.getComputedStyle(layoutRef.value)
     const headerRect = headerRef.value.getBoundingClientRect()
