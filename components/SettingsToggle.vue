@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="styles.toggleButton"
+    :class="styles['toggle-button']"
     @click="togglePanel"
     :aria-label="$t('settings.open')"
     :aria-expanded="isOpen"

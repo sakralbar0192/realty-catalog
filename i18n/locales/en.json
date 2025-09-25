@@ -38,7 +38,8 @@
     },
     "units": {
       "area": "м²",
-      "currency": "₽"
+      "currency": "₽",
+      "room": "r"
     },
     "price": "Price",
     "location": "Location",
@@ -53,7 +54,8 @@
     "dark": "Dark Theme",
     "toggle": "Toggle Theme",
     "Switch to light theme": "Switch to light theme",
-    "Switch to dark theme": "Switch to dark theme"
+    "Switch to dark theme": "Switch to dark theme",
+    "title": "Theme"
   },
   "search": {
     "placeholder": "Search properties...",
@@ -100,5 +102,13 @@
   "settings": {
     "title": "Settings",
     "open": "Open settings"
+  },
+  "filters": {
+    "rooms": {
+      "label": "Rooms",
+      "all": "All",
+      "room": "room",
+      "rooms": "rooms"
+    }
   }
 }

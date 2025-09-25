@@ -3,9 +3,9 @@
 .toggle-button {
   position: fixed;
   top: 2rem;
-  right: 2rem;
+  right: 6rem;
   width: 48px;
-  height: 48px;
+	height: 48px;
   border-radius: 50%;
   background-color: var(--color-primary);
   color: white;
@@ -16,20 +16,18 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  z-index: 999;
-
-  &:hover {
-    background-color: var(--color-secondary-hover);
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  }
+  z-index: 998;
 
   &:active {
     transform: scale(0.95);
   }
 
   &:focus {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--color-secondary);
     outline-offset: 2px;
   }
+
+	@media (min-width: #{$tablet-min}) {
+		display: none;
+	}
 }

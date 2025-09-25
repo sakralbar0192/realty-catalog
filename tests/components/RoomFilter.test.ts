@@ -1,0 +1,286 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
+import RoomFilter from '../../components/RoomFilter.vue'
+import type { Property } from '../../mocks/models'
+
+// Mock the useAppI18n composable
+vi.mock('../../composables/useI18n', () => ({
+  useAppI18n: () => ({
+    translate: (key: string) => {
+      const translations: Record<string, string> = {
+        'filters.rooms.label': 'Rooms',
+        'filters.rooms.all': 'All',
+        'filters.rooms.room': 'room',
+        'filters.rooms.rooms': 'rooms',
+      }
+      return translations[key] || key
+    },
+  }),
+}))
+
+describe('RoomFilter', () => {
+  let wrapper: ReturnType<typeof mount>
+  let mockProperties: Property[]
+
+  beforeEach(() => {
+    mockProperties = [
+      {
+        id: '1',
+        name: '1-room flat',
+        area: 35,
+        floor: 2,
+        totalFloors: 5,
+        price: 50000,
+        imageUrl: '/flat.svg',
+        rooms: 1,
+      },
+      {
+        id: '2',
+        name: '2-room flat',
+        area: 55,
+        floor: 3,
+        totalFloors: 9,
+        price: 75000,
+        imageUrl: '/flat.svg',
+        rooms: 2,
+      },
+      {
+        id: '3',
+        name: '3-room flat',
+        area: 75,
+        floor: 4,
+        totalFloors: 12,
+        price: 100000,
+        imageUrl: '/flat.svg',
+        rooms: 3,
+      },
+      {
+        id: '4',
+        name: '4-room flat',
+        area: 95,
+        floor: 8,
+        totalFloors: 16,
+        price: 150000,
+        imageUrl: '/flat.svg',
+        rooms: 4,
+      },
+    ]
+
+    wrapper = mount(RoomFilter, {
+      props: {
+        properties: mockProperties,
+      },
+      global: {
+        mocks: {
+          $t: (key: string) => {
+            const translations: Record<string, string> = {
+              'filters.rooms.label': 'Rooms',
+              'filters.rooms.all': 'All',
+              'filters.rooms.room': 'room',
+              'filters.rooms.rooms': 'rooms',
+            }
+            return translations[key] || key
+          },
+        },
+      },
+    })
+  })
+
+  describe('Component Structure', () => {
+    it('should render room count buttons (1,2,3,4)', () => {
+      const buttons = wrapper.findAll('button')
+      expect(buttons.length).toBe(4)
+      expect(buttons[0].text()).toContain('1')
+      expect(buttons[1].text()).toContain('2')
+      expect(buttons[2].text()).toContain('3')
+      expect(buttons[3].text()).toContain('4')
+    })
+  })
+
+  describe('Button States', () => {
+    it('should have no active button by default', () => {
+      const buttons = wrapper.findAll('button')
+      buttons.forEach(button => {
+        expect(button.classes()).not.toContain('room-filter__button--active')
+      })
+    })
+
+    it('should enable all room buttons when properties exist', () => {
+      const buttons = wrapper.findAll('button')
+      buttons.forEach(button => {
+        expect(button.attributes('disabled')).toBeUndefined()
+      })
+    })
+
+    it('should disable room button when no properties match', () => {
+      // Create properties without 4-room flats
+      const propertiesWithout4Rooms = mockProperties.filter(p => p.rooms !== 4)
+
+      wrapper = mount(RoomFilter, {
+        props: {
+          properties: propertiesWithout4Rooms,
+        },
+        global: {
+          mocks: {
+            $t: (key: string) => key,
+          },
+        },
+      })
+
+      const buttons = wrapper.findAll('button')
+      const button4 = buttons[3] // 4-room button (index 3, since no "All" button)
+      expect(button4.attributes('disabled')).toBeDefined()
+    })
+
+    it('should activate clicked room button and deactivate others', async() => {
+      const buttons = wrapper.findAll('button')
+      const button2 = buttons[1] // 2-room button (index 1)
+
+      await button2.trigger('click')
+
+      // Check aria-pressed attributes instead of CSS classes
+      expect(button2.attributes('aria-pressed')).toBe('true')
+      expect(buttons[0].attributes('aria-pressed')).toBe('false') // 1-room button
+      expect(buttons[2].attributes('aria-pressed')).toBe('false') // 3-room button
+      expect(buttons[3].attributes('aria-pressed')).toBe('false') // 4-room button
+    })
+  })
+
+  describe('Filtering Logic', () => {
+    it('should emit "filter" event with room count when room button clicked', async() => {
+      const button3 = wrapper.findAll('button')[2] // 3-room button (index 2)
+
+      await button3.trigger('click')
+
+      expect(wrapper.emitted('filter')).toBeTruthy()
+      expect(wrapper.emitted('filter')?.[0]).toEqual([{ rooms: 3 }])
+    })
+
+    it('should not emit event when clicking disabled button', async() => {
+      // Create properties without 4-room flats
+      const propertiesWithout4Rooms = mockProperties.filter(p => p.rooms !== 4)
+
+      wrapper = mount(RoomFilter, {
+        props: {
+          properties: propertiesWithout4Rooms,
+        },
+        global: {
+          mocks: {
+            $t: (key: string) => key,
+          },
+        },
+      })
+
+      const button4 = wrapper.findAll('button')[3] // 4-room button (index 3)
+
+      await button4.trigger('click')
+
+      expect(wrapper.emitted('filter')).toBeFalsy()
+    })
+  })
+
+  describe('Accessibility', () => {
+    it('should have proper ARIA labels for buttons', () => {
+      const buttons = wrapper.findAll('button')
+
+      buttons.forEach((button) => {
+        expect(button.attributes('aria-label')).toBeDefined()
+        expect(button.attributes('aria-label')).not.toBe('')
+      })
+    })
+
+    it('should have aria-pressed false for all buttons by default', () => {
+      const buttons = wrapper.findAll('button')
+      buttons.forEach(button => {
+        expect(button.attributes('aria-pressed')).toBe('false')
+      })
+    })
+
+    it('should update aria-pressed when button clicked', async() => {
+      const button2 = wrapper.findAll('button')[1] // 2-room button
+
+      await button2.trigger('click')
+
+      expect(button2.attributes('aria-pressed')).toBe('true')
+      expect(wrapper.findAll('button')[0].attributes('aria-pressed')).toBe('false') // 1-room button
+      expect(wrapper.findAll('button')[2].attributes('aria-pressed')).toBe('false') // 3-room button
+    })
+
+    it('should be keyboard accessible', async() => {
+      const button2 = wrapper.findAll('button')[1] // 2-room button
+
+      await button2.trigger('keydown.enter')
+
+      expect(wrapper.emitted('filter')).toBeTruthy()
+      expect(wrapper.emitted('filter')?.[0]).toEqual([{ rooms: 2 }])
+    })
+
+    it('should indicate disabled state with aria-disabled', () => {
+      // Create properties without 4-room flats
+      const propertiesWithout4Rooms = mockProperties.filter(p => p.rooms !== 4)
+
+      wrapper = mount(RoomFilter, {
+        props: {
+          properties: propertiesWithout4Rooms,
+        },
+        global: {
+          mocks: {
+            $t: (key: string) => key,
+          },
+        },
+      })
+
+      const button4 = wrapper.findAll('button')[3] // 4-room button (index 3)
+      expect(button4.attributes('aria-disabled')).toBe('true')
+    })
+  })
+
+  describe('Styling', () => {
+    it('should have buttons with proper styling classes', () => {
+      const buttons = wrapper.findAll('button')
+
+      buttons.forEach((button) => {
+        // Check that buttons have CSS Modules classes applied
+        expect(button.classes().length).toBeGreaterThan(0)
+        // Check that at least one class contains the expected pattern
+        expect(button.classes().some(cls => cls.includes('room-filter'))).toBe(true)
+      })
+    })
+
+    it('should have different styling when button is active', async() => {
+      const button2 = wrapper.findAll('button')[1] // 2-room button
+
+      await button2.trigger('click')
+
+      // Check that active button has more classes than inactive ones
+      expect(button2.classes().length).toBeGreaterThan(1)
+    })
+
+    it('should have disabled styling for unavailable rooms', () => {
+      // Create properties without 4-room flats
+      const propertiesWithout4Rooms = mockProperties.filter(p => p.rooms !== 4)
+
+      wrapper = mount(RoomFilter, {
+        props: {
+          properties: propertiesWithout4Rooms,
+        },
+        global: {
+          mocks: {
+            $t: (key: string) => key,
+          },
+        },
+      })
+
+      const button4 = wrapper.findAll('button')[3] // 4-room button (index 3)
+      expect(button4.attributes('disabled')).toBeDefined()
+    })
+  })
+
+  describe('i18n', () => {
+    it('should handle singular/plural room labels', () => {
+      const buttons = wrapper.findAll('button')
+      expect(buttons[0].attributes('aria-label')).toContain('1 room') // 1-room button
+      expect(buttons[1].attributes('aria-label')).toContain('2 rooms') // 2-room button
+    })
+  })
+})

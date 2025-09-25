@@ -1,7 +1,11 @@
 <template>
-  <div :class="styles.sidebarContent">
-    <h3>{{ $t('sidebar.filters') }}</h3>
-    <p>{{ $t('sidebar.filtersDescription') }}</p>
+  <div :class="styles.sidebar">
+
+    <!-- Room Filter -->
+    <RoomFilter
+      :properties="properties"
+      @filter="handleRoomFilter"
+    />
 
     <div :class="styles.sidebarSection">
       <h4>{{ $t('sidebar.priceRange') }}</h4>
@@ -28,5 +32,20 @@
 </template>
 
 <script setup lang="ts">
+import type { RoomFilter } from '~/composables/useFilters'
 import styles from '~/assets/styles/components/Sidebar.module.scss'
+
+interface Props {
+  properties: Array<{ rooms: number }>
+}
+
+defineProps<Props>()
+
+const emit = defineEmits<{
+  roomFilter: [filterData: { rooms: RoomFilter }]
+}>()
+
+const handleRoomFilter = (filterData: { rooms: RoomFilter }) => {
+  emit('roomFilter', filterData)
+}
 </script>

@@ -13,15 +13,37 @@
     <aside :class="styles.layout__sidebar" v-if="!isMobile" data-test="layout-sidebar">
       <slot name="sidebar"></slot>
     </aside>
+
+    <!-- Mobile filter components -->
+    <FilterToggle v-if="isMobile" />
+    <FilterDrawer v-if="isMobile" :properties="properties" @room-filter="handleRoomFilter" />
+
     <ScrollToTop />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useDevice } from '~/composables/useDevice'
+import FilterToggle from '~/components/FilterToggle.vue'
+import FilterDrawer from '~/components/FilterDrawer.vue'
+import type { RoomFilter } from '~/composables/useFilters'
 import styles from '~/assets/styles/layouts/default.module.scss'
 
+interface Props {
+  properties: Array<{ rooms: number }>
+}
+
+defineProps<Props>()
+
+const emit = defineEmits<{
+  roomFilter: [filterData: { rooms: RoomFilter }]
+}>()
+
 const { isMobile } = useDevice()
+
+const handleRoomFilter = (filterData: { rooms: RoomFilter }) => {
+  emit('roomFilter', filterData)
+}
 
 defineOptions({
   name: 'DefaultLayout'

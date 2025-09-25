@@ -1,6 +1,7 @@
 import { beforeAll, afterAll, afterEach } from 'vitest'
 import { setupServer } from 'msw/node'
 import { handlers } from '~/mocks/handlers'
+import { ref, computed, reactive, nextTick } from 'vue'
 
 // Global type declarations for test environment
 declare global {
@@ -135,3 +136,6 @@ Object.defineProperty(window, 'innerHeight', {
   }
   return translations[key] || key
 }
+
+// Make Vue composables available globally for tests
+Object.assign(globalThis, { ref, computed, reactive, nextTick })

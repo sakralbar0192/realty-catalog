@@ -38,7 +38,8 @@
     },
     "units": {
       "area": "м²",
-      "currency": "₽"
+      "currency": "₽",
+      "room": "к"
     },
     "price": "Цена",
     "location": "Местоположение",
@@ -53,7 +54,8 @@
     "dark": "Темная тема",
     "toggle": "Переключить тему",
     "Switch to light theme": "Переключить на светлую тему",
-    "Switch to dark theme": "Переключить на темную тему"
+    "Switch to dark theme": "Переключить на темную тему",
+    "title": "Тема"
   },
   "search": {
     "placeholder": "Поиск недвижимости...",
@@ -100,5 +102,13 @@
   "settings": {
     "title": "Настройки",
     "open": "Открыть настройки"
+  },
+  "filters": {
+    "rooms": {
+      "label": "Комнат",
+      "all": "Все",
+      "room": "комната",
+      "rooms": "комнат"
+    }
   }
 }

@@ -36,7 +36,7 @@
       &:hover:not(:disabled) {
         background-color: var(--color-primary-hover);
         transform: translateY(-1px);
-        box-shadow: var(--shadow-lg);
+        box-shadow: var(--shadow-tertiary);
       }
 
       &:active:not(:disabled) {
@@ -75,7 +75,7 @@
       position: sticky;
       top: 0px;
       background-color: var(--color-background);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-secondary);
       max-height: 36px;
       
       th {padding-top: 5px;}
@@ -86,7 +86,7 @@
       text-align: left;
       vertical-align: top;
       font-weight: var(--font-weight-regular);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-secondary);
     }
 
     th {
@@ -128,7 +128,7 @@
   border-radius: 8px;
 
   &:hover {
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-tertiary);
   }
 
   &__content {

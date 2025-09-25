@@ -1,12 +1,16 @@
 <template>
-  <NuxtLayout name="default">
+  <NuxtLayout
+    name="default"
+    :properties="properties"
+    @room-filter="handleRoomFilter"
+  >
     <template #header>
       <h1>{{$t('properties.title')}}</h1>
     </template>
 
     <template #main>
       <PropertyTable
-        :properties="sortedProperties"
+        :properties="filteredAndSortedProperties"
         :loading="loading"
         :has-more="hasMorePages"
         @load-more="handleLoadMore"
@@ -14,13 +18,19 @@
       />
     </template>
     <template #sidebar>
-      <Sidebar />
+      <Sidebar
+        :properties="properties"
+        @room-filter="handleRoomFilter"
+      />
     </template>
   </NuxtLayout>
 
   <!-- Settings Panel -->
   <SettingsPanel ref="settingsPanel" />
   <SettingsToggle />
+
+  <!-- Mobile Filter Drawer -->
+  <FilterDrawer ref="filterDrawerRef" :properties="properties" @room-filter="handleRoomFilter" />
 </template>
 
 <script setup lang="ts">
@@ -28,10 +38,13 @@ import { ref, provide } from 'vue'
 import { usePropertyStore } from '~/stores/property'
 import { useTheme } from '~/composables/useTheme'
 import { useSorting } from '~/composables/useSorting'
+import { useFilters } from '~/composables/useFilters'
 import { storeToRefs } from 'pinia'
 import type { SortField, SortDirection } from '~/components/PropertyTable.vue'
+import type { RoomFilter } from '~/composables/useFilters'
 import SettingsPanel from '~/components/SettingsPanel.vue'
 import SettingsToggle from '~/components/SettingsToggle.vue'
+import FilterDrawer from '~/components/FilterDrawer.vue'
 
 useHead({
   title: 'Realty Catalog',
@@ -46,6 +59,7 @@ useHead({
 const propertyStore = usePropertyStore()
 const { initializeTheme } = useTheme()
 const { setSort } = useSorting()
+const { applyFilters, setRoomFilter } = useFilters()
 const route = useRoute()
 const router = useRouter()
 
@@ -61,6 +75,10 @@ provide('settingsPanel', computed(() => ({
   isOpen: settingsPanel.value?.isOpen ?? false,
 })))
 
+// Provide filter drawer ref to child components
+const filterDrawerRef = ref()
+provide('filterDrawerRef', filterDrawerRef)
+
 // Reactive route query
 const routeQuery = computed(() => route.query)
 
@@ -69,14 +87,18 @@ if (route.query.sort && route.query.order) {
   setSort(route.query.sort as SortField, route.query.order as SortDirection)
 }
 
-// Reactive sorted properties
-const sortedProperties = computed(() => {
+// Reactive filtered and sorted properties
+const filteredAndSortedProperties = computed(() => {
+  // First apply filters
+  const filtered = applyFilters(properties.value)
+
+  // Then apply sorting
   const sortField = routeQuery.value.sort as SortField | undefined
   const sortDirection = routeQuery.value.order as SortDirection | undefined
 
-  if (!sortField) return properties.value
+  if (!sortField) return filtered
 
-  return [...properties.value].sort((a, b) => {
+  return [...filtered].sort((a, b) => {
     let aValue: number
     let bValue: number
 
@@ -117,6 +139,10 @@ const handleSort = (sortData: { field: SortField; direction: SortDirection }) =>
       order: sortData.direction
     }
   })
+}
+
+const handleRoomFilter = (filterData: { rooms: RoomFilter }) => {
+  setRoomFilter(filterData.rooms)
 }
 
 onBeforeMount(async () => {
