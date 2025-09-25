@@ -7,10 +7,11 @@
           <th scope="col">{{ $t('properties.table.headers.name') }}</th>
           <th scope="col">
             <button
+              ref="sortButtonRefs.area"
               type="button"
               :class="getSortButtonClass('area')"
               @click="handleSort('area')"
-              @keydown.enter="handleSort('area')"
+              @keydown.enter.prevent="handleSort('area')"
               @keydown.space.prevent="handleSort('area')"
               :aria-sort="getAriaSort('area')"
               :aria-label="getSortAriaLabel('area')"
@@ -22,10 +23,11 @@
           </th>
           <th scope="col">
             <button
+              ref="sortButtonRefs.floor"
               type="button"
               :class="getSortButtonClass('floor')"
               @click="handleSort('floor')"
-              @keydown.enter="handleSort('floor')"
+              @keydown.enter.prevent="handleSort('floor')"
               @keydown.space.prevent="handleSort('floor')"
               :aria-sort="getAriaSort('floor')"
               :aria-label="getSortAriaLabel('floor')"
@@ -37,10 +39,11 @@
           </th>
           <th scope="col">
             <button
+              ref="sortButtonRefs.price"
               type="button"
               :class="getSortButtonClass('price')"
               @click="handleSort('price')"
-              @keydown.enter="handleSort('price')"
+              @keydown.enter.prevent="handleSort('price')"
               @keydown.space.prevent="handleSort('price')"
               :aria-sort="getAriaSort('price')"
               :aria-label="getSortAriaLabel('price')"
@@ -75,10 +78,11 @@
     <div v-else>
       <div :class="styles['table__mobile-sort']">
         <button
+          ref="sortButtonRefs.area"
           type="button"
           :class="getSortButtonClass('area')"
           @click="handleSort('area')"
-          @keydown.enter="handleSort('area')"
+          @keydown.enter.prevent="handleSort('area')"
           @keydown.space.prevent="handleSort('area')"
           :aria-sort="getAriaSort('area')"
           :aria-label="getSortAriaLabel('area')"
@@ -88,10 +92,11 @@
           <SortIcon :direction="getSortDirection('area')" />
         </button>
         <button
+          ref="sortButtonRefs.floor"
           type="button"
           :class="getSortButtonClass('floor')"
           @click="handleSort('floor')"
-          @keydown.enter="handleSort('floor')"
+          @keydown.enter.prevent="handleSort('floor')"
           @keydown.space.prevent="handleSort('floor')"
           :aria-sort="getAriaSort('floor')"
           :aria-label="getSortAriaLabel('floor')"
@@ -101,10 +106,11 @@
           <SortIcon :direction="getSortDirection('floor')" />
         </button>
         <button
+          ref="sortButtonRefs.price"
           type="button"
           :class="getSortButtonClass('price')"
           @click="handleSort('price')"
-          @keydown.enter="handleSort('price')"
+          @keydown.enter.prevent="handleSort('price')"
           @keydown.space.prevent="handleSort('price')"
           :aria-sort="getAriaSort('price')"
           :aria-label="getSortAriaLabel('price')"
@@ -166,6 +172,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, nextTick } from 'vue'
 import type { Property } from '~/mocks/models'
 import { useDevice } from '~/composables/useDevice'
 import { useAppI18n } from '~/composables/useI18n'
@@ -196,6 +203,13 @@ const {
   getSortDirection
 } = useSorting()
 
+// Refs for sort buttons to maintain focus after sorting
+const sortButtonRefs = ref<Record<string, HTMLButtonElement | null>>({
+  area: null,
+  floor: null,
+  price: null
+})
+
 const getImageSrc = (property: Property): string => {
   return property.imageUrl || '/img/flat.svg'
 }
@@ -222,6 +236,13 @@ const handleSort = (field: SortField) => {
   const direction = getSortDirection(field)
   if (direction) {
     emit('sort', { field, direction })
+    // Restore focus to the button after sorting (in case properties reorder causes re-render)
+    nextTick(() => {
+      const button = sortButtonRefs.value[field]
+      if (button) {
+        button.focus()
+      }
+    })
   }
 }
 

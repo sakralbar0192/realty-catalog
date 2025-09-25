@@ -3,6 +3,8 @@
     type="button"
     :class="styles.toggle"
     @click="toggleTheme"
+    @keydown.enter.prevent="toggleTheme"
+    @keydown.space.prevent="toggleTheme"
     :aria-label="isDarkTheme ? $t('theme.Switch to light theme') : $t('theme.Switch to dark theme')"
     data-test="theme-toggle"
   >

@@ -45,10 +45,8 @@ const priceRange = computed(() => {
 })
 
 // Reactive state for current filter values
-const defaultMin = priceRange.value.min + (priceRange.value.max - priceRange.value.min) * 0.25
-const defaultMax = priceRange.value.min + (priceRange.value.max - priceRange.value.min) * 0.75
-const minPrice = ref(props.currentFilter?.min ?? defaultMin)
-const maxPrice = ref(props.currentFilter?.max ?? defaultMax)
+const minPrice = ref(props.currentFilter?.min ?? priceRange.value.min)
+const maxPrice = ref(props.currentFilter?.max ?? priceRange.value.max)
 
 // Format price for display
 const formatPrice = (price: number): string => {
@@ -73,8 +71,8 @@ watch(() => props.currentFilter, (newFilter) => {
     minPrice.value = newFilter.min
     maxPrice.value = newFilter.max
   } else {
-    minPrice.value = priceRange.value.min + (priceRange.value.max - priceRange.value.min) * 0.25
-    maxPrice.value = priceRange.value.min + (priceRange.value.max - priceRange.value.min) * 0.75
+    minPrice.value = priceRange.value.min
+    maxPrice.value = priceRange.value.max
   }
 })
 </script>

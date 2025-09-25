@@ -69,6 +69,7 @@ describe('RoomFilter', () => {
     wrapper = mount(RoomFilter, {
       props: {
         properties: mockProperties,
+        currentFilter: null,
       },
       global: {
         mocks: {
@@ -119,6 +120,7 @@ describe('RoomFilter', () => {
       wrapper = mount(RoomFilter, {
         props: {
           properties: propertiesWithout4Rooms,
+          currentFilter: null,
         },
         global: {
           mocks: {
@@ -144,6 +146,38 @@ describe('RoomFilter', () => {
       expect(buttons[2].attributes('aria-pressed')).toBe('false') // 3-room button
       expect(buttons[3].attributes('aria-pressed')).toBe('false') // 4-room button
     })
+
+    it('should deactivate filter when clicking on active button', async() => {
+      const buttons = wrapper.findAll('button')
+      const button3 = buttons[2] // 3-room button (index 2)
+
+      // First click activates the filter
+      await button3.trigger('click')
+      expect(button3.attributes('aria-pressed')).toBe('true')
+
+      // Second click on the same button deactivates it
+      await button3.trigger('click')
+      expect(button3.attributes('aria-pressed')).toBe('false')
+
+      // Check that emit was called with null on second click
+      expect(wrapper.emitted('filter')?.[1]).toEqual([{ rooms: null }])
+    })
+
+    it('should update active state when currentFilter prop changes', async() => {
+      const buttons = wrapper.findAll('button')
+      const button2 = buttons[1] // 2-room button
+
+      // Initially no active filter
+      expect(button2.attributes('aria-pressed')).toBe('false')
+
+      // Update prop to make button2 active
+      await wrapper.setProps({ currentFilter: 2 })
+      expect(button2.attributes('aria-pressed')).toBe('true')
+
+      // Update prop to clear filter
+      await wrapper.setProps({ currentFilter: null })
+      expect(button2.attributes('aria-pressed')).toBe('false')
+    })
   })
 
   describe('Filtering Logic', () => {
@@ -163,6 +197,7 @@ describe('RoomFilter', () => {
       wrapper = mount(RoomFilter, {
         props: {
           properties: propertiesWithout4Rooms,
+          currentFilter: null,
         },
         global: {
           mocks: {
@@ -209,7 +244,7 @@ describe('RoomFilter', () => {
     it('should be keyboard accessible', async() => {
       const button2 = wrapper.findAll('button')[1] // 2-room button
 
-      await button2.trigger('keydown.enter')
+      await button2.trigger('keydown.space')
 
       expect(wrapper.emitted('filter')).toBeTruthy()
       expect(wrapper.emitted('filter')?.[0]).toEqual([{ rooms: 2 }])
@@ -222,6 +257,7 @@ describe('RoomFilter', () => {
       wrapper = mount(RoomFilter, {
         props: {
           properties: propertiesWithout4Rooms,
+          currentFilter: null,
         },
         global: {
           mocks: {
@@ -263,6 +299,7 @@ describe('RoomFilter', () => {
       wrapper = mount(RoomFilter, {
         props: {
           properties: propertiesWithout4Rooms,
+          currentFilter: null,
         },
         global: {
           mocks: {

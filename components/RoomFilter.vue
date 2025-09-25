@@ -7,12 +7,12 @@
       :class="getButtonClass(roomCount)"
       :disabled="!isRoomAvailable(roomCount)"
       @click="handleFilter(roomCount)"
-      @keydown.enter="handleFilter(roomCount)"
       @keydown.space.prevent="handleFilter(roomCount)"
       :aria-pressed="isActive(roomCount)"
       :aria-disabled="!isRoomAvailable(roomCount)"
       :aria-label="getRoomAriaLabel(roomCount)"
       :data-test="`room-filter-${roomCount}`"
+      tabindex="0"
     >
       {{ roomCount }}{{ $t('properties.units.room') }}
     </button>
@@ -20,12 +20,14 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import type { RoomFilter } from '~/composables/useFilters'
 import { useAppI18n } from '~/composables/useI18n'
 import styles from '~/assets/styles/components/RoomFilter.module.scss'
 
 interface Props {
   properties: Array<{ rooms: number }>
+  currentFilter: RoomFilter
 }
 
 const props = defineProps<Props>()
@@ -37,7 +39,12 @@ const emit = defineEmits<{
 const { translate: $t } = useAppI18n()
 
 // Reactive state for active filter
-const activeFilter = ref<RoomFilter>(null)
+const activeFilter = ref<RoomFilter>(props.currentFilter)
+
+// Watch for external filter changes (e.g., clear filters)
+watch(() => props.currentFilter, (newFilter) => {
+  activeFilter.value = newFilter
+})
 
 // Check if room count is available in properties
 const isRoomAvailable = (roomCount: number): boolean => {
@@ -73,7 +80,12 @@ const handleFilter = (filter: RoomFilter) => {
     return
   }
 
-  activeFilter.value = filter
-  emit('filter', { rooms: filter })
+  // Toggle: if clicking on active filter, deactivate it
+  if (activeFilter.value === filter) {
+    activeFilter.value = null
+  } else {
+    activeFilter.value = filter
+  }
+  emit('filter', { rooms: activeFilter.value })
 }
 </script>

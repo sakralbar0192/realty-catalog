@@ -29,6 +29,8 @@
           <button
             :class="styles.drawer__close"
             @click="closeDrawer"
+            @keydown.enter.prevent="closeDrawer"
+            @keydown.space.prevent="closeDrawer"
             :aria-label="$t('common.close')"
             data-test="filter-drawer-close"
           >
@@ -109,10 +111,33 @@ const handleClearFilters = () => {
   emit('clearFilters')
 }
 
-// Handle ESC key
+// Handle keyboard navigation and ESC key
 const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Escape' && isOpen.value) {
+  if (!isOpen.value) return
+
+  if (event.key === 'Escape') {
     closeDrawer()
+    return
+  }
+
+  if (event.key === 'Tab') {
+    focusableElements.value = getFocusableElements()
+    const firstElement = focusableElements.value[0]
+    const lastElement = focusableElements.value[focusableElements.value.length - 1]
+
+    if (event.shiftKey) {
+      // Shift + Tab
+      if (document.activeElement === firstElement) {
+        event.preventDefault()
+        lastElement.focus()
+      }
+    } else {
+      // Tab
+      if (document.activeElement === lastElement) {
+        event.preventDefault()
+        firstElement.focus()
+      }
+    }
   }
 }
 
@@ -126,15 +151,36 @@ onUnmounted(() => {
 })
 
 // Focus management
+const focusableElements = ref<HTMLElement[]>([])
+const previouslyFocusedElement = ref<HTMLElement | null>(null)
+
 watch(isOpen, (newIsOpen) => {
   if (newIsOpen) {
-    // Focus the drawer when opened
+    // Store previously focused element
+    previouslyFocusedElement.value = document.activeElement as HTMLElement
+
+    // Focus first element when drawer opens
     nextTick(() => {
-      const drawer = document.querySelector('[data-test="filter-drawer"]') as HTMLElement
-      if (drawer) {
-        drawer.focus()
+      focusableElements.value = getFocusableElements()
+      const firstElement = focusableElements.value[0]
+      if (firstElement) {
+        firstElement.focus()
       }
     })
+  } else {
+    // Restore focus when closing
+    if (previouslyFocusedElement.value) {
+      previouslyFocusedElement.value.focus()
+    }
   }
 })
+
+const getFocusableElements = () => {
+  const drawer = document.querySelector('[data-test="filter-drawer"]') as HTMLElement
+  if (!drawer) return []
+  return Array.from(drawer.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  )) as HTMLElement[]
+}
+
 </script>

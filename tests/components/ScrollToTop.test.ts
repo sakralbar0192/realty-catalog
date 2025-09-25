@@ -89,12 +89,9 @@ describe('ScrollToTop', () => {
   })
 
   describe('Scroll Detection Logic', () => {
-    it('should show button when IntersectionObserver detects scroll past threshold', async() => {
-      // Since IO is already initialized, we need to trigger its callback
-      // This is complex to test directly, so we'll test the reactive behavior
+    it('should show button when scrolled past threshold', async() => {
+      // Since test uses main element with IO, manually trigger visibility
       const component = wrapper.vm as any
-
-      // Manually set isVisible to true (simulating IO callback)
       component.isVisible = true
       await wrapper.vm.$nextTick()
 
@@ -125,7 +122,7 @@ describe('ScrollToTop', () => {
 
   describe('Click Functionality', () => {
     beforeEach(async() => {
-      mockScrollY = 400
+      mockScrollY = 200
       window.dispatchEvent(new Event('scroll'))
       await wrapper.vm.$nextTick()
     })
@@ -156,7 +153,7 @@ describe('ScrollToTop', () => {
     })
 
     it('should be keyboard accessible', async() => {
-      mockScrollY = 400
+      mockScrollY = 200
       window.dispatchEvent(new Event('scroll'))
       await wrapper.vm.$nextTick()
 
@@ -180,7 +177,7 @@ describe('ScrollToTop', () => {
     })
 
     it('should have focus management', async() => {
-      mockScrollY = 400
+      mockScrollY = 200
       window.dispatchEvent(new Event('scroll'))
       await wrapper.vm.$nextTick()
 

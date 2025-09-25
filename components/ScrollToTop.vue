@@ -27,9 +27,9 @@ const isVisible = ref(false)
 // Configuration
 const SCROLL_THRESHOLD = computed(() => {
   if (import.meta.client && 'ontouchstart' in window) {
-    return 500
+    return 200 // Lower threshold for mobile
   }
-  return 300
+  return 150 // Lower threshold for desktop
 })
 const THROTTLE_DELAY = 100 // Throttle scroll events to 100ms
 
@@ -96,7 +96,9 @@ const updateVisibility = () => {
   const scrollTop = scrollableElement === window
     ? window.scrollY
     : (scrollableElement as HTMLElement).scrollTop || 0
+  console.log('ScrollToTop: updateVisibility called, scrollTop:', scrollTop, 'threshold:', SCROLL_THRESHOLD.value)
   isVisible.value = scrollTop > SCROLL_THRESHOLD.value
+  console.log('ScrollToTop: isVisible set to:', isVisible.value)
 }
 
 // Create throttled version of updateVisibility
@@ -180,9 +182,7 @@ const findScrollableElement = (): HTMLElement | Window => {
   const mainElement = document.querySelector('main')
   if (mainElement) {
     const mainOverflow = getComputedStyle(mainElement).overflowY
-    console.log('ScrollToTop: main element found, overflowY:', mainOverflow)
     if (mainOverflow !== 'visible') {
-      console.log('ScrollToTop: using main element for scrolling')
       return mainElement as HTMLElement
     }
   }
@@ -190,14 +190,11 @@ const findScrollableElement = (): HTMLElement | Window => {
   // Fallback to body
   const bodyElement = document.body
   const bodyOverflow = getComputedStyle(bodyElement).overflowY
-  console.log('ScrollToTop: body overflowY:', bodyOverflow)
   if (bodyOverflow !== 'visible') {
-    console.log('ScrollToTop: using body element for scrolling')
     return bodyElement
   }
 
   // Ultimate fallback to window
-  console.log('ScrollToTop: using window for scrolling')
   return window
 }
 
@@ -205,6 +202,7 @@ const findScrollableElement = (): HTMLElement | Window => {
 onMounted(() => {
   // Find the actual scrollable element
   scrollableElement = findScrollableElement()
+  console.log('ScrollToTop: onMounted, scrollableElement:', scrollableElement)
 
   // Use Intersection Observer for element scrolling, scroll listener for window scrolling
   if ('IntersectionObserver' in window && scrollableElement !== window) {
@@ -212,6 +210,9 @@ onMounted(() => {
   } else {
     setupScrollListener()
   }
+
+  // Initial visibility check
+  updateVisibility()
 })
 
 onUnmounted(() => {

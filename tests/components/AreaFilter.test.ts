@@ -97,12 +97,10 @@ describe('AreaFilter', () => {
       expect(rangeSlider.props('max')).toBe(75)
     })
 
-    it('should set default values at 25% and 75% of range', () => {
+    it('should set default values to full range', () => {
       const rangeSlider = wrapper.findComponent({ name: 'RangeSlider' })
-      // 35 + (75-35)*0.25 = 45
-      // 35 + (75-35)*0.75 = 65
-      expect(rangeSlider.props('minValue')).toBe(45)
-      expect(rangeSlider.props('maxValue')).toBe(65)
+      expect(rangeSlider.props('minValue')).toBe(35)
+      expect(rangeSlider.props('maxValue')).toBe(75)
     })
   })
 
@@ -163,8 +161,8 @@ describe('AreaFilter', () => {
       await wrapper.setProps({ currentFilter: null })
 
       const rangeSlider = wrapper.findComponent({ name: 'RangeSlider' })
-      expect(rangeSlider.props('minValue')).toBe(45)
-      expect(rangeSlider.props('maxValue')).toBe(65)
+      expect(rangeSlider.props('minValue')).toBe(35)
+      expect(rangeSlider.props('maxValue')).toBe(75)
     })
   })
 

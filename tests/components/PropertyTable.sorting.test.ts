@@ -254,7 +254,23 @@ describe('PropertyTable - Sorting', () => {
     it('should be keyboard accessible', async() => {
       const areaButton = wrapper.findAll('th button')[0]
 
-      await areaButton.trigger('keydown.enter')
+      await areaButton.trigger('keydown', { key: 'Enter' })
+      expect(areaButton.attributes('aria-sort')).toBe('ascending')
+    })
+
+    it('should handle multiple Enter key presses for sorting', async() => {
+      const areaButton = wrapper.findAll('th button')[0]
+
+      // First Enter press
+      await areaButton.trigger('keydown', { key: 'Enter' })
+      expect(areaButton.attributes('aria-sort')).toBe('ascending')
+
+      // Second Enter press should toggle to descending
+      await areaButton.trigger('keydown', { key: 'Enter' })
+      expect(areaButton.attributes('aria-sort')).toBe('descending')
+
+      // Third Enter press should toggle back to ascending
+      await areaButton.trigger('keydown', { key: 'Enter' })
       expect(areaButton.attributes('aria-sort')).toBe('ascending')
     })
   })

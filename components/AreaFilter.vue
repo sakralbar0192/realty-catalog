@@ -45,10 +45,8 @@ const areaRange = computed(() => {
 })
 
 // Reactive state for current filter values
-const defaultMin = areaRange.value.min + (areaRange.value.max - areaRange.value.min) * 0.25
-const defaultMax = areaRange.value.min + (areaRange.value.max - areaRange.value.min) * 0.75
-const minArea = ref(props.currentFilter?.min ?? defaultMin)
-const maxArea = ref(props.currentFilter?.max ?? defaultMax)
+const minArea = ref(props.currentFilter?.min ?? areaRange.value.min)
+const maxArea = ref(props.currentFilter?.max ?? areaRange.value.max)
 
 // Format area for display
 const formatArea = (area: number): string => {
@@ -71,8 +69,8 @@ watch(() => props.currentFilter, (newFilter) => {
     minArea.value = newFilter.min
     maxArea.value = newFilter.max
   } else {
-    minArea.value = areaRange.value.min + (areaRange.value.max - areaRange.value.min) * 0.25
-    maxArea.value = areaRange.value.min + (areaRange.value.max - areaRange.value.min) * 0.75
+    minArea.value = areaRange.value.min
+    maxArea.value = areaRange.value.max
   }
 })
 </script>

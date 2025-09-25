@@ -97,12 +97,10 @@ describe('PriceFilter', () => {
       expect(rangeSlider.props('max')).toBe(100000)
     })
 
-    it('should set default values at 25% and 75% of range', () => {
+    it('should set default values to full range', () => {
       const rangeSlider = wrapper.findComponent({ name: 'RangeSlider' })
-      // 50000 + (100000-50000)*0.25 = 62500
-      // 50000 + (100000-50000)*0.75 = 87500
-      expect(rangeSlider.props('minValue')).toBe(62500)
-      expect(rangeSlider.props('maxValue')).toBe(87500)
+      expect(rangeSlider.props('minValue')).toBe(50000)
+      expect(rangeSlider.props('maxValue')).toBe(100000)
     })
   })
 
@@ -155,8 +153,8 @@ describe('PriceFilter', () => {
       await wrapper.setProps({ currentFilter: null })
 
       const rangeSlider = wrapper.findComponent({ name: 'RangeSlider' })
-      expect(rangeSlider.props('minValue')).toBe(62500)
-      expect(rangeSlider.props('maxValue')).toBe(87500)
+      expect(rangeSlider.props('minValue')).toBe(50000)
+      expect(rangeSlider.props('maxValue')).toBe(100000)
     })
   })
 
