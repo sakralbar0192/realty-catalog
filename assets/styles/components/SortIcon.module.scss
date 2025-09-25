@@ -1,0 +1,58 @@
+.sort-icon {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  width: 10px;
+  height: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  opacity: 0.4; // Default muted state
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &__chevron {
+		width: 100%;
+		height: 50%;
+		color: var(--color-text-muted);
+		transition: color 0.2s ease;
+
+		&.active {
+			color: var(--color-primary);
+		}
+
+		&--up {
+			transform: rotate(0deg);
+			
+		}
+
+			&--down {
+			transform: scaleY(-1);
+		}
+	}
+
+	&[data-active="true"] {
+		opacity: 1;
+
+		.sort-icon__chevron {
+			color: var(--color-text-primary);
+
+			&.active {
+				color: var(--color-primary);
+			}
+		}
+		
+	}
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .sortIcon {
+    width: 7px;
+    height: 7px;
+    gap: 0.5px;
+  }
+}

@@ -5,9 +5,51 @@
         <tr>
           <th scope="col">{{ $t('properties.table.headers.image') }}</th>
           <th scope="col">{{ $t('properties.table.headers.name') }}</th>
-          <th scope="col">{{ $t('properties.table.headers.area') }}</th>
-          <th scope="col">{{ $t('properties.table.headers.floor') }}</th>
-          <th scope="col">{{ $t('properties.table.headers.price') }}</th>
+          <th scope="col">
+            <button
+              type="button"
+              :class="getSortButtonClass('area')"
+              @click="handleSort('area')"
+              @keydown.enter="handleSort('area')"
+              @keydown.space.prevent="handleSort('area')"
+              :aria-sort="getAriaSort('area')"
+              :aria-label="getSortAriaLabel('area')"
+              data-test="sort-area"
+            >
+              {{ $t('properties.table.headers.area') }}
+              <SortIcon :direction="getSortDirection('area')" />
+            </button>
+          </th>
+          <th scope="col">
+            <button
+              type="button"
+              :class="getSortButtonClass('floor')"
+              @click="handleSort('floor')"
+              @keydown.enter="handleSort('floor')"
+              @keydown.space.prevent="handleSort('floor')"
+              :aria-sort="getAriaSort('floor')"
+              :aria-label="getSortAriaLabel('floor')"
+              data-test="sort-floor"
+            >
+              {{ $t('properties.table.headers.floor') }}
+              <SortIcon :direction="getSortDirection('floor')" />
+            </button>
+          </th>
+          <th scope="col">
+            <button
+              type="button"
+              :class="getSortButtonClass('price')"
+              @click="handleSort('price')"
+              @keydown.enter="handleSort('price')"
+              @keydown.space.prevent="handleSort('price')"
+              :aria-sort="getAriaSort('price')"
+              :aria-label="getSortAriaLabel('price')"
+              data-test="sort-price"
+            >
+              {{ $t('properties.table.headers.price') }}
+              <SortIcon :direction="getSortDirection('price')" />
+            </button>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -30,11 +72,47 @@
     </table>
 
     <!-- Mobile/Tablet Card View -->
-    <template v-else>
-      <div>
-        <span scope="col">{{ $t('properties.table.headers.area') }}</span>
-        <span scope="col">{{ $t('properties.table.headers.floor') }}</span>
-        <span scope="col">{{ $t('properties.table.headers.price') }}</span>
+    <div v-else>
+      <div :class="styles['table__mobile-sort']">
+        <button
+          type="button"
+          :class="getSortButtonClass('area')"
+          @click="handleSort('area')"
+          @keydown.enter="handleSort('area')"
+          @keydown.space.prevent="handleSort('area')"
+          :aria-sort="getAriaSort('area')"
+          :aria-label="getSortAriaLabel('area')"
+          data-test="sort-area"
+        >
+          {{ $t('properties.table.headers.area') }}
+          <SortIcon :direction="getSortDirection('area')" />
+        </button>
+        <button
+          type="button"
+          :class="getSortButtonClass('floor')"
+          @click="handleSort('floor')"
+          @keydown.enter="handleSort('floor')"
+          @keydown.space.prevent="handleSort('floor')"
+          :aria-sort="getAriaSort('floor')"
+          :aria-label="getSortAriaLabel('floor')"
+          data-test="sort-floor"
+        >
+          {{ $t('properties.table.headers.floor') }}
+          <SortIcon :direction="getSortDirection('floor')" />
+        </button>
+        <button
+          type="button"
+          :class="getSortButtonClass('price')"
+          @click="handleSort('price')"
+          @keydown.enter="handleSort('price')"
+          @keydown.space.prevent="handleSort('price')"
+          :aria-sort="getAriaSort('price')"
+          :aria-label="getSortAriaLabel('price')"
+          data-test="sort-price"
+        >
+          {{ $t('properties.table.headers.price') }}
+          <SortIcon :direction="getSortDirection('price')" />
+        </button>
       </div>
       <div :class="styles.cards" class="mobile-tablet-only">
         <div
@@ -64,7 +142,7 @@
           </div>
         </div>
       </div>
-    </template>
+    </div>
 
     <!-- Load More Button -->
     <div v-if="hasMore" :class="styles.table__more">
@@ -91,6 +169,8 @@
 import type { Property } from '~/mocks/models'
 import { useDevice } from '~/composables/useDevice'
 import { useAppI18n } from '~/composables/useI18n'
+import { useSorting } from '~/composables/useSorting'
+import SortIcon from '~/components/SortIcon.vue'
 import styles from '~/assets/styles/components/PropertyTable.module.scss'
 
 
@@ -102,12 +182,19 @@ interface Props {
 
 defineProps<Props>()
 
-defineEmits<{
+const emit = defineEmits<{
   loadMore: []
+  sort: [sortData: { field: SortField; direction: SortDirection }]
 }>()
 
 const { isMobile, isTablet } = useDevice()
 const {translate: $t} = useAppI18n()
+const {
+  toggleSort,
+  getAriaSort,
+  isSortedBy,
+  getSortDirection
+} = useSorting()
 
 const getImageSrc = (property: Property): string => {
   return property.imageUrl || '/img/flat.svg'
@@ -123,5 +210,32 @@ const formatFloor = (totalFloors: number): string => {
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat('ru-RU').format(price)
+}
+
+// Sorting functionality
+export type SortField = 'area' | 'floor' | 'price'
+export type SortDirection = 'asc' | 'desc'
+
+const handleSort = (field: SortField) => {
+  toggleSort(field)
+  // Emit sort event to parent with current sort data
+  const direction = getSortDirection(field)
+  if (direction) {
+    emit('sort', { field, direction })
+  }
+}
+
+const getSortButtonClass = (field: SortField): string => {
+  const baseClass = styles['sort-button']
+  const activeClass = isSortedBy(field) ? styles['sort-button--active'] : ''
+  return `${baseClass} ${activeClass}`.trim()
+}
+
+const getSortAriaLabel = (field: SortField): string => {
+  const direction = getSortDirection(field)
+  if (!direction) return $t('properties.table.headers.area') // fallback
+
+  const key = `sort.${field}${direction === 'asc' ? 'Asc' : 'Desc'}`
+  return $t(key)
 }
 </script>

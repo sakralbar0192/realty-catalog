@@ -1,0 +1,57 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SortIcon Snapshots > should match snapshot when direction is asc 1`] = `
+"<div class="_sort-icon_224acd" data-test="sort-icon-asc">
+  <!-- Chevron Up --><svg class="_sort-icon__chevron_224acd _sort-icon__chevron--up_224acd _active_224acd" xmlns="http://www.w3.org/2000/svg" width="7" height="4" fill="none" viewBox="0 0 7 4">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+      <path fill="currentColor" d="M4.034.253A.846.846 0 0 0 3.428 0c-.229 0-.444.09-.605.253L.168 3.013a.583.583 0 0 0 0 .817.566.566 0 0 0 .807 0l2.453-2.555L5.882 3.83a.566.566 0 0 0 .808 0 .583.583 0 0 0 0-.817L4.034.253Z"></path>
+    </g>
+  </svg><!-- Chevron Down --><svg class="_sort-icon__chevron_224acd _sort-icon__chevron--down_224acd" xmlns="http://www.w3.org/2000/svg" width="7" height="4" fill="none" viewBox="0 0 7 4">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+      <path fill="currentColor" d="M4.034.253A.846.846 0 0 0 3.428 0c-.229 0-.444.09-.605.253L.168 3.013a.583.583 0 0 0 0 .817.566.566 0 0 0 .807 0l2.453-2.555L5.882 3.83a.566.566 0 0 0 .808 0 .583.583 0 0 0 0-.817L4.034.253Z"></path>
+    </g>
+  </svg>
+</div>"
+`;
+
+exports[`SortIcon Snapshots > should match snapshot when direction is desc 1`] = `
+"<div class="_sort-icon_224acd" data-test="sort-icon-desc">
+  <!-- Chevron Up --><svg class="_sort-icon__chevron_224acd _sort-icon__chevron--up_224acd" xmlns="http://www.w3.org/2000/svg" width="7" height="4" fill="none" viewBox="0 0 7 4">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+      <path fill="currentColor" d="M4.034.253A.846.846 0 0 0 3.428 0c-.229 0-.444.09-.605.253L.168 3.013a.583.583 0 0 0 0 .817.566.566 0 0 0 .807 0l2.453-2.555L5.882 3.83a.566.566 0 0 0 .808 0 .583.583 0 0 0 0-.817L4.034.253Z"></path>
+    </g>
+  </svg><!-- Chevron Down --><svg class="_sort-icon__chevron_224acd _sort-icon__chevron--down_224acd _active_224acd" xmlns="http://www.w3.org/2000/svg" width="7" height="4" fill="none" viewBox="0 0 7 4">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+      <path fill="currentColor" d="M4.034.253A.846.846 0 0 0 3.428 0c-.229 0-.444.09-.605.253L.168 3.013a.583.583 0 0 0 0 .817.566.566 0 0 0 .807 0l2.453-2.555L5.882 3.83a.566.566 0 0 0 .808 0 .583.583 0 0 0 0-.817L4.034.253Z"></path>
+    </g>
+  </svg>
+</div>"
+`;
+
+exports[`SortIcon Snapshots > should match snapshot when direction is null 1`] = `
+"<div class="_sort-icon_224acd" data-test="sort-icon-null">
+  <!-- Chevron Up --><svg class="_sort-icon__chevron_224acd _sort-icon__chevron--up_224acd" xmlns="http://www.w3.org/2000/svg" width="7" height="4" fill="none" viewBox="0 0 7 4">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+      <path fill="currentColor" d="M4.034.253A.846.846 0 0 0 3.428 0c-.229 0-.444.09-.605.253L.168 3.013a.583.583 0 0 0 0 .817.566.566 0 0 0 .807 0l2.453-2.555L5.882 3.83a.566.566 0 0 0 .808 0 .583.583 0 0 0 0-.817L4.034.253Z"></path>
+    </g>
+  </svg><!-- Chevron Down --><svg class="_sort-icon__chevron_224acd _sort-icon__chevron--down_224acd" xmlns="http://www.w3.org/2000/svg" width="7" height="4" fill="none" viewBox="0 0 7 4">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+      <path fill="currentColor" d="M4.034.253A.846.846 0 0 0 3.428 0c-.229 0-.444.09-.605.253L.168 3.013a.583.583 0 0 0 0 .817.566.566 0 0 0 .807 0l2.453-2.555L5.882 3.83a.566.566 0 0 0 .808 0 .583.583 0 0 0 0-.817L4.034.253Z"></path>
+    </g>
+  </svg>
+</div>"
+`;
+
+exports[`SortIcon Snapshots > should match snapshot when no direction 1`] = `
+"<div class="_sort-icon_224acd" data-test="sort-icon-undefined">
+  <!-- Chevron Up --><svg class="_sort-icon__chevron_224acd _sort-icon__chevron--up_224acd" xmlns="http://www.w3.org/2000/svg" width="7" height="4" fill="none" viewBox="0 0 7 4">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+      <path fill="currentColor" d="M4.034.253A.846.846 0 0 0 3.428 0c-.229 0-.444.09-.605.253L.168 3.013a.583.583 0 0 0 0 .817.566.566 0 0 0 .807 0l2.453-2.555L5.882 3.83a.566.566 0 0 0 .808 0 .583.583 0 0 0 0-.817L4.034.253Z"></path>
+    </g>
+  </svg><!-- Chevron Down --><svg class="_sort-icon__chevron_224acd _sort-icon__chevron--down_224acd" xmlns="http://www.w3.org/2000/svg" width="7" height="4" fill="none" viewBox="0 0 7 4">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+      <path fill="currentColor" d="M4.034.253A.846.846 0 0 0 3.428 0c-.229 0-.444.09-.605.253L.168 3.013a.583.583 0 0 0 0 .817.566.566 0 0 0 .807 0l2.453-2.555L5.882 3.83a.566.566 0 0 0 .808 0 .583.583 0 0 0 0-.817L4.034.253Z"></path>
+    </g>
+  </svg>
+</div>"
+`;

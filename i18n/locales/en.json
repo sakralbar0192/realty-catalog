@@ -88,5 +88,13 @@
     "limit": "Limit",
     "runAnalysis": "Run \"bun run analyze\" in terminal"
   },
-  "scrollToTop": "Scroll to top"
+  "scrollToTop": "Scroll to top",
+  "sort": {
+    "areaAsc": "Sort by area ascending",
+    "areaDesc": "Sort by area descending",
+    "floorAsc": "Sort by floor ascending",
+    "floorDesc": "Sort by floor descending",
+    "priceAsc": "Sort by price ascending",
+    "priceDesc": "Sort by price descending"
+  }
 }
