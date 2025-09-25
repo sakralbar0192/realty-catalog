@@ -54,8 +54,6 @@ const maxPrice = ref(props.currentFilter?.max ?? defaultMax)
 const formatPrice = (price: number): string => {
   const roundedPrice = Math.round(price)
   return new Intl.NumberFormat('ru-RU', {
-    style: 'currency',
-    currency: 'RUB',
     minimumFractionDigits: 0,
   }).format(roundedPrice)
 }

@@ -1,6 +1,5 @@
 <template>
   <div :class="styles.sidebar">
-
     <!-- Room Filter -->
     <RoomFilterComponent
       :properties="properties"
@@ -22,7 +21,17 @@
       @filter="handleAreaFilter"
     />
 
-    <button :class="styles.applyFiltersBtn">{{ $t('sidebar.applyFilters') }}</button>
+    <div
+      :class="styles.sidebar__clear"
+      @click="handleClearFilters"
+      @keydown.enter="handleClearFilters"
+      @keydown.space.prevent="handleClearFilters"
+      tabindex="0"
+      data-test="clear-filters-btn"
+    >
+      {{ $t('sidebar.clearFilters') }}
+      <Icon name="close" :size="16" />
+    </div>
   </div>
 </template>
 
@@ -32,6 +41,7 @@ import styles from '~/assets/styles/components/Sidebar.module.scss'
 import RoomFilterComponent from '~/components/RoomFilter.vue'
 import PriceFilterComponent from '~/components/PriceFilter.vue'
 import AreaFilterComponent from '~/components/AreaFilter.vue'
+import Icon from '~/components/Icon.vue'
 
 interface Props {
   properties: Array<{ rooms: number; price: number; area: number }>
@@ -44,6 +54,7 @@ const emit = defineEmits<{
   roomFilter: [filterData: { rooms: RoomFilterType }]
   priceFilter: [filterData: { price: PriceFilter }]
   areaFilter: [filterData: { area: AreaFilter }]
+  clearFilters: []
 }>()
 
 const handleRoomFilter = (filterData: { rooms: RoomFilterType }) => {
@@ -56,5 +67,9 @@ const handlePriceFilter = (filterData: { price: PriceFilter }) => {
 
 const handleAreaFilter = (filterData: { area: AreaFilter }) => {
   emit('areaFilter', filterData)
+}
+
+const handleClearFilters = () => {
+  emit('clearFilters')
 }
 </script>

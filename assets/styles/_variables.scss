@@ -1,6 +1,5 @@
 :root {
   --color-primary: #3eb57c;
-  --color-primary-hover: #0056b3;
   --color-secondary: #95D0A1;
   --color-secondary-hover: #545b62; 
 
@@ -77,10 +76,9 @@ $container-max-width: 1440px;
   --font-weight-bold: 700;
 }
 
-// Responsive font sizes
 :root {
   --font-size-base: 16px;
-  --font-size-xs: 0.75rem;
+  --font-size-xs: 14px;
   --font-size-sm: 0.88rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
@@ -96,27 +94,5 @@ $container-max-width: 1440px;
   --letter-spacing-tight: -0.025em;
   --letter-spacing-normal: 0;
   --letter-spacing-wide: 0.025em;
-}
-
-@media (max-width: #{$mobile-max}) {
-  :root {
-    --font-size-base: 0.9375rem;
-    --line-height-normal: 1.6;
-  }
-}
-
-// Tablet typography
-@media (min-width: #{$tablet-min}) and (max-width: #{$tablet-max}) {
-  :root {
-    --font-size-base: 1rem;
-    --line-height-normal: 1.55;
-  }
-}
-
-// Desktop typography
-@media (min-width: #{$desktop-min}) {
-  :root {
-    --line-height-normal: 1.5;
-  }
 }
 

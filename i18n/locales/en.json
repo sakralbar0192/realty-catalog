@@ -75,7 +75,7 @@
     "apartment": "Apartment",
     "house": "House",
     "office": "Office",
-    "applyFilters": "Apply Filters"
+    "clearFilters": "Clear Filters"
   },
   "performance": {
     "title": "Performance Dashboard",

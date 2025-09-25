@@ -1,3 +1,5 @@
+@use '../_variables' as *;
+
 .scroll {
   position: fixed;
   bottom: 2rem;
@@ -13,10 +15,19 @@
   box-shadow: var(--shadow-tertiary);
   transition: all 0.3s ease;
   z-index: 1000;
-  overflow: hidden;
-
-  
+  overflow: hidden;  
   background: var(--color-secondary);
+
+  @media (max-width: #{$mobile-max}) {
+    padding: 16px;
+  }
+
+  @media (min-width: #{$tablet-min}) and (max-width: #{$tablet-max}) {
+    bottom: 50px;
+    right: 32px;
+    width: 38px;
+    height: 38px;
+  }
   
   &:hover {
     background: var(--gradient-primary-hover);

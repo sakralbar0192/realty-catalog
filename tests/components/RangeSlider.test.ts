@@ -46,8 +46,8 @@ describe('RangeSlider', () => {
     it('should render values display', () => {
       const valuesDiv = wrapper.find('[data-test="range-values"]')
       expect(valuesDiv.exists()).toBe(true)
-      expect(valuesDiv.text()).toContain('from 100')
-      expect(valuesDiv.text()).toContain('to 500')
+      expect(valuesDiv.text()).toContain('from\u00A0100')
+      expect(valuesDiv.text()).toContain('to\u00A0500')
     })
 
     it('should render track and thumbs', () => {
@@ -74,14 +74,14 @@ describe('RangeSlider', () => {
       })
 
       const valuesDiv = wrapper.find('[data-test="range-values"]')
-      expect(valuesDiv.text()).toContain('from 100%')
-      expect(valuesDiv.text()).toContain('to 500%')
+      expect(valuesDiv.text()).toContain('from\u00A0100%')
+      expect(valuesDiv.text()).toContain('to\u00A0500%')
     })
 
     it('should use default formatter when none provided', () => {
       const valuesDiv = wrapper.find('[data-test="range-values"]')
-      expect(valuesDiv.text()).toContain('from 100')
-      expect(valuesDiv.text()).toContain('to 500')
+      expect(valuesDiv.text()).toContain('from\u00A0100')
+      expect(valuesDiv.text()).toContain('to\u00A0500')
     })
   })
 

@@ -111,8 +111,8 @@ describe('PriceFilter', () => {
       const rangeSlider = wrapper.findComponent({ name: 'RangeSlider' })
       const formatter = rangeSlider.props('formatter')
 
-      expect(formatter(50000)).toBe('50 000 ₽')
-      expect(formatter(100000)).toBe('100 000 ₽')
+      expect(formatter(50000)).toBe('50\u00A0000')
+      expect(formatter(100000)).toBe('100\u00A0000')
     })
   })
 

@@ -53,7 +53,7 @@ const maxArea = ref(props.currentFilter?.max ?? defaultMax)
 // Format area for display
 const formatArea = (area: number): string => {
   const roundedArea = Math.round(area * 10) / 10
-  return `${roundedArea} ${$t('properties.units.area')}`
+  return `${roundedArea}`
 }
 
 // Handle area change

@@ -75,7 +75,7 @@
     "apartment": "Квартира",
     "house": "Дом",
     "office": "Офис",
-    "applyFilters": "Применить фильтры"
+    "clearFilters": "Сбросить фильтры"
   },
   "performance": {
     "title": "Панель производительности",

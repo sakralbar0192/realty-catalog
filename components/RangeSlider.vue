@@ -1,8 +1,12 @@
 <template>
   <div :class="styles['range-slider']">
     <div :class="styles['range-slider__values']" data-test="range-values">
-      <span>{{ $t('filters.from') }} {{ formatValue(displayMinValue) }}</span>
-      <span>{{ $t('filters.to') }} {{ formatValue(displayMaxValue) }}</span>
+      <p>
+        <span class="text--muted">{{ $t('filters.from') }}</span>&nbsp;<span>{{ formatValue(displayMinValue) }}</span>
+      </p>
+      <p>
+        <span class="text--muted">{{ $t('filters.to') }}</span>&nbsp;<span>{{ formatValue(displayMaxValue) }}</span>
+      </p>
     </div>
     <div
       :class="styles['range-slider__track']"

@@ -111,16 +111,16 @@ describe('AreaFilter', () => {
       const rangeSlider = wrapper.findComponent({ name: 'RangeSlider' })
       const formatter = rangeSlider.props('formatter')
 
-      expect(formatter(35)).toBe('35 m²')
-      expect(formatter(55.5)).toBe('55.5 m²')
+      expect(formatter(35)).toBe('35')
+      expect(formatter(55.5)).toBe('55.5')
     })
 
     it('should round area values to one decimal place', () => {
       const rangeSlider = wrapper.findComponent({ name: 'RangeSlider' })
       const formatter = rangeSlider.props('formatter')
 
-      expect(formatter(35.123)).toBe('35.1 m²')
-      expect(formatter(55.678)).toBe('55.7 m²')
+      expect(formatter(35.123)).toBe('35.1')
+      expect(formatter(55.678)).toBe('55.7')
     })
   })
 

@@ -27,6 +27,7 @@
         @room-filter="handleRoomFilter"
         @price-filter="handlePriceFilter"
         @area-filter="handleAreaFilter"
+        @clear-filters="handleClearFilters"
       />
     </template>
   </NuxtLayout>
@@ -43,6 +44,7 @@
     @room-filter="handleRoomFilter"
     @price-filter="handlePriceFilter"
     @area-filter="handleAreaFilter"
+    @clear-filters="handleClearFilters"
   />
 </template>
 
@@ -72,7 +74,7 @@ useHead({
 const propertyStore = usePropertyStore()
 const { initializeTheme } = useTheme()
 const { setSort } = useSorting()
-const { filters, applyFilters, setRoomFilter, setPriceFilter, setAreaFilter } = useFilters()
+const { filters, applyFilters, setRoomFilter, setPriceFilter, setAreaFilter, clearAllFilters } = useFilters()
 const route = useRoute()
 const router = useRouter()
 
@@ -164,6 +166,10 @@ const handlePriceFilter = (filterData: { price: PriceFilter }) => {
 
 const handleAreaFilter = (filterData: { area: AreaFilter }) => {
   setAreaFilter(filterData.area)
+}
+
+const handleClearFilters = () => {
+  clearAllFilters()
 }
 
 onBeforeMount(async () => {

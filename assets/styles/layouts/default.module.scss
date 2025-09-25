@@ -18,7 +18,7 @@
     gap: 28px;
   }
 
-  @media (min-width: #{$desktop-min}) { 
+  @media (min-width: #{$desktop-min}) {
     padding: 98px 80px;
     gap: 80px
   }
@@ -45,7 +45,7 @@
     background-color: var(--color-background);
 
     @media (max-width: #{$mobile-max}) {
-      padding-bottom: 30px;
+      padding-bottom: 30px; 
     }
 
     @media (min-width: #{$tablet-min}) and (max-width: #{$tablet-max}) {

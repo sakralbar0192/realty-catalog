@@ -4,7 +4,7 @@
 .room-filter {
   @include filter-block;
   display: flex;
-	gap: 8px;
+	gap: 16px;
 	flex-wrap: wrap;
 
   &__button {
@@ -24,7 +24,7 @@
 
     &:hover:not(:disabled):not(.room-filter__button--active) {
       border-color: var(--color-primary);
-      background-color: var(--color-primary-light);
+      background-color: var(--color-secondary);
       transform: scale(1.05);
     }
 
@@ -52,34 +52,6 @@
         border-color: var(--color-border);
         background-color: var(--color-surface);
       }
-    }
-  }
-}
-
-// Dark theme adjustments
-[data-theme="dark"] {
-  .room-filter {
-    &__button {
-      &--disabled {
-        background-color: var(--color-surface-dark);
-        border-color: var(--color-border-dark);
-        color: var(--color-text-muted-dark);
-      }
-    }
-  }
-}
-
-// Mobile responsiveness
-@media (max-width: #{$tablet-max}) {
-  .room-filter {
-    &__buttons {
-      gap: 6px;
-    }
-
-    &__button {
-      width: 44px;
-      height: 44px;
-      font-size: var(--font-size-sm);
     }
   }
 }

@@ -23,6 +23,7 @@
       @room-filter="handleRoomFilter"
       @price-filter="handlePriceFilter"
       @area-filter="handleAreaFilter"
+      @clear-filters="handleClearFilters"
     />
 
     <ScrollToTop />
@@ -47,6 +48,7 @@ const emit = defineEmits<{
   roomFilter: [filterData: { rooms: RoomFilter }]
   priceFilter: [filterData: { price: PriceFilter }]
   areaFilter: [filterData: { area: AreaFilter }]
+  clearFilters: []
 }>()
 
 const { isMobile } = useDevice()
@@ -61,6 +63,10 @@ const handlePriceFilter = (filterData: { price: PriceFilter }) => {
 
 const handleAreaFilter = (filterData: { area: AreaFilter }) => {
   emit('areaFilter', filterData)
+}
+
+const handleClearFilters = () => {
+  emit('clearFilters')
 }
 
 defineOptions({
