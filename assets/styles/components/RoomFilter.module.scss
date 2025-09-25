@@ -1,7 +1,8 @@
 @use '../_variables' as *;
+@use '../_mixins' as *;
 
 .room-filter {
-  margin-bottom: 24px;
+  @include filter-block;
   display: flex;
 	gap: 8px;
 	flex-wrap: wrap;

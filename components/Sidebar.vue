@@ -2,50 +2,59 @@
   <div :class="styles.sidebar">
 
     <!-- Room Filter -->
-    <RoomFilter
+    <RoomFilterComponent
       :properties="properties"
+      :current-filter="currentFilters.rooms"
       @filter="handleRoomFilter"
     />
 
-    <div :class="styles.sidebarSection">
-      <h4>{{ $t('sidebar.priceRange') }}</h4>
-      <div :class="styles.priceInputs">
-        <label for="min-price">{{ $t('sidebar.minPrice') }}</label>
-        <input id="min-price" type="number" />
-        <span>-</span>
-        <label for="max-price">{{ $t('sidebar.maxPrice') }}</label>
-        <input id="max-price" type="number" />
-      </div>
-    </div>
+    <!-- Price Filter -->
+    <PriceFilterComponent
+      :properties="properties"
+      :current-filter="currentFilters.price"
+      @filter="handlePriceFilter"
+    />
 
-    <div :class="styles.sidebarSection">
-      <h4>{{ $t('sidebar.propertyType') }}</h4>
-      <div :class="styles.checkboxGroup">
-        <label><input type="checkbox" /> {{ $t('sidebar.apartment') }}</label>
-        <label><input type="checkbox" /> {{ $t('sidebar.house') }}</label>
-        <label><input type="checkbox" /> {{ $t('sidebar.office') }}</label>
-      </div>
-    </div>
+    <!-- Area Filter -->
+    <AreaFilterComponent
+      :properties="properties"
+      :current-filter="currentFilters.area"
+      @filter="handleAreaFilter"
+    />
 
     <button :class="styles.applyFiltersBtn">{{ $t('sidebar.applyFilters') }}</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { RoomFilter } from '~/composables/useFilters'
+import type { RoomFilter as RoomFilterType, PriceFilter, AreaFilter, FilterState } from '~/composables/useFilters'
 import styles from '~/assets/styles/components/Sidebar.module.scss'
+import RoomFilterComponent from '~/components/RoomFilter.vue'
+import PriceFilterComponent from '~/components/PriceFilter.vue'
+import AreaFilterComponent from '~/components/AreaFilter.vue'
 
 interface Props {
-  properties: Array<{ rooms: number }>
+  properties: Array<{ rooms: number; price: number; area: number }>
+  currentFilters: FilterState
 }
 
 defineProps<Props>()
 
 const emit = defineEmits<{
-  roomFilter: [filterData: { rooms: RoomFilter }]
+  roomFilter: [filterData: { rooms: RoomFilterType }]
+  priceFilter: [filterData: { price: PriceFilter }]
+  areaFilter: [filterData: { area: AreaFilter }]
 }>()
 
-const handleRoomFilter = (filterData: { rooms: RoomFilter }) => {
+const handleRoomFilter = (filterData: { rooms: RoomFilterType }) => {
   emit('roomFilter', filterData)
+}
+
+const handlePriceFilter = (filterData: { price: PriceFilter }) => {
+  emit('priceFilter', filterData)
+}
+
+const handleAreaFilter = (filterData: { area: AreaFilter }) => {
+  emit('areaFilter', filterData)
 }
 </script>

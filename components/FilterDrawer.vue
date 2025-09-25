@@ -37,7 +37,13 @@
         </div>
 
         <div :class="styles.drawer__content">
-          <Sidebar :properties="properties" @room-filter="handleRoomFilter" />
+          <Sidebar
+            :properties="properties"
+            :current-filters="currentFilters"
+            @room-filter="handleRoomFilter"
+            @price-filter="handlePriceFilter"
+            @area-filter="handleAreaFilter"
+          />
         </div>
       </div>
     </Transition>
@@ -49,17 +55,20 @@ import { ref, nextTick, onMounted, onUnmounted, watch } from 'vue'
 import Icon from '~/components/Icon.vue'
 import Sidebar from '~/components/Sidebar.vue'
 import { useAppI18n } from '~/composables/useI18n'
-import type { RoomFilter } from '~/composables/useFilters'
+import type { RoomFilter, PriceFilter, AreaFilter, FilterState } from '~/composables/useFilters'
 import styles from '~/assets/styles/components/FilterDrawer.module.scss'
 
 interface Props {
-  properties: Array<{ rooms: number }>
+  properties: Array<{ rooms: number; price: number; area: number }>
+  currentFilters: FilterState
 }
 
 defineProps<Props>()
 
 const emit = defineEmits<{
   roomFilter: [filterData: { rooms: RoomFilter }]
+  priceFilter: [filterData: { price: PriceFilter }]
+  areaFilter: [filterData: { area: AreaFilter }]
 }>()
 
 const { translate: $t } = useAppI18n()
@@ -84,6 +93,14 @@ defineExpose({
 
 const handleRoomFilter = (filterData: { rooms: RoomFilter }) => {
   emit('roomFilter', filterData)
+}
+
+const handlePriceFilter = (filterData: { price: PriceFilter }) => {
+  emit('priceFilter', filterData)
+}
+
+const handleAreaFilter = (filterData: { area: AreaFilter }) => {
+  emit('areaFilter', filterData)
 }
 
 // Handle ESC key

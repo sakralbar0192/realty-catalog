@@ -109,6 +109,10 @@
       "all": "All",
       "room": "room",
       "rooms": "rooms"
-    }
+    },
+    "price": "Apartment cost, ₽",
+    "area": "Area, m²",
+    "from": "from",
+    "to": "to"
   }
 }

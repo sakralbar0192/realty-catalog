@@ -16,7 +16,14 @@
 
     <!-- Mobile filter components -->
     <FilterToggle v-if="isMobile" />
-    <FilterDrawer v-if="isMobile" :properties="properties" @room-filter="handleRoomFilter" />
+    <FilterDrawer
+      v-if="isMobile"
+      :properties="properties"
+      :current-filters="currentFilters"
+      @room-filter="handleRoomFilter"
+      @price-filter="handlePriceFilter"
+      @area-filter="handleAreaFilter"
+    />
 
     <ScrollToTop />
   </div>
@@ -26,23 +33,34 @@
 import { useDevice } from '~/composables/useDevice'
 import FilterToggle from '~/components/FilterToggle.vue'
 import FilterDrawer from '~/components/FilterDrawer.vue'
-import type { RoomFilter } from '~/composables/useFilters'
+import type { RoomFilter, PriceFilter, AreaFilter, FilterState } from '~/composables/useFilters'
 import styles from '~/assets/styles/layouts/default.module.scss'
 
 interface Props {
-  properties: Array<{ rooms: number }>
+  properties: Array<{ rooms: number; price: number; area: number }>
+  currentFilters: FilterState
 }
 
 defineProps<Props>()
 
 const emit = defineEmits<{
   roomFilter: [filterData: { rooms: RoomFilter }]
+  priceFilter: [filterData: { price: PriceFilter }]
+  areaFilter: [filterData: { area: AreaFilter }]
 }>()
 
 const { isMobile } = useDevice()
 
 const handleRoomFilter = (filterData: { rooms: RoomFilter }) => {
   emit('roomFilter', filterData)
+}
+
+const handlePriceFilter = (filterData: { price: PriceFilter }) => {
+  emit('priceFilter', filterData)
+}
+
+const handleAreaFilter = (filterData: { area: AreaFilter }) => {
+  emit('areaFilter', filterData)
 }
 
 defineOptions({

@@ -2,7 +2,10 @@
   <NuxtLayout
     name="default"
     :properties="properties"
+    :current-filters="filters"
     @room-filter="handleRoomFilter"
+    @price-filter="handlePriceFilter"
+    @area-filter="handleAreaFilter"
   >
     <template #header>
       <h1>{{$t('properties.title')}}</h1>
@@ -20,7 +23,10 @@
     <template #sidebar>
       <Sidebar
         :properties="properties"
+        :current-filters="filters"
         @room-filter="handleRoomFilter"
+        @price-filter="handlePriceFilter"
+        @area-filter="handleAreaFilter"
       />
     </template>
   </NuxtLayout>
@@ -30,7 +36,14 @@
   <SettingsToggle />
 
   <!-- Mobile Filter Drawer -->
-  <FilterDrawer ref="filterDrawerRef" :properties="properties" @room-filter="handleRoomFilter" />
+  <FilterDrawer
+    ref="filterDrawerRef"
+    :properties="properties"
+    :current-filters="filters"
+    @room-filter="handleRoomFilter"
+    @price-filter="handlePriceFilter"
+    @area-filter="handleAreaFilter"
+  />
 </template>
 
 <script setup lang="ts">
@@ -41,7 +54,7 @@ import { useSorting } from '~/composables/useSorting'
 import { useFilters } from '~/composables/useFilters'
 import { storeToRefs } from 'pinia'
 import type { SortField, SortDirection } from '~/components/PropertyTable.vue'
-import type { RoomFilter } from '~/composables/useFilters'
+import type { RoomFilter, PriceFilter, AreaFilter } from '~/composables/useFilters'
 import SettingsPanel from '~/components/SettingsPanel.vue'
 import SettingsToggle from '~/components/SettingsToggle.vue'
 import FilterDrawer from '~/components/FilterDrawer.vue'
@@ -59,7 +72,7 @@ useHead({
 const propertyStore = usePropertyStore()
 const { initializeTheme } = useTheme()
 const { setSort } = useSorting()
-const { applyFilters, setRoomFilter } = useFilters()
+const { filters, applyFilters, setRoomFilter, setPriceFilter, setAreaFilter } = useFilters()
 const route = useRoute()
 const router = useRouter()
 
@@ -143,6 +156,14 @@ const handleSort = (sortData: { field: SortField; direction: SortDirection }) =>
 
 const handleRoomFilter = (filterData: { rooms: RoomFilter }) => {
   setRoomFilter(filterData.rooms)
+}
+
+const handlePriceFilter = (filterData: { price: PriceFilter }) => {
+  setPriceFilter(filterData.price)
+}
+
+const handleAreaFilter = (filterData: { area: AreaFilter }) => {
+  setAreaFilter(filterData.area)
 }
 
 onBeforeMount(async () => {

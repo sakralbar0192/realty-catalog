@@ -19,3 +19,14 @@
 @mixin theme-shadow($level) {
   box-shadow: var(--shadow-#{$level});
 }
+
+@mixin filter-block {
+  margin-bottom: 24px;
+
+  &__title {
+    margin: 0 0 8px 0;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+}
