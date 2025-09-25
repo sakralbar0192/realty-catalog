@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SettingsPanel Snapshots > should match snapshot when closed 1`] = `
+"<!--teleport start-->
+<!--teleport end-->"
+`;
+
+exports[`SettingsPanel Snapshots > should match snapshot when open 1`] = `
+"<!--teleport start-->
+<!--teleport end-->"
+`;

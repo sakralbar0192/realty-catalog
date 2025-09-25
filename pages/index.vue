@@ -14,19 +14,24 @@
       />
     </template>
     <template #sidebar>
-      <LanguageSwitcher />
-      <ThemeToggle />
       <Sidebar />
     </template>
   </NuxtLayout>
+
+  <!-- Settings Panel -->
+  <SettingsPanel ref="settingsPanel" />
+  <SettingsToggle />
 </template>
 
 <script setup lang="ts">
+import { ref, provide } from 'vue'
 import { usePropertyStore } from '~/stores/property'
 import { useTheme } from '~/composables/useTheme'
 import { useSorting } from '~/composables/useSorting'
 import { storeToRefs } from 'pinia'
 import type { SortField, SortDirection } from '~/components/PropertyTable.vue'
+import SettingsPanel from '~/components/SettingsPanel.vue'
+import SettingsToggle from '~/components/SettingsToggle.vue'
 
 useHead({
   title: 'Realty Catalog',
@@ -45,6 +50,16 @@ const route = useRoute()
 const router = useRouter()
 
 const { properties, loading, hasMorePages } = storeToRefs(propertyStore)
+
+// Settings panel reference
+const settingsPanel = ref()
+
+// Provide settings panel methods to child components
+provide('settingsPanel', computed(() => ({
+  open: () => settingsPanel.value?.open(),
+  close: () => settingsPanel.value?.close(),
+  isOpen: settingsPanel.value?.isOpen ?? false,
+})))
 
 // Reactive route query
 const routeQuery = computed(() => route.query)

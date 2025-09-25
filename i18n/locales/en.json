@@ -96,5 +96,9 @@
     "floorDesc": "Sort by floor descending",
     "priceAsc": "Sort by price ascending",
     "priceDesc": "Sort by price descending"
+  },
+  "settings": {
+    "title": "Settings",
+    "open": "Open settings"
   }
 }
