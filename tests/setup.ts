@@ -1,7 +1,8 @@
-import { beforeAll, afterAll, afterEach } from 'vitest'
+import { beforeAll, afterAll, afterEach, vi } from 'vitest'
 import { setupServer } from 'msw/node'
 import { handlers } from '~/mocks/handlers'
 import { ref, computed, reactive, nextTick } from 'vue'
+import { createPinia, setActivePinia } from 'pinia'
 
 // Global type declarations for test environment
 declare global {
@@ -56,6 +57,9 @@ const server = setupServer(...handlers)
 
 // Setup before tests
 beforeAll(async() => {
+  // Create and set active Pinia instance for tests
+  setActivePinia(createPinia())
+
   server.listen({ onUnhandledRequest: 'error' })
   applyCSSVariables()
   await new Promise(resolve => setTimeout(resolve, 1000)) // Wait for styles to apply
@@ -118,6 +122,11 @@ Object.defineProperty(window, 'innerHeight', {
   writable: true,
   value: 800,
 })
+
+// Mock useState for tests
+vi.mock('#app', () => ({
+  useState: vi.fn((key: string, defaultValue: () => unknown) => ref(defaultValue())),
+}))
 
 // Global mocks for Vue components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

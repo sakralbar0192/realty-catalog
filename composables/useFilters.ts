@@ -1,5 +1,7 @@
-import { ref, computed, readonly } from 'vue'
+import { computed, readonly } from 'vue'
+import { storeToRefs } from 'pinia'
 import type { Property } from '~/mocks/models'
+import { usePropertyStore } from '~/stores/property'
 
 // Filter types
 export type RoomFilter = number | null // null means "all rooms"
@@ -19,11 +21,8 @@ export interface FilterOptions {
 }
 
 export function useFilters() {
-  const filters = ref<FilterState>({
-    rooms: null, // null = show all
-    price: null,
-    area: null,
-  })
+  const propertyStore = usePropertyStore()
+  const { filters, filterMetadata } = storeToRefs(propertyStore)
 
   // Computed properties for filter checks
   const hasActiveFilters = computed(() => {
@@ -46,94 +45,57 @@ export function useFilters() {
 
   // Filter functions
   const setRoomFilter = (rooms: RoomFilter) => {
-    filters.value.rooms = rooms
+    propertyStore.setFilters({ rooms })
   }
 
   const clearRoomFilter = () => {
-    filters.value.rooms = null
+    propertyStore.setFilters({ rooms: null })
   }
 
   const setPriceFilter = (price: PriceFilter) => {
-    filters.value.price = price
+    propertyStore.setFilters({ price })
   }
 
   const clearPriceFilter = () => {
-    filters.value.price = null
+    propertyStore.setFilters({ price: null })
   }
 
   const setAreaFilter = (area: AreaFilter) => {
-    filters.value.area = area
+    propertyStore.setFilters({ area })
   }
 
   const clearAreaFilter = () => {
-    filters.value.area = null
+    propertyStore.setFilters({ area: null })
   }
 
-  const clearAllFilters = () => {
-    filters.value = {
-      rooms: null,
-      price: null,
-      area: null,
-    }
+  const clearAllFilters = async() => {
+    await propertyStore.clearFilters()
   }
 
-  const setFilters = (newFilters: Partial<FilterState>) => {
-    filters.value = {
-      ...filters.value,
-      ...newFilters,
-    }
+  const setFilters = async(newFilters: Partial<FilterState>) => {
+    await propertyStore.setFilters(newFilters)
   }
 
-  // Apply filters to properties
+  // Apply filters to properties (now server-side, so just return as-is)
   const applyFilters = (properties: Property[]): Property[] => {
-    let filtered = [...properties]
-
-    // Room filter
-    if (filters.value.rooms !== null) {
-      filtered = filtered.filter(property => property.rooms === filters.value.rooms)
-    }
-
-    // Price filter
-    if (filters.value.price !== null) {
-      filtered = filtered.filter(property =>
-        property.price >= filters.value.price!.min && property.price <= filters.value.price!.max,
-      )
-    }
-
-    // Area filter
-    if (filters.value.area !== null) {
-      filtered = filtered.filter(property =>
-        property.area >= filters.value.area!.min && property.area <= filters.value.area!.max,
-      )
-    }
-
-    return filtered
+    return properties
   }
 
-  // Get available filter options based on current properties
-  const getAvailableRooms = (properties: Property[]): number[] => {
-    const roomCounts = new Set(properties.map(p => p.rooms))
-    return Array.from(roomCounts).sort((a, b) => a - b)
+  // Get available filter options based on server metadata
+  const getAvailableRooms = (): number[] => {
+    return filterMetadata.value?.availableRooms || []
   }
 
-  const isRoomFilterAvailable = (roomCount: number, properties: Property[]): boolean => {
-    return properties.some(property => property.rooms === roomCount)
+  const isRoomFilterAvailable = (roomCount: number): boolean => {
+    return filterMetadata.value?.availableRooms.includes(roomCount) || false
   }
 
-  const getPriceRange = (properties: Property[]): { min: number; max: number } => {
-    const prices = properties.map(p => p.price)
-    return {
-      min: Math.min(...prices),
-      max: Math.max(...prices),
-    }
+  const getPriceRange = (): { min: number; max: number } => {
+    return filterMetadata.value?.priceRange || { min: 0, max: 0 }
   }
 
-  const getAreaRange = (properties: Property[]): { min: number; max: number } => {
-    const areas = properties.map(p => p.area)
-    return {
-      min: Math.min(...areas),
-      max: Math.max(...areas),
-    }
+  const getAreaRange = (): { min: number; max: number } => {
+    return filterMetadata.value?.areaRange || { min: 0, max: 0 }
   }
 
   return {

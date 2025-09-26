@@ -25,6 +25,7 @@ import RangeSlider from '~/components/RangeSlider.vue'
 interface Props {
   properties: Array<{ area: number }>
   currentFilter: AreaFilter
+  areaRange?: { min: number; max: number }
 }
 
 const props = defineProps<Props>()
@@ -35,12 +36,11 @@ const emit = defineEmits<{
 
 const { translate: $t } = useAppI18n()
 
-// Computed area range from properties
+// Computed area range from server metadata or fallback to properties
 const areaRange = computed(() => {
-  const areas = props.properties.map(p => p.area)
-  return {
-    min: Math.min(...areas),
-    max: Math.max(...areas),
+  return props.areaRange || {
+    min: Math.min(...props.properties.map(p => p.area)),
+    max: Math.max(...props.properties.map(p => p.area)),
   }
 })
 

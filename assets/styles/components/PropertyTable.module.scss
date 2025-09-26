@@ -4,6 +4,32 @@
   width: 100%;
   position: relative;
 
+  &__loading {
+    text-align: center;
+    padding: 64px 32px;
+    color: var(--color-text-primary);
+
+    p {
+      font-size: var(--font-size-lg);
+      margin: 0;
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 8px;
+        border: 2px solid var(--color-primary);
+        border-top: 2px solid transparent;
+        border-radius: 50%;
+      }
+    }
+  }
+
   &__empty {
     text-align: center;
     padding: 64px 32px;

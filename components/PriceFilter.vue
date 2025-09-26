@@ -25,6 +25,7 @@ import RangeSlider from '~/components/RangeSlider.vue'
 interface Props {
   properties: Array<{ price: number }>
   currentFilter: PriceFilter
+  priceRange?: { min: number; max: number }
 }
 
 const props = defineProps<Props>()
@@ -35,12 +36,11 @@ const emit = defineEmits<{
 
 const { translate: $t } = useAppI18n()
 
-// Computed price range from properties
+// Computed price range from server metadata or fallback to properties
 const priceRange = computed(() => {
-  const prices = props.properties.map(p => p.price)
-  return {
-    min: Math.min(...prices),
-    max: Math.max(...prices),
+  return props.priceRange || {
+    min: Math.min(...props.properties.map(p => p.price)),
+    max: Math.max(...props.properties.map(p => p.price)),
   }
 })
 

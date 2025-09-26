@@ -28,6 +28,7 @@ import styles from '~/assets/styles/components/RoomFilter.module.scss'
 interface Props {
   properties: Array<{ rooms: number }>
   currentFilter: RoomFilter
+  availableRooms?: number[]
 }
 
 const props = defineProps<Props>()
@@ -46,9 +47,9 @@ watch(() => props.currentFilter, (newFilter) => {
   activeFilter.value = newFilter
 })
 
-// Check if room count is available in properties
+// Check if room count is available based on server metadata
 const isRoomAvailable = (roomCount: number): boolean => {
-  return props.properties.some(property => property.rooms === roomCount)
+  return props.availableRooms?.includes(roomCount) || false
 }
 
 // Check if filter is currently active
@@ -60,9 +61,15 @@ const isActive = (filter: RoomFilter): boolean => {
 const getButtonClass = (filter: RoomFilter): string => {
   const baseClass = styles['room-filter__button']
   const activeClass = isActive(filter) ? styles['room-filter__button--active'] : ''
-  const disabledClass = filter !== null && !isRoomAvailable(filter)
-    ? styles['room-filter__button--disabled']
-    : ''
+
+  // Determine disabled state and class
+  const isUnavailable = props.availableRooms && filter !== null && !isRoomAvailable(filter)
+
+  let disabledClass = ''
+  if (isUnavailable) {
+    // Unavailable buttons get disabled style
+    disabledClass = styles['room-filter__button--disabled']
+  }
 
   return [baseClass, activeClass, disabledClass].filter(Boolean).join(' ')
 }

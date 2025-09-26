@@ -173,7 +173,15 @@ const handleClearFilters = () => {
 }
 
 onBeforeMount(async () => {
-  propertyStore.fetchProperties()
+  try {
+    // First fetch filter metadata
+    await propertyStore.fetchFilterMetadata()
+
+    // Then fetch properties without filters initially (metadata loaded)
+    propertyStore.fetchProperties(1, 20)
+  } catch (error) {
+    console.error('Failed to initialize:', error)
+  }
   initializeTheme()
 })
 </script>

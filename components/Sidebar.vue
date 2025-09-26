@@ -4,6 +4,7 @@
     <RoomFilterComponent
       :properties="properties"
       :current-filter="currentFilters.rooms"
+      :available-rooms="filterMetadata?.availableRooms"
       @filter="handleRoomFilter"
     />
 
@@ -11,6 +12,7 @@
     <PriceFilterComponent
       :properties="properties"
       :current-filter="currentFilters.price"
+      :price-range="filterMetadata?.priceRange"
       @filter="handlePriceFilter"
     />
 
@@ -18,6 +20,7 @@
     <AreaFilterComponent
       :properties="properties"
       :current-filter="currentFilters.area"
+      :area-range="filterMetadata?.areaRange"
       @filter="handleAreaFilter"
     />
 
@@ -37,6 +40,8 @@
 
 <script setup lang="ts">
 import type { RoomFilter as RoomFilterType, PriceFilter, AreaFilter, FilterState } from '~/composables/useFilters'
+import { usePropertyStore } from '~/stores/property'
+import { storeToRefs } from 'pinia'
 import styles from '~/assets/styles/components/Sidebar.module.scss'
 import RoomFilterComponent from '~/components/RoomFilter.vue'
 import PriceFilterComponent from '~/components/PriceFilter.vue'
@@ -56,6 +61,9 @@ const emit = defineEmits<{
   areaFilter: [filterData: { area: AreaFilter }]
   clearFilters: []
 }>()
+
+const propertyStore = usePropertyStore()
+const { filterMetadata } = storeToRefs(propertyStore)
 
 const handleRoomFilter = (filterData: { rooms: RoomFilterType }) => {
   emit('roomFilter', filterData)

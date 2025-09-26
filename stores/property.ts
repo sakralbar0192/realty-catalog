@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Property } from '~/mocks/models'
-import { db } from '~/mocks/models'
-import { seedDatabase } from '~/mocks/seed'
+import type { FilterState } from '~/composables/useFilters'
 
 export const usePropertyStore = defineStore('property', () => {
-  // Use useState for SSR compatibility
-  const properties = useState<Property[]>('properties', () => [])
+  // Use useState for SSR compatibility (fallback to ref for tests)
+  const properties = process.client ? useState<Property[]>('properties', () => []) : ref<Property[]>([])
   const currentProperty = ref<Property | null>(null)
   const loading = ref(false)
   const pagination = ref({
@@ -16,12 +15,19 @@ export const usePropertyStore = defineStore('property', () => {
     totalPages: 0,
   })
   const favorites = ref<string[]>([]) // ID избранных свойств
-  const filters = ref({
-    minPrice: undefined as number | undefined,
-    maxPrice: undefined as number | undefined,
-    location: undefined as string | undefined,
-    bedrooms: undefined as number | undefined,
+  const filters = ref<FilterState>({
+    rooms: null,
+    price: null,
+    area: null,
   })
+
+  // Filter metadata from server
+  const filterMetadata = ref<{
+    availableRooms: number[]
+    priceRange: { min: number; max: number }
+    areaRange: { min: number; max: number }
+  } | null>(null)
+  const metadataLoading = ref(true) // Start with true to disable filters initially
 
   const getPropertyById = computed(() => (id: string) =>
     properties.value.find(p => p.id === id),
@@ -39,33 +45,62 @@ export const usePropertyStore = defineStore('property', () => {
     favorites?.value?.includes(id),
   )
 
-  const fetchProperties = async(page = 1, limit = 20) => {
+  const fetchProperties = async(page = 1, limit = 20, filterParams?: Partial<FilterState>) => {
     loading.value = true
     try {
-      // Use mock data for production demo since API doesn't exist yet
-      seedDatabase()
-      const allProperties = db.property.getAll()
-      const startIndex = (page - 1) * limit
-      const endIndex = startIndex + limit
-      const paginatedProperties = allProperties.slice(startIndex, endIndex)
+      const query: Record<string, string | number> = { page, limit }
+
+      // Add filter parameters to query
+      if (filterParams?.rooms !== null && filterParams?.rooms !== undefined) {
+        query.rooms = filterParams.rooms
+      }
+      if (filterParams?.price?.min !== undefined) {
+        query.price_min = filterParams.price.min
+      }
+      if (filterParams?.price?.max !== undefined) {
+        query.price_max = filterParams.price.max
+      }
+      if (filterParams?.area?.min !== undefined) {
+        query.area_min = filterParams.area.min
+      }
+      if (filterParams?.area?.max !== undefined) {
+        query.area_max = filterParams.area.max
+      }
+
+      const response = await $fetch<{ data: Property[]; meta: { page: number; limit: number; total: number; totalPages: number } }>('/api/properties', {
+        query,
+      })
 
       if (page === 1) {
-        properties.value = paginatedProperties
+        properties.value = response.data
       } else {
-        properties.value.push(...paginatedProperties)
+        properties.value.push(...response.data)
       }
 
-      pagination.value = {
-        page,
-        limit,
-        total: allProperties.length,
-        totalPages: Math.ceil(allProperties.length / limit),
-      }
+      pagination.value = response.meta
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch properties:', error)
     } finally {
       loading.value = false
+    }
+  }
+
+  const fetchFilterMetadata = async() => {
+    metadataLoading.value = true
+    try {
+      const response = await $fetch<{
+        availableRooms: number[]
+        priceRange: { min: number; max: number }
+        areaRange: { min: number; max: number }
+      }>('/api/properties/metadata')
+      filterMetadata.value = response
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to fetch filter metadata:', error)
+      throw error
+    } finally {
+      metadataLoading.value = false
     }
   }
 
@@ -86,7 +121,7 @@ export const usePropertyStore = defineStore('property', () => {
 
   const loadMore = () => {
     if (hasMorePages.value) {
-      fetchProperties(pagination.value.page + 1)
+      fetchProperties(pagination.value.page + 1, pagination.value.limit, filters.value)
     }
   }
 
@@ -99,29 +134,32 @@ export const usePropertyStore = defineStore('property', () => {
     }
   }
 
-  const setFilters = (newFilters: Partial<typeof filters.value>) => {
+  const setFilters = async(newFilters: Partial<FilterState>) => {
     filters.value = { ...filters.value, ...newFilters }
+    // Clear current properties and reset pagination
+    properties.value = []
+    pagination.value.page = 1
+    // Fetch with new filters
+    await fetchProperties(1, pagination.value.limit, filters.value)
   }
 
-  const clearFilters = () => {
+  const clearFilters = async() => {
     filters.value = {
-      minPrice: undefined,
-      maxPrice: undefined,
-      location: undefined,
-      bedrooms: undefined,
+      rooms: null,
+      price: null,
+      area: null,
     }
+    // Clear current properties and reset pagination
+    properties.value = []
+    pagination.value.page = 1
+    // Fetch without filters
+    await fetchProperties(1, pagination.value.limit)
   }
 
+  // Note: getFilteredProperties is now obsolete since filtering is done server-side
+  // Keeping for backward compatibility, but it will just return all properties
   const getFilteredProperties = () => {
-    return properties.value.filter(property => {
-      if ((property?.price || 0) < (filters?.value?.minPrice || 0)) {
-        return false
-      }
-      if ((property?.price || 0) > (filters?.value?.maxPrice || 0)) {
-        return false
-      }
-      return true
-    })
+    return properties.value
   }
 
   return {
@@ -131,11 +169,14 @@ export const usePropertyStore = defineStore('property', () => {
     pagination,
     favorites,
     filters,
+    filterMetadata,
+    metadataLoading,
     getPropertyById,
     hasMorePages,
     favoriteProperties,
     isFavorite,
     fetchProperties,
+    fetchFilterMetadata,
     fetchPropertyById,
     loadMore,
     toggleFavorite,

@@ -164,6 +164,11 @@
       </button>
     </div>
 
+    <!-- Loading State -->
+    <div v-if="properties.length === 0 && loading" :class="styles.table__loading" data-test="loading-state">
+      <p>{{ $t('properties.loading') }}</p>
+    </div>
+
     <!-- Empty State -->
     <div v-if="properties.length === 0 && !loading" :class="styles.table__empty" data-test="empty-state">
       <p>{{ $t('properties.empty') }}</p>
