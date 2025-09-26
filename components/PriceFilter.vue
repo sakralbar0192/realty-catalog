@@ -9,6 +9,7 @@
       :step="100000"
       :label="$t('filters.price')"
       :formatter="formatPrice"
+      :disabled="loading"
       @update:min-value="handlePriceChange"
       @update:max-value="handlePriceChange"
     />
@@ -26,6 +27,8 @@ interface Props {
   properties: Array<{ price: number }>
   currentFilter: PriceFilter
   priceRange?: { min: number; max: number }
+  loading?: boolean
+  metadataLoading?: boolean
 }
 
 const props = defineProps<Props>()
@@ -38,15 +41,27 @@ const { translate: $t } = useAppI18n()
 
 // Computed price range from server metadata or fallback to properties
 const priceRange = computed(() => {
-  return props.priceRange || {
-    min: Math.min(...props.properties.map(p => p.price)),
-    max: Math.max(...props.properties.map(p => p.price)),
+  if (props.priceRange) {
+    return props.priceRange
   }
+
+  if (props.metadataLoading) {
+    return { min: 1000000, max: 6000000 }
+  }
+
+  if (props.properties.length > 0) {
+    const prices = props.properties.map(p => p.price)
+    return {
+      min: Math.min(...prices),
+      max: Math.max(...prices),
+    }
+  }
+
+  return { min: 1000000, max: 6000000 }
 })
 
-// Reactive state for current filter values
-const minPrice = ref(props.currentFilter?.min ?? priceRange.value.min)
-const maxPrice = ref(props.currentFilter?.max ?? priceRange.value.max)
+const minPrice = ref(props.currentFilter?.min ?? (props.priceRange?.min ?? 1000000))
+const maxPrice = ref(props.currentFilter?.max ?? (props.priceRange?.max ?? 6000000))
 
 // Format price for display
 const formatPrice = (price: number): string => {
@@ -71,8 +86,8 @@ watch(() => props.currentFilter, (newFilter) => {
     minPrice.value = newFilter.min
     maxPrice.value = newFilter.max
   } else {
-    minPrice.value = priceRange.value.min
-    maxPrice.value = priceRange.value.max
+    minPrice.value = props.priceRange?.min ?? 1000000
+    maxPrice.value = props.priceRange?.max ?? 6000000
   }
 })
 </script>

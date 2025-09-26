@@ -5,11 +5,11 @@
       :key="roomCount"
       type="button"
       :class="getButtonClass(roomCount)"
-      :disabled="!isRoomAvailable(roomCount)"
+      :disabled="!isRoomAvailable(roomCount) || props.loading"
       @click="handleFilter(roomCount)"
       @keydown.space.prevent="handleFilter(roomCount)"
       :aria-pressed="isActive(roomCount)"
-      :aria-disabled="!isRoomAvailable(roomCount)"
+      :aria-disabled="!isRoomAvailable(roomCount) || props.loading"
       :aria-label="getRoomAriaLabel(roomCount)"
       :data-test="`room-filter-${roomCount}`"
       tabindex="0"
@@ -29,6 +29,7 @@ interface Props {
   properties: Array<{ rooms: number }>
   currentFilter: RoomFilter
   availableRooms?: number[]
+  loading?: boolean
 }
 
 const props = defineProps<Props>()
@@ -64,10 +65,11 @@ const getButtonClass = (filter: RoomFilter): string => {
 
   // Determine disabled state and class
   const isUnavailable = props.availableRooms && filter !== null && !isRoomAvailable(filter)
+  const isLoading = props.loading
 
   let disabledClass = ''
-  if (isUnavailable) {
-    // Unavailable buttons get disabled style
+  if (isUnavailable || isLoading) {
+    // Unavailable or loading buttons get disabled style
     disabledClass = styles['room-filter__button--disabled']
   }
 
@@ -80,10 +82,8 @@ const getRoomAriaLabel = (roomCount: number): string => {
   return `${roomCount} ${roomWord}`
 }
 
-// Handle filter selection
 const handleFilter = (filter: RoomFilter) => {
-  // Don't allow selecting disabled filters
-  if (filter !== null && !isRoomAvailable(filter)) {
+  if ((filter !== null && !isRoomAvailable(filter)) || props.loading) {
     return
   }
 

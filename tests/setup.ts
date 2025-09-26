@@ -128,6 +128,16 @@ vi.mock('#app', () => ({
   useState: vi.fn((key: string, defaultValue: () => unknown) => ref(defaultValue())),
 }))
 
+// Mock useRuntimeConfig for tests
+vi.mock('nuxt/app', () => ({
+  useRuntimeConfig: vi.fn(() => ({
+    public: {
+      apiBaseURL: '/',
+      baseURL: '/',
+    },
+  })),
+}))
+
 // Global mocks for Vue components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ;(globalThis as any).$t = (key: string) => {

@@ -1,5 +1,5 @@
 <template>
-  <div :class="styles['range-slider']">
+  <div :class="[styles['range-slider'], { [styles['range-slider--disabled']]: disabled }]">
     <div :class="styles['range-slider__values']" data-test="range-values">
       <p>
         <span class="text--muted">{{ $t('filters.from') }}</span>&nbsp;<span>{{ formatValue(displayMinValue) }}</span>
@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue'
+import { watch, onBeforeUnmount } from 'vue'
 import styles from '~/assets/styles/components/RangeSlider.module.scss'
 import { useAppI18n } from '~/composables/useI18n'
 
@@ -60,6 +60,7 @@ interface Props {
   label: string
   // eslint-disable-next-line no-unused-vars
   formatter?: (value: number) => string
+  disabled?: boolean
 }
 
 const props = defineProps<Props>()
@@ -71,6 +72,7 @@ const emit = defineEmits<{
 
 const trackRef = ref<HTMLElement>()
 let dragging: 'min' | 'max' | null = null
+let keyboardDebounceTimeout: ReturnType<typeof setTimeout> | null = null
 
 // Local state for smooth dragging
 const localMinValue = ref(props.minValue)
@@ -108,7 +110,7 @@ const valueFromPercent = (percent: number): number => {
 }
 
 const handleTrackClick = (event: MouseEvent | TouchEvent) => {
-  if (!trackRef.value) return
+  if (!trackRef.value || props.disabled) return
   const rect = trackRef.value.getBoundingClientRect()
   const clientX = 'touches' in event ? event.touches[0].clientX : event.clientX
   const percent = ((clientX - rect.left) / rect.width) * 100
@@ -123,12 +125,11 @@ const handleTrackClick = (event: MouseEvent | TouchEvent) => {
     localMaxValue.value = Math.max(value, localMinValue.value + minDistance.value)
   }
 
-  // Emit immediately for track click
-  emit('update:minValue', localMinValue.value)
-  emit('update:maxValue', localMaxValue.value)
+  // No emit on track click, only on drag end
 }
 
 const startDrag = (type: 'min' | 'max') => {
+  if (props.disabled) return
   dragging = type
   document.addEventListener('mousemove', handleDrag)
   document.addEventListener('touchmove', handleDrag)
@@ -169,26 +170,58 @@ const stopDrag = () => {
 }
 
 const handleKeyDown = (type: 'min' | 'max', event: KeyboardEvent) => {
+  if (props.disabled) return
   const step = props.step
+  let changed = false
+
   if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
     event.preventDefault()
     if (type === 'min') {
-      localMinValue.value = Math.max(props.min, localMinValue.value - step)
+      const newValue = Math.max(props.min, localMinValue.value - step)
+      if (newValue !== localMinValue.value) {
+        localMinValue.value = newValue
+        changed = true
+      }
     } else {
-      localMaxValue.value = Math.max(localMinValue.value + step, localMaxValue.value - step)
+      const newValue = Math.max(localMinValue.value + step, localMaxValue.value - step)
+      if (newValue !== localMaxValue.value) {
+        localMaxValue.value = newValue
+        changed = true
+      }
     }
   } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
     event.preventDefault()
     if (type === 'min') {
-      localMinValue.value = Math.min(localMaxValue.value - step, localMinValue.value + step)
+      const newValue = Math.min(localMaxValue.value - step, localMinValue.value + step)
+      if (newValue !== localMinValue.value) {
+        localMinValue.value = newValue
+        changed = true
+      }
     } else {
-      localMaxValue.value = Math.min(props.max, localMaxValue.value + step)
+      const newValue = Math.min(props.max, localMaxValue.value + step)
+      if (newValue !== localMaxValue.value) {
+        localMaxValue.value = newValue
+        changed = true
+      }
     }
   }
 
-  // Emit for keyboard navigation
-  emit('update:minValue', localMinValue.value)
-  emit('update:maxValue', localMaxValue.value)
+  if (changed) {
+    if (keyboardDebounceTimeout) {
+      clearTimeout(keyboardDebounceTimeout)
+    }
+    keyboardDebounceTimeout = setTimeout(() => {
+      emit('update:minValue', localMinValue.value)
+      emit('update:maxValue', localMaxValue.value)
+      keyboardDebounceTimeout = null
+    }, 500)
+  }
 }
+
+onBeforeUnmount(() => {
+  if (keyboardDebounceTimeout) {
+    clearTimeout(keyboardDebounceTimeout)
+  }
+})
 
 </script>

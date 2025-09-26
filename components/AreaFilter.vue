@@ -9,6 +9,7 @@
       :step="0.1"
       :label="$t('filters.area')"
       :formatter="formatArea"
+      :disabled="loading"
       @update:min-value="handleAreaChange"
       @update:max-value="handleAreaChange"
     />
@@ -26,6 +27,8 @@ interface Props {
   properties: Array<{ area: number }>
   currentFilter: AreaFilter
   areaRange?: { min: number; max: number }
+  loading?: boolean
+  metadataLoading?: boolean
 }
 
 const props = defineProps<Props>()
@@ -38,15 +41,29 @@ const { translate: $t } = useAppI18n()
 
 // Computed area range from server metadata or fallback to properties
 const areaRange = computed(() => {
-  return props.areaRange || {
-    min: Math.min(...props.properties.map(p => p.area)),
-    max: Math.max(...props.properties.map(p => p.area)),
+  if (props.areaRange) {
+    return props.areaRange
   }
+
+  if (props.metadataLoading) {
+    return { min: 25, max: 175 }
+  }
+
+  if (props.properties.length > 0) {
+    const areas = props.properties.map(p => p.area)
+    return {
+      min: Math.min(...areas),
+      max: Math.max(...areas),
+    }
+  }
+
+  return { min: 25, max: 175 }
 })
 
 // Reactive state for current filter values
-const minArea = ref(props.currentFilter?.min ?? areaRange.value.min)
-const maxArea = ref(props.currentFilter?.max ?? areaRange.value.max)
+// Always use currentFilter if available, otherwise use areaRange or defaults
+const minArea = ref(props.currentFilter?.min ?? (props.areaRange?.min ?? 25))
+const maxArea = ref(props.currentFilter?.max ?? (props.areaRange?.max ?? 175))
 
 // Format area for display
 const formatArea = (area: number): string => {
@@ -69,8 +86,8 @@ watch(() => props.currentFilter, (newFilter) => {
     minArea.value = newFilter.min
     maxArea.value = newFilter.max
   } else {
-    minArea.value = areaRange.value.min
-    maxArea.value = areaRange.value.max
+    minArea.value = props.areaRange?.min ?? 25
+    maxArea.value = props.areaRange?.max ?? 175
   }
 })
 </script>

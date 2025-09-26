@@ -5,6 +5,7 @@
       :properties="properties"
       :current-filter="currentFilters.rooms"
       :available-rooms="filterMetadata?.availableRooms"
+      :loading="loading"
       @filter="handleRoomFilter"
     />
 
@@ -13,6 +14,8 @@
       :properties="properties"
       :current-filter="currentFilters.price"
       :price-range="filterMetadata?.priceRange"
+      :loading="loading"
+      :metadata-loading="metadataLoading"
       @filter="handlePriceFilter"
     />
 
@@ -21,6 +24,8 @@
       :properties="properties"
       :current-filter="currentFilters.area"
       :area-range="filterMetadata?.areaRange"
+      :loading="loading"
+      :metadata-loading="metadataLoading"
       @filter="handleAreaFilter"
     />
 
@@ -51,6 +56,8 @@ import Icon from '~/components/Icon.vue'
 interface Props {
   properties: Array<{ rooms: number; price: number; area: number }>
   currentFilters: FilterState
+  loading?: boolean
+  metadataLoading?: boolean
 }
 
 defineProps<Props>()

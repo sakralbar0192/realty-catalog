@@ -42,6 +42,7 @@
           <Sidebar
             :properties="properties"
             :current-filters="currentFilters"
+            :loading="loading"
             @room-filter="handleRoomFilter"
             @price-filter="handlePriceFilter"
             @area-filter="handleAreaFilter"
@@ -64,6 +65,7 @@ import styles from '~/assets/styles/components/FilterDrawer.module.scss'
 interface Props {
   properties: Array<{ rooms: number; price: number; area: number }>
   currentFilters: FilterState
+  loading?: boolean
 }
 
 defineProps<Props>()

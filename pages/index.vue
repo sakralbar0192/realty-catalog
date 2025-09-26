@@ -3,6 +3,8 @@
     name="default"
     :properties="properties"
     :current-filters="filters"
+    :loading="loading"
+    :metadata-loading="metadataLoading"
     @room-filter="handleRoomFilter"
     @price-filter="handlePriceFilter"
     @area-filter="handleAreaFilter"
@@ -24,6 +26,7 @@
       <Sidebar
         :properties="properties"
         :current-filters="filters"
+        :loading="loading"
         @room-filter="handleRoomFilter"
         @price-filter="handlePriceFilter"
         @area-filter="handleAreaFilter"
@@ -41,6 +44,7 @@
     ref="filterDrawerRef"
     :properties="properties"
     :current-filters="filters"
+    :loading="loading"
     @room-filter="handleRoomFilter"
     @price-filter="handlePriceFilter"
     @area-filter="handleAreaFilter"
@@ -78,7 +82,7 @@ const { filters, applyFilters, setRoomFilter, setPriceFilter, setAreaFilter, cle
 const route = useRoute()
 const router = useRouter()
 
-const { properties, loading, hasMorePages } = storeToRefs(propertyStore)
+const { properties, loading, hasMorePages, metadataLoading } = storeToRefs(propertyStore)
 
 // Settings panel reference
 const settingsPanel = ref()

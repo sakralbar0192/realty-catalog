@@ -28,14 +28,9 @@ export const useTheme = () => {
     return 'light'
   }
 
-  const followSystemTheme = () => {
-    const systemTheme = getSystemTheme()
-    setTheme(systemTheme)
-  }
-
   const initializeTheme = () => {
     if (theme.value === null && typeof window !== 'undefined') {
-      followSystemTheme()
+      theme.value = getSystemTheme()
     }
   }
 

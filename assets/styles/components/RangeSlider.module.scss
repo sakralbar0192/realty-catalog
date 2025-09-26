@@ -59,6 +59,27 @@
       cursor: grabbing;
     }
   }
+
+  &--disabled {
+    .range-slider__track {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .range-slider__thumb {
+      cursor: not-allowed;
+      opacity: 0.5;
+      pointer-events: none;
+
+      &:hover,
+      &:active,
+      &:focus {
+        transform: translate(-50%, -50%);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        outline: none;
+      }
+    }
+  }
 }
 
 @media (max-width: #{$tablet-max}) {

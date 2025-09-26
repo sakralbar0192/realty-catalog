@@ -47,7 +47,7 @@
       cursor: not-allowed;
       color: var(--color-text-muted);
 
-      &:hover {
+      &:hover:not(.room-filter__button--active) {
         transform: none;
         border-color: var(--color-border);
         background-color: var(--color-surface);

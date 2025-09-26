@@ -11,7 +11,16 @@
     </div>
 
     <aside :class="styles.layout__sidebar" v-if="!isMobile" data-test="layout-sidebar">
-      <slot name="sidebar"></slot>
+      <Sidebar
+        :properties="properties"
+        :current-filters="currentFilters"
+        :loading="loading"
+        :metadata-loading="metadataLoading"
+        @room-filter="handleRoomFilter"
+        @price-filter="handlePriceFilter"
+        @area-filter="handleAreaFilter"
+        @clear-filters="handleClearFilters"
+      />
     </aside>
 
     <!-- Mobile filter components -->
@@ -20,6 +29,7 @@
       v-if="isMobile"
       :properties="properties"
       :current-filters="currentFilters"
+      :loading="loading"
       @room-filter="handleRoomFilter"
       @price-filter="handlePriceFilter"
       @area-filter="handleAreaFilter"
@@ -34,12 +44,15 @@
 import { useDevice } from '~/composables/useDevice'
 import FilterToggle from '~/components/FilterToggle.vue'
 import FilterDrawer from '~/components/FilterDrawer.vue'
+import Sidebar from '~/components/Sidebar.vue'
 import type { RoomFilter, PriceFilter, AreaFilter, FilterState } from '~/composables/useFilters'
 import styles from '~/assets/styles/layouts/default.module.scss'
 
 interface Props {
   properties: Array<{ rooms: number; price: number; area: number }>
   currentFilters: FilterState
+  loading?: boolean
+  metadataLoading?: boolean
 }
 
 defineProps<Props>()

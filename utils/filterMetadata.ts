@@ -1,12 +1,9 @@
-import { db } from '~/mocks/models'
 import { seedDatabase } from '~/mocks/seed'
+import { db } from '~/mocks/models'
 
-export default defineEventHandler(async() => {
+export function getFilterMetadata() {
   // Seed the database if not already seeded
   seedDatabase()
-
-  // Simulate network delay for demonstration (longer delay for metadata to show validation)
-  await new Promise(resolve => setTimeout(resolve, 1200))
 
   const allProperties = db.property.getAll()
 
@@ -32,4 +29,4 @@ export default defineEventHandler(async() => {
     priceRange,
     areaRange,
   }
-})
+}

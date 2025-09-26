@@ -136,6 +136,50 @@ describe('RoomFilter', () => {
       expect(button4.attributes('disabled')).toBeDefined()
     })
 
+    it('should disable all room buttons when loading is true', () => {
+      wrapper = mount(RoomFilter, {
+        props: {
+          properties: mockProperties,
+          currentFilter: null,
+          availableRooms: [1, 2, 3, 4],
+          loading: true,
+        },
+        global: {
+          mocks: {
+            $t: (key: string) => key,
+          },
+        },
+      })
+
+      const buttons = wrapper.findAll('button')
+      buttons.forEach(button => {
+        expect(button.attributes('disabled')).toBeDefined()
+        expect(button.attributes('aria-disabled')).toBe('true')
+      })
+    })
+
+    it('should not emit event when clicking button while loading', async() => {
+      wrapper = mount(RoomFilter, {
+        props: {
+          properties: mockProperties,
+          currentFilter: null,
+          availableRooms: [1, 2, 3, 4],
+          loading: true,
+        },
+        global: {
+          mocks: {
+            $t: (key: string) => key,
+          },
+        },
+      })
+
+      const button2 = wrapper.findAll('button')[1] // 2-room button
+
+      await button2.trigger('click')
+
+      expect(wrapper.emitted('filter')).toBeFalsy()
+    })
+
     it('should activate clicked room button and deactivate others', async() => {
       const buttons = wrapper.findAll('button')
       const button2 = buttons[1] // 2-room button (index 1)

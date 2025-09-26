@@ -165,7 +165,7 @@
     </div>
 
     <!-- Loading State -->
-    <div v-if="properties.length === 0 && loading" :class="styles.table__loading" data-test="loading-state">
+    <div v-if="loading" :class="styles.table__loading" data-test="loading-state">
       <p>{{ $t('properties.loading') }}</p>
     </div>
 

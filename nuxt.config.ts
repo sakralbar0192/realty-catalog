@@ -51,7 +51,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseURL: process.env.NUXT_PUBLIC_BASE_URL || '/',
+      baseURL: process.env.NODE_ENV === 'production' ? '/realty-catalog/' : '/',
+      apiBaseURL: '/',
     },
   },
 })

@@ -1,14 +1,19 @@
 import { setupWorker } from 'msw/browser'
 import { handlers } from '~/mocks/handlers'
 import { seedDatabase } from '~/mocks/seed'
+import { useRuntimeConfig } from '#imports'
 
 export default defineNuxtPlugin(() => {
-  if (process.env.NODE_ENV === 'development') {
-    seedDatabase() // Заполняем базу данных
+  seedDatabase()
 
-    const worker = setupWorker(...handlers)
-    worker.start({
-      onUnhandledRequest: 'bypass',
-    })
-  }
+  const config = useRuntimeConfig()
+  const baseURL = config.public.baseURL || '/'
+
+  const worker = setupWorker(...handlers)
+  worker.start({
+    onUnhandledRequest: 'bypass',
+    serviceWorker: {
+      url: `${baseURL}mockServiceWorker.js`,
+    },
+  })
 })

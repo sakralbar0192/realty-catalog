@@ -5,6 +5,9 @@ export default defineEventHandler(async(event) => {
   // Seed the database if not already seeded
   seedDatabase()
 
+  // Simulate network delay for demonstration
+  await new Promise(resolve => setTimeout(resolve, 800))
+
   const query = getQuery(event)
   const page = Number(query.page) || 1
   const limit = Number(query.limit) || 20

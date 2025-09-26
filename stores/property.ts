@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Property } from '~/mocks/models'
 import type { FilterState } from '~/composables/useFilters'
+import { useRuntimeConfig } from 'nuxt/app'
 
 export const usePropertyStore = defineStore('property', () => {
   // Use useState for SSR compatibility (fallback to ref for tests)
@@ -48,6 +49,7 @@ export const usePropertyStore = defineStore('property', () => {
   const fetchProperties = async(page = 1, limit = 20, filterParams?: Partial<FilterState>) => {
     loading.value = true
     try {
+      const config = useRuntimeConfig()
       const query: Record<string, string | number> = { page, limit }
 
       // Add filter parameters to query
@@ -68,6 +70,7 @@ export const usePropertyStore = defineStore('property', () => {
       }
 
       const response = await $fetch<{ data: Property[]; meta: { page: number; limit: number; total: number; totalPages: number } }>('/api/properties', {
+        baseURL: config.public.apiBaseURL,
         query,
       })
 
@@ -89,12 +92,16 @@ export const usePropertyStore = defineStore('property', () => {
   const fetchFilterMetadata = async() => {
     metadataLoading.value = true
     try {
-      const response = await $fetch<{
-        availableRooms: number[]
-        priceRange: { min: number; max: number }
-        areaRange: { min: number; max: number }
-      }>('/api/properties/metadata')
+      // Simulate network delay for demonstration (longer delay for metadata to show validation)
+      await new Promise(resolve => setTimeout(resolve, 1200))
+
+      // Import static metadata function
+      const { getFilterMetadata } = await import('~/utils/filterMetadata')
+      const response = getFilterMetadata()
+
       filterMetadata.value = response
+      // Validate persisted filters against new metadata
+      await validateFilters()
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch filter metadata:', error)
@@ -107,7 +114,10 @@ export const usePropertyStore = defineStore('property', () => {
   const fetchPropertyById = async(id: string) => {
     loading.value = true
     try {
-      const response = await $fetch<{ data: Property }>(`/api/properties/${id}`)
+      const config = useRuntimeConfig()
+      const response = await $fetch<{ data: Property }>(`/api/properties/${id}`, {
+        baseURL: config.public.apiBaseURL,
+      })
       currentProperty.value = response.data
       return response.data
     } catch (error) {
@@ -156,6 +166,58 @@ export const usePropertyStore = defineStore('property', () => {
     await fetchProperties(1, pagination.value.limit)
   }
 
+  const validateFilters = async() => {
+    if (!filterMetadata.value) {
+      return
+    }
+
+    const validatedFilters: Partial<FilterState> = {}
+
+    // Validate room filter
+    if (filters.value.rooms !== null) {
+      if (!filterMetadata.value.availableRooms.includes(filters.value.rooms)) {
+        validatedFilters.rooms = null
+      } else {
+        validatedFilters.rooms = filters.value.rooms
+      }
+    }
+
+    // Validate price filter - only clear if completely invalid, otherwise keep saved values
+    if (filters.value.price !== null) {
+      const priceRange = filterMetadata.value.priceRange
+      const isCompletelyInvalid = filters.value.price.max < priceRange.min || filters.value.price.min > priceRange.max
+
+      if (isCompletelyInvalid) {
+        validatedFilters.price = null
+      }
+      // If partially valid, keep the saved values without adjustment
+    }
+
+    // Validate area filter - only clear if completely invalid, otherwise keep saved values
+    if (filters.value.area !== null) {
+      const areaRange = filterMetadata.value.areaRange
+      const isCompletelyInvalid = filters.value.area.max < areaRange.min || filters.value.area.min > areaRange.max
+
+      if (isCompletelyInvalid) {
+        validatedFilters.area = null
+      }
+      // If partially valid, keep the saved values without adjustment
+    }
+
+    // Apply validated filters if any changed
+    const hasChanges = Object.keys(validatedFilters).some(key =>
+      validatedFilters[key as keyof FilterState] !== filters.value[key as keyof FilterState],
+    )
+
+    if (hasChanges) {
+      filters.value = { ...filters.value, ...validatedFilters }
+      // If filters changed, refetch properties
+      properties.value = []
+      pagination.value.page = 1
+      await fetchProperties(1, pagination.value.limit, filters.value)
+    }
+  }
+
   // Note: getFilteredProperties is now obsolete since filtering is done server-side
   // Keeping for backward compatibility, but it will just return all properties
   const getFilteredProperties = () => {
@@ -183,6 +245,7 @@ export const usePropertyStore = defineStore('property', () => {
     setFilters,
     clearFilters,
     getFilteredProperties,
+    validateFilters,
   }
 }, {
   persist: {
