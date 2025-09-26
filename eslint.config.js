@@ -1,5 +1,3 @@
-import storybook from 'eslint-plugin-storybook'
-
 import js from '@eslint/js'
 import vue from 'eslint-plugin-vue'
 import vueParser from 'vue-eslint-parser'
@@ -175,4 +173,4 @@ export default [{
       },
     ],
   },
-}, ...storybook.configs['flat/recommended']]
+}]

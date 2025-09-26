@@ -20,7 +20,7 @@ export const seedDatabase = () => {
       area: Math.round((Math.random() * 150 + 25) * 10) / 10, // 25-175 м² с точностью до 0.1
       floor: floor,
       totalFloors: totalFloors,
-      imageUrl: '/img/flat.svg',
+      imageUrl: `${process.env.NODE_ENV === 'production' ? '/realty-catalog/' : '/'}img/flat.svg`,
       rooms: rooms,
       createdAt: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString(),
     })

@@ -96,9 +96,7 @@ const updateVisibility = () => {
   const scrollTop = scrollableElement === window
     ? window.scrollY
     : (scrollableElement as HTMLElement).scrollTop || 0
-  console.log('ScrollToTop: updateVisibility called, scrollTop:', scrollTop, 'threshold:', SCROLL_THRESHOLD.value)
   isVisible.value = scrollTop > SCROLL_THRESHOLD.value
-  console.log('ScrollToTop: isVisible set to:', isVisible.value)
 }
 
 // Create throttled version of updateVisibility
@@ -202,7 +200,6 @@ const findScrollableElement = (): HTMLElement | Window => {
 onMounted(() => {
   // Find the actual scrollable element
   scrollableElement = findScrollableElement()
-  console.log('ScrollToTop: onMounted, scrollableElement:', scrollableElement)
 
   // Use Intersection Observer for element scrolling, scroll listener for window scrolling
   if ('IntersectionObserver' in window && scrollableElement !== window) {

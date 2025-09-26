@@ -1,13 +1,9 @@
 import { useI18n } from 'vue-i18n'
+import { useSwitchLocalePath } from '#i18n'
 
 export const useAppI18n = () => {
   const { t, locale } = useI18n()
   const mainStore = useMainStore()
-
-  // Синхронизируем язык из store в i18n при инициализации
-  if (import.meta.client) {
-    locale.value = mainStore.language
-  }
 
   // Доступные локали
   const availableLocales = computed(() => [
@@ -17,9 +13,11 @@ export const useAppI18n = () => {
 
   // Смена языка
   const changeLocale = async(newLocale: 'en' | 'ru') => {
-    locale.value = newLocale
     // Сохраняем в main store (он имеет персистентность)
     mainStore.setLanguage(newLocale)
+    const switchLocalePath = useSwitchLocalePath()
+    const newPath = switchLocalePath(newLocale)
+    await navigateTo(newPath)
   }
 
   // Получение перевода с параметрами

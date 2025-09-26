@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Property } from '~/mocks/models'
+import { db } from '~/mocks/models'
+import { seedDatabase } from '~/mocks/seed'
 
 export const usePropertyStore = defineStore('property', () => {
-  const properties = ref<Property[]>([])
+  // Use useState for SSR compatibility
+  const properties = useState<Property[]>('properties', () => [])
   const currentProperty = ref<Property | null>(null)
   const loading = ref(false)
   const pagination = ref({
@@ -39,28 +42,31 @@ export const usePropertyStore = defineStore('property', () => {
   const fetchProperties = async(page = 1, limit = 20) => {
     loading.value = true
     try {
-      const response = await $fetch<{
-        data: Property[]
-        meta: typeof pagination.value
-      }>('/api/properties', {
-        query: { page, limit },
-      })
+      // Use mock data for production demo since API doesn't exist yet
+      seedDatabase()
+      const allProperties = db.property.getAll()
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedProperties = allProperties.slice(startIndex, endIndex)
 
       if (page === 1) {
-        properties.value = response.data
+        properties.value = paginatedProperties
       } else {
-        properties.value.push(...response.data)
+        properties.value.push(...paginatedProperties)
       }
 
-      pagination.value = response.meta
+      pagination.value = {
+        page,
+        limit,
+        total: allProperties.length,
+        totalPages: Math.ceil(allProperties.length / limit),
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch properties:', error)
     } finally {
       loading.value = false
     }
-    // eslint-disable-next-line no-console
-    console.log(properties.value)
   }
 
   const fetchPropertyById = async(id: string) => {

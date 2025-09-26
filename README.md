@@ -331,38 +331,68 @@ bun run test:ui
 
 ## 🚀 Deployment
 
+### GitHub Pages Deployment
+
+The application is configured for static site generation and can be deployed to GitHub Pages.
+
+#### Automatic Deployment
+
+1. **Enable GitHub Pages** in your repository settings:
+   - Go to Settings → Pages
+   - Select "GitHub Actions" as source
+
+2. **Push to main branch** - deployment happens automatically via GitHub Actions
+
+3. **Access your site** at `https://your-username.github.io/repository-name/`
+
+#### Manual Deployment
+
+```bash
+# Generate static files
+bun run generate
+
+# Preview locally
+bun run preview
+
+# Deploy .output/public to any static hosting
+```
+
 ### Build Process
 
 ```bash
-# Production build
+# Development
+bun run dev
+
+# Production build (SSR)
 bun run build
 
-# Static generation (if needed)
+# Static generation (SSG)
 bun run generate
 
-# Preview build
+# Preview static build
 bun run preview
 ```
-
-### Deployment Options
-
-- **Vercel**: Zero-config deployment
-- **Netlify**: Static site hosting
-- **Node.js**: Server-side rendering
-- **Docker**: Containerized deployment
 
 ### Environment Variables
 
 ```env
-# App Configuration
-NUXT_PUBLIC_APP_NAME=Realty Catalog
-NUXT_PUBLIC_API_BASE_URL=https://api.example.com
+# Base URL for GitHub Pages (auto-set in CI)
+NUXT_PUBLIC_BASE_URL=/
 
 # MSW Configuration
 NUXT_PUBLIC_MSW_ENABLED=true
 
 # Analytics (optional)
 NUXT_PUBLIC_GA_ID=GA_MEASUREMENT_ID
+```
+
+### Deployment Options
+
+- **GitHub Pages**: Automated static site hosting (recommended)
+- **Vercel**: Zero-config deployment
+- **Netlify**: Static site hosting
+- **Node.js**: Server-side rendering
+- **Docker**: Containerized deployment
 ```
 
 ## 🤝 Contributing
