@@ -59,7 +59,7 @@ describe('Sidebar', () => {
       props: {
         properties: mockProperties,
         currentFilters: {
-          rooms: null,
+          rooms: 2, // Set active filter to make clear button visible
           price: null,
           area: null,
         },
@@ -80,10 +80,39 @@ describe('Sidebar', () => {
   })
 
   describe('Component Structure', () => {
-    it('should render clear filters link', () => {
+    it('should render clear filters link when filters are active', () => {
       const link = wrapper.find('[data-test="clear-filters-btn"]')
       expect(link.exists()).toBe(true)
       expect(link.text()).toContain('Clear Filters')
+    })
+
+    it('should render clear filters link element when no filters are active', () => {
+      // Create wrapper with no active filters
+      const wrapperNoFilters = mount(Sidebar, {
+        props: {
+          properties: mockProperties,
+          currentFilters: {
+            rooms: null,
+            price: null,
+            area: null,
+          },
+        },
+        global: {
+          mocks: {
+            $t: (key: string) => {
+              const translations: Record<string, string> = {
+                'sidebar.clearFilters': 'Clear Filters',
+                'filters.price': 'Price',
+                'filters.area': 'Area',
+              }
+              return translations[key] || key
+            },
+          },
+        },
+      })
+
+      const link = wrapperNoFilters.find('[data-test="clear-filters-btn"]')
+      expect(link.exists()).toBe(true) // Element exists (v-show keeps it in DOM)
     })
 
     it('should render filter components', () => {

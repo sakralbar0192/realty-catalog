@@ -30,6 +30,7 @@
     />
 
     <div
+      v-show="hasActiveFilters"
       :class="styles.sidebar__clear"
       @click="handleClearFilters"
       @keydown.enter="handleClearFilters"
@@ -44,6 +45,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { RoomFilter as RoomFilterType, PriceFilter, AreaFilter, FilterState } from '~/composables/useFilters'
 import { usePropertyStore } from '~/stores/property'
 import { storeToRefs } from 'pinia'
@@ -60,7 +62,7 @@ interface Props {
   metadataLoading?: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   roomFilter: [filterData: { rooms: RoomFilterType }]
@@ -71,6 +73,10 @@ const emit = defineEmits<{
 
 const propertyStore = usePropertyStore()
 const { filterMetadata } = storeToRefs(propertyStore)
+
+const hasActiveFilters = computed(() => {
+  return props.currentFilters.rooms !== null || props.currentFilters.price !== null || props.currentFilters.area !== null
+})
 
 const handleRoomFilter = (filterData: { rooms: RoomFilterType }) => {
   emit('roomFilter', filterData)

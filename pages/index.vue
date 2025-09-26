@@ -8,6 +8,7 @@
     @room-filter="handleRoomFilter"
     @price-filter="handlePriceFilter"
     @area-filter="handleAreaFilter"
+    @clear-filters="handleClearFilters"
   >
     <template #header>
       <h1>{{$t('properties.title')}}</h1>

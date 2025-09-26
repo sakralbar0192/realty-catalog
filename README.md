@@ -5,6 +5,7 @@ A modern, accessible real estate catalog application built with Nuxt 3, featurin
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [User Experience](#user-experience)
 - [Tech Stack](#tech-stack)
 - [Architecture](#architecture)
 - [Project Structure](#project-structure)
@@ -20,16 +21,52 @@ A modern, accessible real estate catalog application built with Nuxt 3, featurin
 
 ## 🎯 Overview
 
-Realty Catalog is a comprehensive real estate application that allows users to browse, filter, and sort property listings. The application features:
+Finding the perfect property can be overwhelming with thousands of listings scattered across different platforms. Realty Catalog simplifies your real estate search by providing a modern, intuitive, and powerful catalog that puts you in control of your property discovery journey.
 
-- **Property Listings**: Paginated property cards with detailed information
-- **Advanced Filtering**: Room count, price range, and area filters
-- **Sorting**: Sort by area, floor, and price with toggle controls
-- **Responsive Design**: Mobile-first approach with drawer navigation
-- **Accessibility**: WCAG 2.1 AA compliant with full keyboard navigation
-- **Themes**: Light and dark theme support
-- **Internationalization**: Multi-language support (English/Russian)
-- **Performance**: Optimized with virtual scrolling and lazy loading
+Whether you're a first-time buyer, seasoned investor, or real estate professional, our application offers a seamless experience to browse, filter, and compare properties efficiently. Built with performance and accessibility in mind, Realty Catalog ensures that everyone can find their ideal home or investment opportunity.
+
+### Who It's For
+- **🏠 First-Time Home Buyers**: Easy-to-use interface to explore properties without feeling overwhelmed
+- **💼 Real Estate Investors**: Powerful filtering and sorting to quickly identify profitable opportunities
+- **🏢 Property Managers**: Efficient browsing of large property portfolios
+- **♿ Accessibility Users**: Full WCAG compliance ensures equal access for all users
+- **🌍 International Users**: Multi-language support for global property searches
+
+### Key Features
+
+- **📋 Comprehensive Property Listings**: Browse through paginated property cards with rich details including images, area, floor information, and pricing
+- **🔍 Advanced Filtering System**: Narrow down your search with precise filters for room count, price range, and property area - find exactly what you're looking for
+- **📊 Smart Sorting Options**: Sort properties by area, floor level, or price with intuitive toggle controls to prioritize what matters most to you
+- **📱 Responsive Design**: Enjoy a seamless experience across all devices with mobile-first design and collapsible navigation drawers
+- **♿ Full Accessibility**: WCAG 2.1 AA compliant with complete keyboard navigation, screen reader support, and focus management
+- **🎨 Theme Customization**: Switch between light and dark themes to match your preference and reduce eye strain
+- **🌍 Multi-Language Support**: Navigate the interface in English or Russian with full localization coverage
+- **⚡ High Performance**: Experience lightning-fast browsing with virtual scrolling, lazy loading, and optimized rendering for large property datasets
+
+## 👤 User Experience
+
+### Seamless Property Discovery
+Start your property search with our intuitive interface that loads properties instantly. Browse through visually appealing cards or detailed table views, depending on your device and preference.
+
+### Powerful Yet Simple Filtering
+Use our sidebar filters to refine your search:
+- **Room Filter**: Select specific room counts or ranges (studio, 1-2 rooms, etc.)
+- **Price Range**: Set your budget with our interactive price slider
+- **Area Filter**: Find properties within your desired square footage
+
+Filters work in real-time, updating results as you adjust criteria. Clear all filters with one click to start fresh.
+
+### Smart Sorting & Comparison
+Sort properties by area, floor, or price to prioritize what matters most. Toggle between ascending and descending order with visual indicators. Compare multiple properties side-by-side in our responsive table layout.
+
+### Mobile-First Design
+On mobile devices, filters collapse into a convenient drawer that slides out from the side. Property listings transform into card-based layouts optimized for touch interaction. All functionality remains accessible with full keyboard and screen reader support.
+
+### Personalized Experience
+Customize your browsing experience with light/dark theme toggle and language preferences. Your settings persist across sessions for a consistent experience.
+
+### Performance That Doesn't Compromise
+Even with thousands of properties, our virtual scrolling ensures smooth performance. Load more properties on demand without page refreshes, keeping your search uninterrupted.
 
 ## 🛠 Tech Stack
 
